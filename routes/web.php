@@ -7,6 +7,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//tajjjjjjjjjj
+
+Route::get('/taj', function () {
+    return view('taj');
+});
+
+Route::get('/alif', function () {
+    return view('bin');
+});
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
