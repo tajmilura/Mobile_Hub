@@ -1,25 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Mobilehub;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-use App\Models\Products;
+use App\Models\Product;
 use App\Models\Category;
-use App\Models\Brands;
+use App\Models\Brand;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Products::with(['category', 'brand'])->get();
+        $products = Product::with(['category', 'brand'])->get();
         return view('products.index', compact('products'));
     }
         // creating product
     public function create()
     {
         $categories = Category::all();
-        $brands = Brands::all();
+        $brands = Brand::all();
         return view('products.create', compact('categories', 'brands'));
     }
 
@@ -69,25 +71,25 @@ class ProductController extends Controller
             $data['gallery'] = json_encode($request->gallery);
         }
 
-        Products::create($data);
+        Product::create($data);
         return redirect()->route('products.index');
     }
 
 
-    public function show(Products $product)
+    public function show(Product $product)
     {
         return view('products.show', compact('product'));
     }
 
-    public function edit(Products $product)
+    public function edit(Product $product)
     {
         $categories = Category::all();
-        $brands = Brands::all();
+        $brands = Brand::all();
         return view('products.edit', compact('product', 'categories', 'brands'));
     }
 
     // to  update products
-    public function update(Request $request, Products $product)
+    public function update(Request $request, Product $product)
     {
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id',
@@ -137,7 +139,7 @@ class ProductController extends Controller
 
     // to delete a product
 
-    public function destroy(Products $product)
+    public function destroy(Product $product)
     {
         $product->delete();
         return redirect()->route('products.index');
