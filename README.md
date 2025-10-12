@@ -12,9 +12,9 @@
   <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-# Mobile Hub
+# AI - Mobile Hub
 
-> A full-featured e-commerce web application for buying and selling mobile phones and accessories, built with Laravel 12.
+> A full-featured AI based e-commerce web application for buying and selling mobile phones and accessories, built with Laravel 12.
 
 ---
 
