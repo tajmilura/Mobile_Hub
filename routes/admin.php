@@ -4,8 +4,8 @@ use App\Http\Controllers\Mobilehub\BrandController;
 use App\Http\Controllers\Mobilehub\ProductController;
 
 Route::middleware(['auth', 'role:admin'])
-    ->prefix('dashboard')
-    ->name('dashboard.')
+    ->prefix('ad_dashboard')
+//    ->name('dashboard_ad')
     ->group(function () {
         Route::get('/', fn() => view('admin.index'))->name('admin_dashboard');
         Route::resource('brands', BrandController::class);
