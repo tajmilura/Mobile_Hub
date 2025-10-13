@@ -12,27 +12,27 @@
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icons/favicon-16x16.png">
-    <link rel="manifest" href="assets/images/icons/site.html">
-    <link rel="mask-icon" href="assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="assets/images/icons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('{{ asset('assets/frontend') }}/assets/frontend') }}/{{ asset('assets/frontend') }}/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/frontend') }}/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/frontend') }}/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="{{ asset('assets/frontend') }}/assets/images/icons/site.html">
+    <link rel="mask-icon" href="{{ asset('assets/frontend') }}/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="{{ asset('assets/frontend') }}/assets/images/icons/favicon.ico">
     <meta name="apple-mobile-web-app-title" content="Molla">
     <meta name="application-name" content="Molla">
     <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
+    <meta name="msapplication-config" content="{{ asset('assets/frontend') }}/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/plugins/owl-carousel/owl.carousel.css">
-    <link rel="stylesheet" href="assets/css/plugins/magnific-popup/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/plugins/jquery.countdown.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/plugins/jquery.countdown.css">
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/skins/skin-demo-3.css">
-    <link rel="stylesheet" href="assets/css/demos/demo-3.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/skins/skin-demo-3.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/demos/demo-3.css">
 </head>
 
 <body>
@@ -62,8 +62,8 @@
                                     <div class="intro-slide">
                                         <figure class="slide-image">
                                             <picture>
-                                                <source media="(max-width: 480px)" srcset="assets/images/demos/demo-3/slider/slide-1-480w.jpg">
-                                                <img src="assets/images/demos/demo-3/slider/slide-1.jpg" alt="Image Desc">
+                                                <source media="(max-width: 480px)" srcset="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/slider/slide-1-480w.jpg">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/slider/slide-1.jpg" alt="Image Desc">
                                             </picture>
                                         </figure><!-- End .slide-image -->
 
@@ -90,8 +90,8 @@
                                     <div class="intro-slide">
                                         <figure class="slide-image">
                                             <picture>
-                                                <source media="(max-width: 480px)" srcset="assets/images/demos/demo-3/slider/slide-2-480w.jpg">
-                                                <img src="assets/images/demos/demo-3/slider/slide-2.jpg" alt="Image Desc">
+                                                <source media="(max-width: 480px)" srcset="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/slider/slide-2-480w.jpg">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/slider/slide-2.jpg" alt="Image Desc">
                                             </picture>
                                         </figure><!-- End .slide-image -->
 
@@ -124,7 +124,7 @@
                             <div class="intro-banners">
                                 <div class="banner mb-lg-1 mb-xl-2">
                                     <a href="#">
-                                        <img src="assets/images/demos/demo-3/banners/banner-1.jpg" alt="Banner">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/banners/banner-1.jpg" alt="Banner">
                                     </a>
 
                                     <div class="banner-content">
@@ -136,7 +136,7 @@
 
                                 <div class="banner mb-lg-1 mb-xl-2">
                                     <a href="#">
-                                        <img src="assets/images/demos/demo-3/banners/banner-2.jpg" alt="Banner">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/banners/banner-2.jpg" alt="Banner">
                                     </a>
 
                                     <div class="banner-content">
@@ -148,7 +148,7 @@
 
                                 <div class="banner mb-0">
                                     <a href="#">
-                                        <img src="assets/images/demos/demo-3/banners/banner-3.jpg" alt="Banner">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/banners/banner-3.jpg" alt="Banner">
                                     </a>
 
                                     <div class="banner-content">
@@ -202,7 +202,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -236,8 +236,8 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -276,7 +276,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -310,7 +310,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -343,7 +343,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -399,7 +399,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -432,7 +432,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -465,7 +465,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -500,8 +500,8 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -563,7 +563,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-3.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -597,7 +597,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -630,7 +630,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -664,8 +664,8 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
-                                        <img src="assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-2.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-2-2.jpg" alt="Product image" class="product-image-hover">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -704,7 +704,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -741,7 +741,7 @@
             <div class="mb-7 mb-lg-11"></div><!-- End .mb-7 -->
 
             <div class="container">
-                <div class="cta cta-border cta-border-image mb-5 mb-lg-7" style="background-image: url(assets/images/demos/demo-3/bg-1.jpg);">
+                <div class="cta cta-border cta-border-image mb-5 mb-lg-7" style="background-image: url({{ asset('assets/frontend') }}/assets/images/demos/demo-3/bg-1.jpg);">
                     <div class="cta-border-wrapper bg-white">
                         <div class="row justify-content-center">
                             <div class="col-md-11 col-xl-11">
@@ -770,7 +770,7 @@
 
                     <div class="row">
                         <div class="col-lg-6 deal-col">
-                            <div class="deal" style="background-image: url('assets/images/demos/demo-3/deal/bg-1.jpg');">
+                            <div class="deal" style="background-image: url('{{ asset('assets/frontend') }}/assets/images/demos/demo-3/deal/bg-1.jpg');">
                                 <div class="deal-top">
                                     <h2>Deal of the Day.</h2>
                                     <h4>Limited quantities. </h4>
@@ -801,7 +801,7 @@
                                                 <span class="product-label label-circle label-top">Top</span>
                                                 <span class="product-label label-circle label-sale">Sale</span>
                                                 <a href="product.html">
-                                                    <img src="assets/images/demos/demo-3/products/product-5.jpg" alt="Product image" class="product-image">
+                                                    <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-5.jpg" alt="Product image" class="product-image">
                                                 </a>
 
                                                 <div class="product-action-vertical">
@@ -838,7 +838,7 @@
                                             <figure class="product-media">
                                                 <span class="product-label label-circle label-sale">Sale</span>
                                                 <a href="product.html">
-                                                    <img src="assets/images/demos/demo-3/products/product-6.jpg" alt="Product image" class="product-image">
+                                                    <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-6.jpg" alt="Product image" class="product-image">
                                                 </a>
 
                                                 <div class="product-action-vertical">
@@ -906,27 +906,27 @@
                             }
                         }'>
                         <a href="#" class="brand">
-                            <img src="assets/images/brands/1.png" alt="Brand Name">
+                            <img src="{{ asset('assets/frontend') }}/assets/images/brands/1.png" alt="Brand Name">
                         </a>
 
                         <a href="#" class="brand">
-                            <img src="assets/images/brands/2.png" alt="Brand Name">
+                            <img src="{{ asset('assets/frontend') }}/assets/images/brands/2.png" alt="Brand Name">
                         </a>
 
                         <a href="#" class="brand">
-                            <img src="assets/images/brands/3.png" alt="Brand Name">
+                            <img src="{{ asset('assets/frontend') }}/assets/images/brands/3.png" alt="Brand Name">
                         </a>
 
                         <a href="#" class="brand">
-                            <img src="assets/images/brands/4.png" alt="Brand Name">
+                            <img src="{{ asset('assets/frontend') }}/assets/images/brands/4.png" alt="Brand Name">
                         </a>
 
                         <a href="#" class="brand">
-                            <img src="assets/images/brands/5.png" alt="Brand Name">
+                            <img src="{{ asset('assets/frontend') }}/assets/images/brands/5.png" alt="Brand Name">
                         </a>
 
                         <a href="#" class="brand">
-                            <img src="assets/images/brands/6.png" alt="Brand Name">
+                            <img src="{{ asset('assets/frontend') }}/assets/images/brands/6.png" alt="Brand Name">
                         </a>
                     </div><!-- End .owl-carousel -->
             </div><!-- End .container -->
@@ -969,7 +969,7 @@
                     <div class="col-xl-5col d-none d-xl-block">
                         <div class="banner">
                             <a href="#">
-                                <img src="assets/images/demos/demo-3/banners/banner-4.jpg" alt="banner">
+                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/banners/banner-4.jpg" alt="banner">
                             </a>
                         </div><!-- End .banner -->
                     </div><!-- End .col-xl-5col -->
@@ -1002,7 +1002,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-7.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-7.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1041,7 +1041,7 @@
                                     <div class="product product-2">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-8.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-8.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1075,7 +1075,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-new">New</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-9.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-9.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1116,7 +1116,7 @@
                                             <span class="product-label label-circle label-top">Top</span>
                                             <span class="product-label label-circle label-sale">Sale</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-10.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-10.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1151,7 +1151,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1185,7 +1185,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1242,7 +1242,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-new">New</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1281,7 +1281,7 @@
                                     <div class="product product-2">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1316,7 +1316,7 @@
                                             <span class="product-label label-circle label-top">Top</span>
                                             <span class="product-label label-circle label-sale">Sale</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1357,7 +1357,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1391,7 +1391,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1448,7 +1448,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1482,7 +1482,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1516,7 +1516,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-new">New</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1555,7 +1555,7 @@
                                     <div class="product product-2">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1590,7 +1590,7 @@
                                             <span class="product-label label-circle label-top">Top</span>
                                             <span class="product-label label-circle label-sale">Sale</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1654,7 +1654,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1687,7 +1687,7 @@
                                     <div class="product product-2">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1721,7 +1721,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-new">New</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1761,7 +1761,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1795,7 +1795,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1830,7 +1830,7 @@
                                             <span class="product-label label-circle label-top">Top</span>
                                             <span class="product-label label-circle label-sale">Sale</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1895,7 +1895,7 @@
                                             <span class="product-label label-circle label-top">Top</span>
                                             <span class="product-label label-circle label-sale">Sale</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1936,7 +1936,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -1969,7 +1969,7 @@
                                     <div class="product product-2">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -2003,7 +2003,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-new">New</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -2066,7 +2066,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -2100,7 +2100,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -2134,7 +2134,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-top">Top</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -2167,7 +2167,7 @@
                                     <div class="product product-2">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -2201,7 +2201,7 @@
                                         <figure class="product-media">
                                             <span class="product-label label-circle label-new">New</span>
                                             <a href="product.html">
-                                                <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -2307,7 +2307,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2340,7 +2340,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2374,7 +2374,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2415,7 +2415,7 @@
                                     <span class="product-label label-circle label-top">Top</span>
                                     <span class="product-label label-circle label-sale">Sale</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2456,7 +2456,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2490,7 +2490,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2550,7 +2550,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2589,7 +2589,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2624,7 +2624,7 @@
                                     <span class="product-label label-circle label-top">Top</span>
                                     <span class="product-label label-circle label-sale">Sale</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2665,7 +2665,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2699,7 +2699,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2759,7 +2759,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2793,7 +2793,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2827,7 +2827,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2866,7 +2866,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2901,7 +2901,7 @@
                                     <span class="product-label label-circle label-top">Top</span>
                                     <span class="product-label label-circle label-sale">Sale</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -2968,7 +2968,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3001,7 +3001,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3035,7 +3035,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3075,7 +3075,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3109,7 +3109,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3144,7 +3144,7 @@
                                     <span class="product-label label-circle label-top">Top</span>
                                     <span class="product-label label-circle label-sale">Sale</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3212,7 +3212,7 @@
                                     <span class="product-label label-circle label-top">Top</span>
                                     <span class="product-label label-circle label-sale">Sale</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-14.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3253,7 +3253,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3286,7 +3286,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3320,7 +3320,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3386,7 +3386,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3420,7 +3420,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-15.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3454,7 +3454,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-11.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3487,7 +3487,7 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-12.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3521,7 +3521,7 @@
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-new">New</span>
                                     <a href="product.html">
-                                        <img src="assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
+                                        <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-3/products/product-13.jpg" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
@@ -3623,7 +3623,7 @@
             </div><!-- End .icon-boxes-container -->
 
             <div class="container">
-                <div class="cta cta-separator cta-border-image cta-half mb-0" style="background-image: url(assets/images/demos/demo-3/bg-2.jpg);">
+                <div class="cta cta-separator cta-border-image cta-half mb-0" style="background-image: url({{ asset('assets/frontend') }}/assets/images/demos/demo-3/bg-2.jpg);">
                     <div class="cta-border-wrapper bg-white">
                         <div class="row">
                             <div class="col-lg-6">
@@ -3989,7 +3989,7 @@
                 <div class="row no-gutters bg-white newsletter-popup-content">
                     <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
                         <div class="banner-content text-center">
-                            <img src="assets/images/popup/newsletter/logo.png" class="logo" alt="logo" width="60" height="15">
+                            <img src="{{ asset('assets/frontend') }}/assets/images/popup/newsletter/logo.png" class="logo" alt="logo" width="60" height="15">
                             <h2 class="banner-title">get <span>25<light>%</light></span> off</h2>
                             <p>Subscribe to the Molla eCommerce newsletter to receive timely updates from your favorite products.</p>
                             <form action="#">
@@ -4007,26 +4007,26 @@
                         </div>
                     </div>
                     <div class="col-xl-2-5col col-lg-5 ">
-                        <img src="assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
+                        <img src="{{ asset('assets/frontend') }}/assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Plugins JS File -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery.hoverIntent.min.js"></script>
-    <script src="assets/js/jquery.waypoints.min.js"></script>
-    <script src="assets/js/superfish.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/bootstrap-input-spinner.js"></script>
-    <script src="assets/js/jquery.plugin.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/jquery.countdown.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/jquery.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/jquery.waypoints.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/superfish.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/owl.carousel.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/jquery.plugin.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/jquery.countdown.min.js"></script>
     <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/demos/demo-3.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/main.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/demos/demo-3.js"></script>
 </body>
 
 
