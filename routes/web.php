@@ -17,6 +17,10 @@ Route::get('/alif', function () {
     return view('bin');
 });
 
+Route::get('/home', function () {
+    return view('frontend.index');
+});
+
 
 
 Route::get('/dashboard', function () {
