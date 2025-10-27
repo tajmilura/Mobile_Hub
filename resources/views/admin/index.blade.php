@@ -65,6 +65,10 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+ <!-- Flasher SweetAlert -->
+
+    <!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- jQuery -->
     <script src="{{ asset('assets/admin') }}/plugins/jquery/jquery.min.js"></script>

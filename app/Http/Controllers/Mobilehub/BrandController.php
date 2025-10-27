@@ -13,13 +13,14 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
+use function Flasher\Toastr\Prime\toastr;
 
 class BrandController extends Controller
 {
     // Show all brands
     public function index()
     {
-        $brands = Brand::all();
+        $brands = Brand::orderBy('id', 'desc')->paginate(10); // per page 10 brand
         return view('admin.store.brand.add_brand', compact('brands'));
     }
 
@@ -159,8 +160,8 @@ if ($request->hasFile('brand_image')) {
     }
 }
         $brand->save();
-
-        return redirect()->route('admin.brands.index')->with('success', 'Brand created successfully.');
+        toastr('Brand created successfully.', 'success');
+        return redirect()->back();
     }
 
     // Show edit form
@@ -243,9 +244,13 @@ if ($request->hasFile('brand_image')) {
     }
 
     // Delete brand
-    public function destroy(Brand $brand)
-    {
-        $brand->delete();
-        return redirect()->route('admin.brands.index')->with('success', 'Brand deleted successfully.');
-    }
+    public function destroy($id)
+{
+    $brand = Brand::findOrFail($id);
+    $brand->delete();
+
+    // AJAX response
+    return response()->json(['success' => true]);
+}
+
 }
