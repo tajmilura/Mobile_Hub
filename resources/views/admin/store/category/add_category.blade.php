@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Brand/Edit Brand/All Brand</h1>
+                    <h1>Create Category/Edit Category/All Category</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Create Brand</li>
+                        <li class="breadcrumb-item active">Create Category</li>
                     </ol>
                 </div>
             </div>
@@ -22,32 +22,33 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+                <!-- Form Column -->
                 <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title" id="formTitle">Add New Brand</h3>
+                            <h3 class="card-title" id="formTitle">Add New Category</h3>
                             <button type="button" class="btn btn-success btn-sm d-none" id="addNewBtn">
-                                <i class="fas fa-plus"></i> Add Brand
+                                <i class="fas fa-plus"></i> Add Category
                             </button>
                         </div>
 
                         <!-- form start -->
-                        <form action="{{ route('brand.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="brand_name">Brand Name</label>
-                                    <input type="text" name="name" class="form-control" id="brand_name"
-                                        placeholder="Enter brand name" value="{{ old('name') }}" required>
+                                    <label for="category_name">Category Name</label>
+                                    <input type="text" name="name" class="form-control" id="category_name"
+                                        placeholder="Enter category name" value="{{ old('name') }}" required>
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="brand_icon">Brand Icon</label>
-                                    <input type="file" name="brand_icon" class="form-control-file" id="brand_icon"
+                                    <label for="category_icon">Category Icon</label>
+                                    <input type="file" name="category_icon" class="form-control-file" id="category_icon"
                                         accept="image/*" onchange="previewImage(event, 'icon_preview')">
-                                    @error('brand_icon')
+                                    @error('category_icon')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="mt-2">
@@ -56,10 +57,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="brand_image">Brand Image</label>
-                                    <input type="file" name="brand_image" class="form-control-file" id="brand_image"
+                                    <label for="category_image">Category Image</label>
+                                    <input type="file" name="category_image" class="form-control-file" id="category_image"
                                         accept="image/*" onchange="previewImage(event, 'image_preview')">
-                                    @error('brand_image')
+                                    @error('category_image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="mt-2">
@@ -69,56 +70,58 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Create Brand</button>
+                                <button type="submit" class="btn btn-primary">Create Category</button>
                             </div>
                         </form>
                     </div>
                 </div>
 
+                <!-- Table Column -->
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header" style="background-color: #ea238d; color: white;">
-                            <h3 style="" class="card-title">All Brands</h3>
+                            <h3 class="card-title">All Categories</h3>
                         </div>
-                        <!-- /.card-header -->
+
                         <!-- Loader -->
                         <div id="loader" style="display:none; text-align:center; padding:20px;">
                             <i class="fas fa-spinner fa-spin fa-2x"></i>
                         </div>
-                        <div class="card-body" id="brand-table">
+
+                        <div class="card-body" id="category-table">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>Brand Name</th>
+                                        <th>Category Name</th>
                                         <th>Logo</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($brands as $index => $brand)
+                                    @forelse($categories as $index => $category)
                                         <tr>
-                                            <td>{{ $brands->firstItem() + $index }}.</td>
-                                            <td>{{ $brand->name }}</td>
+                                            <td>{{ $categories->firstItem() + $index }}.</td>
+                                            <td>{{ $category->category_name }}</td>
                                             <td>
-                                                @if ($brand->brand_icon)
-                                                    <img src="{{ asset($brand->brand_icon) }}" alt="{{ $brand->name }}"
+                                                @if ($category->category_icon)
+                                                    <img src="{{ asset($category->category_icon) }}" alt="{{ $category->category_name }}"
                                                         width="50" height="50" class="rounded shadow-sm">
                                                 @else
                                                     <span class="text-muted">No logo</span>
                                                 @endif
                                             </td>
                                             <td class="text-center align-middle">
-                                                <a href="#" data-id="{{ $brand->id }}"
-                                                    data-name="{{ $brand->name }}"
-                                                    data-icon="{{ asset($brand->brand_icon) }}"
-                                                    data-image="{{ asset($brand->brand_image) }}"
-                                                    class="text-primary pr-3 editBrandBtn">
+                                                <a href="#" data-id="{{ $category->id }}"
+                                                    data-name="{{ $category->category_name }}"
+                                                    data-icon="{{ asset($category->category_icon) }}"
+                                                    data-image="{{ asset($category->category_image) }}"
+                                                    class="text-primary pr-3 editCategoryBtn">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
 
                                                 <a href="#" class="text-danger delete-btn"
-                                                    data-url="{{ route('brand.destroy', $brand->id) }}">
+                                                    data-url="{{ route('category.destroy', $category->id) }}">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
 
@@ -127,29 +130,27 @@
                                     @empty
                                         <tr>
                                             <td colspan="4" class="text-center text-muted py-4">
-                                                <i class="fas fa-exclamation-circle"></i> No brands available
+                                                <i class="fas fa-exclamation-circle"></i> No categories available
                                             </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
+
                         <div class="card-footer clearfix">
                             <ul class="pagination pagination-sm m-0 float-right">
-                                {{ $brands->links('pagination::bootstrap-5') }}
+                                {{ $categories->links('pagination::bootstrap-5') }}
                             </ul>
                         </div>
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!-- /.col -->
 
             </div>
         </div>
     </section>
-    <!-- /.content -->
 
+    <!-- Scripts -->
     <script>
         function previewImage(event, previewId) {
             const input = event.target;
@@ -167,29 +168,13 @@
             }
         }
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Pagination link click event
-            $(document).on('click', '.pagination a', function(e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
 
-                fetch(url, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(response => response.text())
-                    .then(html => {
-                        // শুধু #brand-table content replace করবে
-                        $('#brand-table').html($(html).find('#brand-table').html());
-                    })
-                    .catch(error => console.log(error));
-            });
-        });
-    </script>
+    <!-- jQuery -->
+    <script src="{{ asset('assets/admin/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+    <!-- Pagination AJAX -->
     <script>
         $(document).on('click', '.pagination a', function(e) {
             e.preventDefault();
@@ -199,23 +184,19 @@
             fetch(url)
                 .then(res => res.text())
                 .then(html => {
-                    $('#brand-table').html($(html).find('#brand-table').html());
+                    $('#category-table').html($(html).find('#category-table').html());
                     $('#loader').hide();
                 });
         });
     </script>
 
-    <!-- jQuery must come first -->
-    <script src="{{ asset('assets/admin/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- Delete AJAX -->
     <script>
         $(document).on('click', '.delete-btn', function(e) {
             e.preventDefault();
 
-            var url = $(this).data('url'); // delete route
-            var row = $(this).closest('tr'); // delete row
+            var url = $(this).data('url');
+            var row = $(this).closest('tr');
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -231,13 +212,11 @@
                     $.ajax({
                         url: url,
                         type: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
+                        data: { _token: '{{ csrf_token() }}' },
                         success: function(response) {
                             if (response.success) {
-                                row.remove(); // টেবিল থেকে রো সরানো
-                                toastr.success('Brand deleted successfully.');
+                                row.remove();
+                                toastr.success('Category deleted successfully.');
                             }
                         },
                         error: function() {
@@ -249,75 +228,65 @@
         });
     </script>
 
-    <!--Edit -->
+    <!-- Edit Category -->
     <script>
-$(document).on('click', '.editBrandBtn', function (e) {
-    e.preventDefault();
+        $(document).on('click', '.editCategoryBtn', function(e) {
+            e.preventDefault();
 
-    let id = $(this).data('id');
-    let name = $(this).data('name');
-    let icon = $(this).data('icon');
-    let image = $(this).data('image');
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            let icon = $(this).data('icon');
+            let image = $(this).data('image');
 
-    // Reset form first
-    $('form')[0].reset();
-    $('#icon_preview, #image_preview').hide();
-    $('input[name="_method"]').remove();
+            // Reset form
+            $('form')[0].reset();
+            $('#icon_preview, #image_preview').hide();
+            $('input[name="_method"]').remove();
 
-    // Fill data into form
-    $('#brand_name').val(name);
-    $('#icon_preview').attr('src', icon).show();
-    $('#image_preview').attr('src', image).show();
+            // Fill form data
+            $('#category_name').val(name);
+            $('#icon_preview').attr('src', icon).show();
+            $('#image_preview').attr('src', image).show();
 
-    // Change form action to update route
-    $('form').attr('action', '/brand/update/' + id);
-    $('form').append('<input type="hidden" name="_method" value="PUT">');
+            // Update route & method
+            $('form').attr('action', '/category/update/' + id);
+            $('form').append('<input type="hidden" name="_method" value="PUT">');
 
-    // Change button text and style
-    $('button[type="submit"]').text('Update Brand')
-        .removeClass('btn-primary')
-        .addClass('btn-warning');
+            // Button & header changes
+            $('button[type="submit"]').text('Update Category')
+                .removeClass('btn-primary')
+                .addClass('btn-warning');
+            $('#formTitle').text('Edit Category');
+            $('#addNewBtn').removeClass('d-none');
 
-    // Change header text
-    $('#formTitle').text('Edit Brand');
+            toastr.info('Edit mode enabled for "' + name + '"');
+        });
 
-    // Show "Add Brand" button
-    $('#addNewBtn').removeClass('d-none');
+        // Add Category Button to reset form
+        $('#addNewBtn').on('click', function() {
+            $('form')[0].reset();
+            $('#icon_preview, #image_preview').attr('src', '#').hide();
+            $('input[name="_method"]').remove();
+            $('form').attr
+                        // Change form action back to store route
+            $('form').attr('action', '{{ route('category.store') }}');
 
-    toastr.info('Edit mode enabled for "' + name + '"');
-});
+            // Reset button text and style
+            $('button[type="submit"]').text('Create Category')
+                .removeClass('btn-warning')
+                .addClass('btn-primary');
 
+            // Reset header title
+            $('#formTitle').text('Add New Category');
 
-// ✅ Add Brand Button (Back to add mode)
-$('#addNewBtn').on('click', function () {
-    // Clear the form
-    $('form')[0].reset();
+            // Hide the "Add Category" button
+            $(this).addClass('d-none');
 
-    // Clear image previews
-    $('#icon_preview, #image_preview').attr('src', '#').hide();
+            // Clear category_name input
+            $('#category_name').val('');
 
-    // Remove method override (PUT)
-    $('input[name="_method"]').remove();
-
-    // Change form action back to store route
-    $('form').attr('action', '{{ route('brand.store') }}');
-
-    // Reset button text and style
-    $('button[type="submit"]').text('Create Brand')
-        .removeClass('btn-warning')
-        .addClass('btn-primary');
-
-    // Reset header title
-    $('#formTitle').text('Add New Brand');
-
-    // Hide the "Add Brand" button
-    $(this).addClass('d-none');
-
-    // 🔥 Most Important — clear brand_name input
-    $('#brand_name').val('');
-
-    toastr.success('Back to Add mode');
-});
-</script>
-
+            toastr.success('Back to Add mode');
+        });
+    </script>
 @endsection
+

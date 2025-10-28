@@ -3,9 +3,165 @@
 namespace App\Http\Controllers\Mobilehub;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use function Flasher\Toastr\Prime\toastr;
 
 class CategoryController extends Controller
 {
-    //
+    // Show all categories
+    public function index()
+    {
+        $categories = Category::orderBy('id', 'desc')->paginate(10); // 10 per page
+        return view('admin.store.category.add_category', compact('categories'));
+    }
+
+    // Show create form (optional, can use same form as index)
+    public function create()
+    {
+        return view('admin.store.category.add_category');
+    }
+
+    // Store new category
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:categories,category_name',
+            'category_icon' => 'nullable|image|mimes:png,jpg,jpeg,svg',
+            'category_image' => 'nullable|image|mimes:png,jpg,jpeg,svg',
+        ]);
+
+        $category = new Category();
+        $category->category_name = $request->name;
+
+        $manager = new ImageManager(new Driver());
+
+        // Handle Category Icon
+        if ($request->hasFile('category_icon')) {
+            $categoryName = Str::slug($request->name);
+            $uniqueId = uniqid();
+            $iconName = "{$categoryName}_icon_{$uniqueId}." . $request->file('category_icon')->getClientOriginalExtension();
+
+            $icon = $manager->read($request->file('category_icon'));
+            $icon->resize(200, 200, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $iconPath = 'uploads/categories/icons/';
+            if (!File::exists(public_path($iconPath))) {
+                File::makeDirectory(public_path($iconPath), 0755, true);
+            }
+
+            $icon->save(public_path($iconPath . $iconName));
+            $category->category_icon = $iconPath . $iconName;
+        }
+
+        // Handle Category Main Image
+        if ($request->hasFile('category_image')) {
+            $categoryName = Str::slug($request->name);
+            $uniqueId = uniqid();
+            $imageName = "{$categoryName}_image_{$uniqueId}." . $request->file('category_image')->getClientOriginalExtension();
+
+            $image = $manager->read($request->file('category_image'));
+            $image->resize(800, 800, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $imagePath = 'uploads/categories/images/';
+            if (!File::exists(public_path($imagePath))) {
+                File::makeDirectory(public_path($imagePath), 0755, true);
+            }
+
+            $image->save(public_path($imagePath . $imageName));
+            $category->category_image = $imagePath . $imageName;
+        }
+
+        $category->save();
+        toastr('Category created successfully.', 'success');
+        return redirect()->back();
+    }
+
+    // Update category
+    public function update(Request $request, Category $category)
+    {
+        $request->validate([
+            'name' => 'required|unique:categories,category_name,' . $category->id,
+            'category_icon' => 'nullable|image|mimes:png,jpg,jpeg,svg',
+            'category_image' => 'nullable|image|mimes:png,jpg,jpeg,svg',
+        ]);
+
+        $category->category_name = $request->name;
+
+        $manager = new ImageManager(new Driver());
+
+        // Update category_icon
+        if ($request->hasFile('category_icon')) {
+            if ($category->category_icon && File::exists(public_path($category->category_icon))) {
+                File::delete(public_path($category->category_icon));
+            }
+
+            $categoryName = Str::slug($request->name);
+            $uniqueId = uniqid();
+            $iconName = "{$categoryName}_icon_{$uniqueId}." . $request->file('category_icon')->getClientOriginalExtension();
+
+            $icon = $manager->read($request->file('category_icon'));
+            $icon->resize(200, 200, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $iconPath = 'uploads/categories/icons/';
+            if (!File::exists(public_path($iconPath))) {
+                File::makeDirectory(public_path($iconPath), 0755, true);
+            }
+
+            $icon->save(public_path($iconPath . $iconName));
+            $category->category_icon = $iconPath . $iconName;
+        }
+
+        // Update category_image
+        if ($request->hasFile('category_image')) {
+            if ($category->category_image && File::exists(public_path($category->category_image))) {
+                File::delete(public_path($category->category_image));
+            }
+
+            $categoryName = Str::slug($request->name);
+            $uniqueId = uniqid();
+            $imageName = "{$categoryName}_image_{$uniqueId}." . $request->file('category_image')->getClientOriginalExtension();
+
+            $image = $manager->read($request->file('category_image'));
+            $image->resize(800, 800, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $imagePath = 'uploads/categories/images/';
+            if (!File::exists(public_path($imagePath))) {
+                File::makeDirectory(public_path($imagePath), 0755, true);
+            }
+
+            $image->save(public_path($imagePath . $imageName));
+            $category->category_image = $imagePath . $imageName;
+        }
+
+        $category->save();
+        toastr()->success('Category updated successfully.');
+        return redirect()->back();
+    }
+
+    // Delete category
+    public function destroy($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        // AJAX response
+        return response()->json(['success' => true]);
+    }
 }
