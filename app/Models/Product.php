@@ -78,4 +78,13 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    // Product Images
+    public function images(){
+        return $this->hasMany(ProductImage::class);
+    }
+
+    // Product Videos
+    public function videos(){
+        return $this->hasMany(ProductVideo::class);
+    }
 }
