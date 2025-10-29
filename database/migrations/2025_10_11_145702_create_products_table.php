@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('build')->nullable();
             $table->string('weight')->nullable();
             $table->string('dimensions')->nullable();
-            $table->string('colors')->nullable();
+            $table->json('colors')->nullable();
             $table->string('fingerprint')->nullable();
             $table->string('water_resistance')->nullable();
             $table->string('bluetooth')->nullable();

@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with(['category', 'brand'])->get();
-        return view('products.index', compact('products'));
+        return view('admin.store.product.add_product', compact('products'));
     }
         // creating product
     public function create()

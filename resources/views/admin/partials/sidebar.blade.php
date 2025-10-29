@@ -49,9 +49,34 @@
                       </a>
                   </li>
                   <li class="nav-header">Products Management</li>
+                   <li class="nav-item">
+                      <a href="#" class="nav-link">
+                         <i class="nav-icon fas fa-solid fa-box-open"></i>
+                          <p>
+                              Product
+                              <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('product.index') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Add Product</p>
+                              </a>
+                          </li>
+                      </ul>
+                       <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('category.index') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>All Products</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
                   <li class="nav-item">
                       <a href="#" class="nav-link">
-                          <i class="nav-icon far fa-envelope"></i>
+                         <i class=" nav-icon fa-brands fa-font-awesome"></i>
                           <p>
                               Brand
                               <i class="fas fa-angle-left right"></i>
@@ -68,7 +93,7 @@
                   </li>
                   <li class="nav-item">
                       <a href="#" class="nav-link">
-                          <i class="nav-icon far fa-envelope"></i>
+                          <i class="nav-icon fas fa-table"></i>
                           <p>
                               Category
                               <i class="fas fa-angle-left right"></i>

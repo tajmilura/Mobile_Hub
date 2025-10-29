@@ -43,4 +43,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::put('/update/{category}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('destroy');
     });
+     // ----------------------
+    // Product ROUTES
+    // ----------------------
+    Route::prefix('product')->name('product.')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::post('/store', [ProductController::class, 'store'])->name('store');
+        // Route::get('/edit/{category}', [ProductController::class, 'edit'])->name('edit'); // Optional if using same form
+        Route::put('/update/{category}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/delete/{category}', [ProductController::class, 'destroy'])->name('destroy');
+    });
+
+
 });

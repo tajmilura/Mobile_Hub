@@ -11,6 +11,9 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
@@ -19,6 +22,8 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
+    <!-- dropzonejs -->
+  <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/dropzone/min/dropzone.min.css">
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/jqvmap/jqvmap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/dist/css/adminlte.min.css">
@@ -50,7 +55,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
 
-              @yield('content')
+            @yield('content')
 
         </div>
 
@@ -65,10 +70,10 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
- <!-- Flasher SweetAlert -->
+    <!-- Flasher SweetAlert -->
 
     <!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- jQuery -->
     <script src="{{ asset('assets/admin') }}/plugins/jquery/jquery.min.js"></script>
@@ -80,6 +85,8 @@
     </script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/admin') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="{{ asset('assets/admin') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <!-- ChartJS -->
     <script src="{{ asset('assets/admin') }}/plugins/chart.js/Chart.min.js"></script>
     <!-- Sparkline -->
@@ -95,6 +102,8 @@
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('assets/admin') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
     </script>
+    <!-- dropzonejs -->
+    <script src="{{ asset('assets/admin') }}/plugins/dropzone/min/dropzone.min.js"></script>
     <!-- Summernote -->
     <script src="{{ asset('assets/admin') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- overlayScrollbars -->
@@ -105,6 +114,8 @@
     <script src="{{ asset('assets/admin') }}/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('assets/admin') }}/dist/js/pages/dashboard.js"></script>
+    <!-- Blade page specific JS -->
+    @stack('scripts')
 </body>
 
 </html>
