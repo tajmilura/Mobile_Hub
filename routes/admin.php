@@ -52,7 +52,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store', [ProductController::class, 'store'])->name('store');
         // Route::get('/edit/{category}', [ProductController::class, 'edit'])->name('edit'); // Optional if using same form
         Route::put('/update/{category}', [ProductController::class, 'update'])->name('update');
-        Route::delete('/delete/{category}', [ProductController::class, 'destroy'])->name('destroy');
+        Route::delete('/delete/{product}', [ProductController::class, 'destroy'])->name('destroy');
     });
 
 

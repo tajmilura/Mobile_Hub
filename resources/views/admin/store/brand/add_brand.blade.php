@@ -236,7 +236,7 @@
                         },
                         success: function(response) {
                             if (response.success) {
-                                row.remove(); // টেবিল থেকে রো সরানো
+                                row.remove();
                                 toastr.success('Brand deleted successfully.');
                             }
                         },

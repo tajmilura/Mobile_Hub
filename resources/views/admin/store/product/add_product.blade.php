@@ -29,6 +29,15 @@
                                 <small class="text-muted">Fill in product details and media</small>
                             </div>
                             <div class="card-body">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <form method="POST" id="productForm" action="{{ route('product.store') }}"
                                     enctype="multipart/form-data" class="formDropzone">
                                     @csrf
@@ -53,9 +62,13 @@
                                                     <label>Category</label>
                                                     <select class="form-control" name="category_id">
                                                         <option value="">Select Category</option>
-                                                        <option value="1">Mobile</option>
-                                                        <option value="2">Laptop</option>
-                                                        <option value="3">Tablet</option>
+                                                        @forelse($categories ?? [] as $category)
+                                                            <option value="{{ $category->id }}"
+                                                                {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                                {{ $category->category_name }}</option>
+                                                        @empty
+                                                            <option value="">No categories available</option>
+                                                        @endforelse
                                                     </select>
                                                 </div>
                                             </div>
@@ -65,9 +78,13 @@
                                                     <label>Brand</label>
                                                     <select class="form-control" name="brand_id">
                                                         <option value="">Select Brand</option>
-                                                        <option value="1">Apple</option>
-                                                        <option value="2">Samsung</option>
-                                                        <option value="3">Xiaomi</option>
+                                                        @forelse($brands ?? [] as $brand)
+                                                            <option value="{{ $brand->id }}"
+                                                                {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                                                {{ $brand->name }}</option>
+                                                        @empty
+                                                            <option value="">No brands available</option>
+                                                        @endforelse
                                                     </select>
                                                 </div>
                                             </div>
@@ -379,9 +396,11 @@
                                             <div class="col-sm-4">
                                                 <label class="font-weight-bold text-dark d-block mb-2">Featured: </label>
                                                 <div class="custom-control custom-switch">
+                                                    <input type="hidden" name="is_featured" value="0">
                                                     <input type="checkbox" class="custom-control-input"
-                                                        name="is_featured" id="is_featured" data-bootstrap-switch
-                                                        data-on-color="success" data-off-color="danger">
+                                                        name="is_featured" id="is_featured" value="1"
+                                                        data-bootstrap-switch data-on-color="success"
+                                                        data-off-color="danger">
                                                 </div>
                                             </div>
 
@@ -389,18 +408,22 @@
                                                 <label class="font-weight-bold text-dark d-block mb-2">New Arrival:
                                                 </label>
                                                 <div class="custom-control custom-switch">
+                                                    <input type="hidden" name="is_new_arrival" value="0">
                                                     <input type="checkbox" class="custom-control-input"
-                                                        name="is_new_arrival" id="is_new_arrival" data-bootstrap-switch
-                                                        data-on-color="success" data-off-color="danger">
+                                                        name="is_new_arrival" id="is_new_arrival" value="1"
+                                                        data-bootstrap-switch data-on-color="success"
+                                                        data-off-color="danger">
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <label class="font-weight-bold text-dark d-block mb-2">Hot Deal: </label>
                                                 <div class="custom-control custom-switch">
+                                                    <input type="hidden" name="is_hot_deal" value="0">
                                                     <input type="checkbox" class="custom-control-input"
-                                                        name="is_hot_deal" id="is_hot_deal" data-bootstrap-switch
-                                                        data-on-color="success" data-off-color="danger">
+                                                        name="is_hot_deal" id="is_hot_deal" value="1"
+                                                        data-bootstrap-switch data-on-color="success"
+                                                        data-off-color="danger">
                                                     <label class="form-check-label ml-2 mb-0" for="is_hot_deal">Hot
                                                         Deal</label>
                                                 </div>
@@ -443,7 +466,7 @@
 
                                         <div class="d-flex justify-content-end my-3">
                                             <button type="button" class="btn btn-secondary mr-2 prev">Previous</button>
-                                            <button type="button" class="btn btn-primary next">Next</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
 
                                     </div>
@@ -565,15 +588,26 @@
                 const $step = steps.eq(index);
 
                 // clear previous errors in this step
-                $step.find('input,textarea,select').each(function() { clearError($(this)); });
+                $step.find('input,textarea,select').each(function() {
+                    clearError($(this));
+                });
 
                 if (index === 0) { // Basic Info
                     const $cat = $step.find('[name="category_id"]');
                     const $brand = $step.find('[name="brand_id"]');
                     const $name = $step.find('[name="name"]');
-                    if (!$cat.val() || $cat.val().trim().length < 1) { showError($cat, 'Category is required'); valid = false; }
-                    if (!$brand.val() || $brand.val().trim().length < 1) { showError($brand, 'Brand is required'); valid = false; }
-                    if (!$name.val() || $name.val().trim().length < 2) { showError($name, 'Enter a valid product name (min 2 chars)'); valid = false; }
+                    if (!$cat.val() || $cat.val().trim().length < 1) {
+                        showError($cat, 'Category is required');
+                        valid = false;
+                    }
+                    if (!$brand.val() || $brand.val().trim().length < 1) {
+                        showError($brand, 'Brand is required');
+                        valid = false;
+                    }
+                    if (!$name.val() || $name.val().trim().length < 2) {
+                        showError($name, 'Enter a valid product name (min 2 chars)');
+                        valid = false;
+                    }
                 }
 
                 return valid;
@@ -588,7 +622,9 @@
                     // scroll to first error
                     const $firstErr = $(".is-invalid").first();
                     if ($firstErr.length) {
-                        $('html, body').animate({ scrollTop: $firstErr.offset().top - 100 }, 250);
+                        $('html, body').animate({
+                            scrollTop: $firstErr.offset().top - 100
+                        }, 250);
                     }
                     return false;
                 }
@@ -649,16 +685,27 @@
             function validateStepAt(index) {
                 var valid = true;
                 var $step = $(".step").eq(index);
-                $step.find('input,textarea,select').each(function() { clearError($(this)); });
+                $step.find('input,textarea,select').each(function() {
+                    clearError($(this));
+                });
 
                 // Basic Info (index 0)
                 if (index === 0) {
                     var $cat = $step.find('[name="category_id"]');
                     var $brand = $step.find('[name="brand_id"]');
                     var $name = $step.find('[name="name"]');
-                    if (!$cat.val() || $cat.val().trim().length < 1) { showError($cat, 'Category is required'); valid = false; }
-                    if (!$brand.val() || $brand.val().trim().length < 1) { showError($brand, 'Brand is required'); valid = false; }
-                    if (!$name.val() || $name.val().trim().length < 2) { showError($name, 'Enter a valid product name (min 2 chars)'); valid = false; }
+                    if (!$cat.val() || $cat.val().trim().length < 1) {
+                        showError($cat, 'Category is required');
+                        valid = false;
+                    }
+                    if (!$brand.val() || $brand.val().trim().length < 1) {
+                        showError($brand, 'Brand is required');
+                        valid = false;
+                    }
+                    if (!$name.val() || $name.val().trim().length < 2) {
+                        showError($name, 'Enter a valid product name (min 2 chars)');
+                        valid = false;
+                    }
                 }
 
                 // Connectivity & Build (index 3) - colors validation
@@ -671,27 +718,34 @@
                             try {
                                 var parsed = JSON.parse(c);
                                 if (!Array.isArray(parsed)) ok = false;
-                            } catch (e) { ok = false; }
+                            } catch (e) {
+                                ok = false;
+                            }
                         } else {
-                            var parts = c.split(',').map(function(p){return p.trim();}).filter(Boolean);
+                            var parts = c.split(',').map(function(p) {
+                                return p.trim();
+                            }).filter(Boolean);
                             if (parts.length === 0) ok = false;
                         }
-                        if (!ok) { showError($colors, 'Enter colors as JSON array or comma-separated list'); valid = false; }
+                        if (!ok) {
+                            showError($colors, 'Enter colors as JSON array or comma-separated list');
+                            valid = false;
+                        }
                     }
                 }
 
                 // Media & Pricing (index 5) - optional checks for URL format
-                if (index === 5) {
-                    var $videoLink = $step.find('[name="video_link"]');
-                    var v = $videoLink.val();
-                    if (v && v.trim().length) {
-                        try {
-                            new URL(v);
-                        } catch (e) {
-                            showError($videoLink, 'Enter a valid URL'); valid = false;
-                        }
-                    }
-                }
+                // if (index === 5) {
+                //     var $videoLink = $step.find('[name="video_link"]');
+                //     var v = $videoLink.val();
+                //     if (v && v.trim().length) {
+                //         try {
+                //             new URL(v);
+                //         } catch (e) {
+                //             showError($videoLink, 'Enter a valid URL'); valid = false;
+                //         }
+                //     }
+                // }
 
                 // Extra Info / Price & Stock (index 6)
                 if (index === 6) {
@@ -702,20 +756,34 @@
                     var $de = $step.find('[name="discount_end"]');
 
                     var priceVal = parseFloat($price.val());
-                    if (!$.isNumeric($price.val()) || priceVal < 0) { showError($price, 'Enter a valid price'); valid = false; }
+                    if (!$.isNumeric($price.val()) || priceVal < 0) {
+                        showError($price, 'Enter a valid price');
+                        valid = false;
+                    }
 
                     if ($discount.val()) {
                         var discVal = parseFloat($discount.val());
-                        if (!$.isNumeric($discount.val()) || discVal < 0) { showError($discount, 'Enter a valid discount price'); valid = false; }
-                        else if ($.isNumeric($price.val()) && discVal > priceVal) { showError($discount, 'Discount must be <= price'); valid = false; }
+                        if (!$.isNumeric($discount.val()) || discVal < 0) {
+                            showError($discount, 'Enter a valid discount price');
+                            valid = false;
+                        } else if ($.isNumeric($price.val()) && discVal > priceVal) {
+                            showError($discount, 'Discount must be <= price');
+                            valid = false;
+                        }
                     }
 
-                    if ($stock.val() && (!Number.isInteger(Number($stock.val())) || Number($stock.val()) < 0)) { showError($stock, 'Enter a valid stock number'); valid = false; }
+                    if ($stock.val() && (!Number.isInteger(Number($stock.val())) || Number($stock.val()) < 0)) {
+                        showError($stock, 'Enter a valid stock number');
+                        valid = false;
+                    }
 
                     if ($ds.val() && $de.val()) {
                         var dsVal = Date.parse($ds.val());
                         var deVal = Date.parse($de.val());
-                        if (isNaN(dsVal) || isNaN(deVal) || dsVal >= deVal) { showError($de, 'Discount end must be after start'); valid = false; }
+                        if (isNaN(dsVal) || isNaN(deVal) || dsVal >= deVal) {
+                            showError($de, 'Discount end must be after start');
+                            valid = false;
+                        }
                     }
 
                     // tags validation (index 6)
@@ -727,12 +795,19 @@
                             try {
                                 var p2 = JSON.parse(t);
                                 if (!Array.isArray(p2)) ok2 = false;
-                            } catch (e) { ok2 = false; }
+                            } catch (e) {
+                                ok2 = false;
+                            }
                         } else {
-                            var parts2 = t.split(',').map(function(p){return p.trim();}).filter(Boolean);
+                            var parts2 = t.split(',').map(function(p) {
+                                return p.trim();
+                            }).filter(Boolean);
                             if (parts2.length === 0) ok2 = false;
                         }
-                        if (!ok2) { showError($tags, 'Enter tags as JSON array or comma-separated list'); valid = false; }
+                        if (!ok2) {
+                            showError($tags, 'Enter tags as JSON array or comma-separated list');
+                            valid = false;
+                        }
                     }
                 }
 
@@ -744,7 +819,9 @@
                     // validate current step before moving
                     if (!validateStepAt(currentStep)) {
                         var $first = $('.is-invalid').first();
-                        if ($first.length) $('html, body').animate({ scrollTop: $first.offset().top - 100 }, 250);
+                        if ($first.length) $('html, body').animate({
+                            scrollTop: $first.offset().top - 100
+                        }, 250);
                         return;
                     }
                     $(".step").eq(currentStep).removeClass("active");
@@ -769,12 +846,16 @@
                 form.addEventListener('submit', function(e) {
                     var overallValid = true;
                     for (var i = 0; i < totalSteps; i++) {
-                        if (!validateStepAt(i)) { overallValid = false; }
+                        if (!validateStepAt(i)) {
+                            overallValid = false;
+                        }
                     }
                     if (!overallValid) {
                         e.preventDefault();
                         var $first = $('.is-invalid').first();
-                        if ($first.length) $('html, body').animate({ scrollTop: $first.offset().top - 100 }, 250);
+                        if ($first.length) $('html, body').animate({
+                            scrollTop: $first.offset().top - 100
+                        }, 250);
                     }
                 });
             }
@@ -783,144 +864,135 @@
         });
     </script>
     <!-- Dropzone JS -->
-    <script>
-        Dropzone.autoDiscover = false;
+<script>
+Dropzone.autoDiscover = false;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Dropzones but don't auto-upload; we'll append files to the form on submit
-            const mainDz = new Dropzone("#mainImageDropzone", {
-                url: "#",
-                autoProcessQueue: false,
-                maxFiles: 1,
-                addRemoveLinks: true,
-                acceptedFiles: "image/*",
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        // If a new file is added when one already exists, remove the previous one
-                        if (this.files && this.files.length > 1) {
-                            // remove the first (old) file so only the newest remains
-                            this.removeFile(this.files[0]);
-                        }
-                    });
+document.addEventListener('DOMContentLoaded', function() {
+    // 🔹 Initialize Dropzones
+    const mainDz = new Dropzone("#mainImageDropzone", {
+        url: "#",
+        autoProcessQueue: false,
+        maxFiles: 1,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*",
+        init: function() {
+            this.on('addedfile', function(file) {
+                if (this.files.length > 1) this.removeFile(this.files[0]);
+            });
+            this.on('maxfilesexceeded', function(file) {
+                this.removeAllFiles();
+                this.addFile(file);
+            });
+        }
+    });
 
-                    this.on('maxfilesexceeded', function(file) {
-                        // fallback: ensure only the most recent file is kept
-                        this.removeAllFiles();
-                        this.addFile(file);
-                    });
+    const galleryDz = new Dropzone("#galleryDropzone", {
+        url: "#",
+        autoProcessQueue: false,
+        maxFiles: 20,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*",
+        init: function() {
+            this.on('addedfile', function(file) {
+                // Gallery preview
+                const url = URL.createObjectURL(file);
+                const img = document.createElement('img');
+                img.src = url;
+                img.dataset._previewUrl = url;
+                img.dataset._fileName = file.name;
+                img.alt = file.name;
+                document.getElementById('galleryPreview').appendChild(img);
+                file._galleryPreviewEl = img;
+            });
+
+            this.on('removedfile', function(file) {
+                if (file._galleryPreviewEl) {
+                    if (file._galleryPreviewEl.parentNode) file._galleryPreviewEl.parentNode.removeChild(file._galleryPreviewEl);
+                    if (file._galleryPreviewEl.dataset._previewUrl) URL.revokeObjectURL(file._galleryPreviewEl.dataset._previewUrl);
+                }
+            });
+        }
+    });
+
+    const videoDz = new Dropzone("#videoDropzone", {
+        url: "#",
+        autoProcessQueue: false,
+        maxFiles: 1,
+        addRemoveLinks: true,
+        acceptedFiles: "video/*",
+        init: function() {
+            this.on('addedfile', function(file) {
+                if (this.files.length > 1) this.removeFile(this.files[0]);
+
+                const previewEl = file.previewElement;
+                if (previewEl) {
+                    const video = document.createElement('video');
+                    video.controls = true;
+                    video.width = 200;
+                    video.style.display = 'block';
+                    video.style.marginTop = '8px';
+                    const url = URL.createObjectURL(file);
+                    video.src = url;
+                    file._videoPreviewUrl = url;
+                    previewEl.appendChild(video);
                 }
             });
 
-            const galleryDz = new Dropzone("#galleryDropzone", {
-                url: "#",
-                autoProcessQueue: false,
-                maxFiles: 20,
-                addRemoveLinks: true,
-                acceptedFiles: "image/*",
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        try {
-                            const url = URL.createObjectURL(file);
-                            const img = document.createElement('img');
-                            img.src = url;
-                            img.dataset._previewUrl = url;
-                            img.dataset._fileName = file.name;
-                            img.alt = file.name;
-                            document.getElementById('galleryPreview').appendChild(img);
-                            // store reference for cleanup
-                            file._galleryPreviewEl = img;
-                        } catch (err) {
-                            console.warn('Gallery preview error:', err);
-                        }
-                    });
-
-                    this.on('removedfile', function(file) {
-                        if (file && file._galleryPreviewEl) {
-                            try {
-                                if (file._galleryPreviewEl.parentNode) file._galleryPreviewEl
-                                    .parentNode.removeChild(file._galleryPreviewEl);
-                                if (file._galleryPreviewEl.dataset && file._galleryPreviewEl
-                                    .dataset._previewUrl) URL.revokeObjectURL(file
-                                    ._galleryPreviewEl.dataset._previewUrl);
-                            } catch (e) {
-                                /* ignore */
-                            }
-                        }
-                    });
-                }
+            this.on('removedfile', function(file) {
+                if (file._videoPreviewUrl) URL.revokeObjectURL(file._videoPreviewUrl);
             });
+        }
+    });
 
-            const videoDz = new Dropzone("#videoDropzone", {
-                url: "#",
-                autoProcessQueue: false,
-                maxFiles: 1,
-                addRemoveLinks: true,
-                acceptedFiles: "video/*",
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        if (this.files && this.files.length > 1) {
-                            this.removeFile(this.files[0]);
-                        }
+    // 🔹 Append files to form on submit
+    const form = document.getElementById('productForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Remove previous hidden inputs if any
+            form.querySelectorAll('input[name="image"], input[name="gallery[]"], input[name="video"]').forEach(el => el.remove());
 
-                        // Create a video preview using an object URL
-                        try {
-                            const previewEl = file.previewElement;
-                            if (previewEl) {
-                                const video = document.createElement('video');
-                                video.controls = true;
-                                video.width = 200;
-                                video.style.display = 'block';
-                                video.style.marginTop = '8px';
-                                const url = URL.createObjectURL(file);
-                                video.src = url;
-                                // store url so we can revoke it later
-                                file._videoPreviewUrl = url;
-                                previewEl.appendChild(video);
-                            }
-                        } catch (err) {
-                            console.warn('Could not create video preview:', err);
-                        }
-                    });
+            // Main Image
+            if (mainDz.files.length > 0) {
+                const dt = new DataTransfer();
+                dt.items.add(mainDz.files[0]);
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.name = 'image';
+                input.files = dt.files;
+                input.style.display = 'none';
+                form.appendChild(input);
+            }
 
-                    this.on('removedfile', function(file) {
-                        if (file && file._videoPreviewUrl) {
-                            try {
-                                URL.revokeObjectURL(file._videoPreviewUrl);
-                            } catch (e) {
-                                /* ignore */
-                            }
-                        }
-                    });
-                }
-            });
+            // Gallery Images
+            if (galleryDz.files.length > 0) {
+                const dt = new DataTransfer();
+                galleryDz.files.forEach(file => dt.items.add(file));
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.name = 'gallery[]';
+                input.files = dt.files;
+                input.style.display = 'none';
+                form.appendChild(input);
+            }
 
-            // On form submit, append files from Dropzones as hidden file inputs so the server receives them
-            const form = document.getElementById('productForm');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    // For each dropzone, add files as inputs
-                    [
-                        [mainDz, 'image'],
-                        [galleryDz, 'gallery[]'],
-                        [videoDz, 'video']
-                    ].forEach(([dz, fieldName]) => {
-                        dz.files.forEach((file) => {
-                            const dt = new DataTransfer();
-                            dt.items.add(file);
-                            const input = document.createElement('input');
-                            input.type = 'file';
-                            input.name = fieldName;
-                            input.files = dt.files;
-                            input.style.display = 'none';
-                            form.appendChild(input);
-                        });
-                    });
-                });
-            } else {
-                console.warn('Product form not found; Dropzone will not append files on submit.');
+            // Video
+            if (videoDz.files.length > 0) {
+                const dt = new DataTransfer();
+                dt.items.add(videoDz.files[0]);
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.name = 'video';
+                input.files = dt.files;
+                input.style.display = 'none';
+                form.appendChild(input);
             }
         });
-    </script>
+    } else {
+        console.warn('Product form not found; Dropzone will not append files on submit.');
+    }
+});
+</script>
+
     <script>
         $(function() {
             // Summernote

@@ -132,10 +132,10 @@ class BrandController extends Controller
         // -------------------
         if ($request->hasFile('brand_image')) {
 
-            // Delete old image if exists
-            if ($brand->brand_image && File::exists(public_path($brand->brand_image))) {
-                File::delete(public_path($brand->brand_image));
-            }
+            // // Delete old image if exists
+            // if ($brand->brand_image && File::exists(public_path($brand->brand_image))) {
+            //     File::delete(public_path($brand->brand_image));
+            // }
 
             $brandName = Str::slug($request->name);
             $uniqueId = uniqid();
@@ -181,7 +181,7 @@ class BrandController extends Controller
 
         $brand->name = $request->name;
 
-         $manager = new ImageManager(new Driver());
+        $manager = new ImageManager(new Driver());
 
         // -------------------
         // Update brand_icon
