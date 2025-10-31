@@ -25,7 +25,7 @@
                             <td>{{ $index + 1 }}</td>
                             <td>
                                 @if ($product->image)
-                                    <img src="{{ asset($product->image) }}" alt="Product Image" width="60" height="60"
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="60" height="60"
                                         style="object-fit: cover; border-radius: 8px;">
                                 @else
                                     <span class="text-muted">No Image</span>
@@ -36,7 +36,7 @@
                             <td>{{ $product->category->category_name ?? 'N/A' }}</td>
                             <td>{{ $product->release_date ?? 'N/A' }}</td>
                             <td class="text-center align-middle">
-                                <a href="#" data-id="{{ $product->id }}" data-name="" class="text-primary pr-3 editBrandBtn">
+                                <a href="{{ route('product.edit', $product->id) }}" data-id="{{ $product->id }}" data-name="" class="text-primary pr-3 editBrandBtn">
                                     <i class="fas fa-edit"></i>
                                 </a>
 

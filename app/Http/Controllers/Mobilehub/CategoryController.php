@@ -155,10 +155,21 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
-    // Delete category
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
+
+        // Delete category category_icon from folder if it exists
+        if ($category->category_icon && File::exists(public_path($category->category_icon))) {
+            File::delete(public_path($category->category_icon));
+        }
+
+        // Delete category image from folder if it exists
+        if ($category->category_image && File::exists(public_path($category->category_image))) {
+            File::delete(public_path($category->category_image));
+        }
+
+        // Delete category record from database
         $category->delete();
 
         // AJAX response

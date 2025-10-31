@@ -4,16 +4,17 @@
 namespace App\Http\Controllers\Mobilehub;
 
 
-use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use Illuminate\Http\Request;
-use Intervention\Image\Laravel\Facades\Image;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
 use function Flasher\Toastr\Prime\toastr;
+
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Laravel\Facades\Image;
 
 class BrandController extends Controller
 {
@@ -244,13 +245,25 @@ class BrandController extends Controller
         return redirect()->back();
     }
 
-    // Delete brand
+
+
     public function destroy($id)
     {
         $brand = Brand::findOrFail($id);
+
+        // Delete brand icon if exists
+        if ($brand->brand_icon && File::exists(public_path($brand->brand_icon))) {
+            File::delete(public_path($brand->brand_icon));
+        }
+
+        // Delete brand image if exists
+        if ($brand->brand_image && File::exists(public_path($brand->brand_image))) {
+            File::delete(public_path($brand->brand_image));
+        }
+
+        // Delete brand record from database
         $brand->delete();
 
-        // AJAX response
         return response()->json(['success' => true]);
     }
 }

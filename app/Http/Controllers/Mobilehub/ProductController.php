@@ -37,6 +37,8 @@ class ProductController extends Controller
         return view('admin.store.product.add_product', compact('categories', 'brands'));
     }
 
+
+
     // store product
 
     public function store(Request $request)
@@ -50,7 +52,7 @@ class ProductController extends Controller
             'discount_start' => 'nullable|date',
             'discount_end' => 'nullable|date|after_or_equal:discount_start',
             'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|max:2048', // 2 MB
+            'image' => 'nullable|image|max:5120', // 2 MB
             'gallery.*'  => 'nullable|image|max:5120', // 5 MB per image
             'video'      => 'nullable|mimetypes:video/mp4,video/avi,video/mpeg|max:1048576', // 1 GB
             'video_link' => 'nullable|string'
@@ -118,13 +120,13 @@ class ProductController extends Controller
                 $constraint->upsize();
             });
 
-            $imagePath = 'uploads/products/main_image/';
-            if (!File::exists(public_path($imagePath))) {
-                File::makeDirectory(public_path($imagePath), 0755, true);
+          $imagePath = storage_path('app/public/uploads/products/main_image/');
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0755, true);
             }
 
-            $image->save(public_path($imagePath . $imageName));
-            $product->image = $imagePath . $imageName;
+            $image->save($imagePath . $imageName);
+            $product->image = 'uploads/products/main_image/' . $imageName;
         }
 
         $product->save(); // Save first to get ID
@@ -141,16 +143,16 @@ class ProductController extends Controller
                     $constraint->upsize();
                 });
 
-                $galleryPath = 'uploads/products/gallery/';
-                if (!File::exists(public_path($galleryPath))) {
-                    File::makeDirectory(public_path($galleryPath), 0755, true);
+                $galleryPath = storage_path('app/public/uploads/products/gallery/');
+                if (!File::exists(($galleryPath))) {
+                    File::makeDirectory($galleryPath, 0755, true);
                 }
 
-                $image->save(public_path($galleryPath . $imageName));
+                $image->save($galleryPath . $imageName);
 
                 ProductImage::create([
                     'product_id' => $product->id,
-                    'image_path' => $galleryPath . $imageName,
+                    'image_path' => '/uploads/products/gallery/' . $imageName,
                 ]);
             }
         }
@@ -162,13 +164,13 @@ class ProductController extends Controller
             $uniqueId = uniqid();
             $videoName = Str::slug($request->name) . "_video_{$uniqueId}." . $video->getClientOriginalExtension();
 
-            $videoPath = 'uploads/products/videos/';
-            if (!File::exists(public_path($videoPath))) {
-                File::makeDirectory(public_path($videoPath), 0755, true);
+            $videoPath = storage_path('app/public/uploads/products/videos/');
+            if (!File::exists($videoPath)) {
+                File::makeDirectory($videoPath, 0755, true);
             }
 
-            $video->move(public_path($videoPath), $videoName);
-            $videoLink = $videoPath . $videoName;
+            $video->move($videoPath, $videoName);
+            $videoLink = '/uploads/products/videos/' . $videoName;
         }
 
         // ✅ YouTube embed conversion
@@ -192,6 +194,22 @@ class ProductController extends Controller
 
         toastr()->success('✅ Product created successfully!');
         return redirect()->route('product.index');
+    }
+
+      //edit function
+    // ProductController.php
+
+    public function edit($id)
+    {
+        // Product fetch
+        $product = Product::findOrFail($id);
+
+        // Categories and Brands fetch for dropdown
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        // Pass everything to view
+        return view('admin.store.product.edit_product', compact('product', 'categories', 'brands'));
     }
 
     // to  update products
@@ -244,44 +262,42 @@ class ProductController extends Controller
     }
 
     // to delete a product
-public function destroy(Product $product)
-{
-    try {
-        // 🔹 Delete main image
-        if ($product->image && File::exists(public_path($product->main_image))) {
-            File::delete(public_path($product->main_image));
-        }
-
-        // 🔹 Delete gallery images
-        foreach ($product->images as $galleryImage) {
-            if ($galleryImage->image_path && File::exists(public_path($galleryImage->image_path))) {
-                File::delete(public_path($galleryImage->image_path));
+    public function destroy(Product $product)
+    {
+        try {
+            // 🔹 Delete main image
+            if ($product->image && File::exists(public_path($product->main_image))) {
+                File::delete(public_path($product->main_image));
             }
-            $galleryImage->delete(); // Remove from database
-        }
 
-        // 🔹 Delete videos
-        foreach ($product->videos as $video) {
-            if ($video->video_path && File::exists(public_path($video->video_path))) {
-                File::delete(public_path($video->video_path));
+            // 🔹 Delete gallery images
+            foreach ($product->images as $galleryImage) {
+                if ($galleryImage->image_path && File::exists(public_path($galleryImage->image_path))) {
+                    File::delete(public_path($galleryImage->image_path));
+                }
+                $galleryImage->delete(); // Remove from database
             }
-            $video->delete(); // Remove from database
+
+            // 🔹 Delete videos
+            foreach ($product->videos as $video) {
+                if ($video->video_path && File::exists(public_path($video->video_path))) {
+                    File::delete(public_path($video->video_path));
+                }
+                $video->delete(); // Remove from database
+            }
+
+            // 🔹 Finally, delete the product itself
+            $product->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product deleted successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong: ' . $e->getMessage()
+            ], 500);
         }
-
-        // 🔹 Finally, delete the product itself
-        $product->delete();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Product deleted successfully.'
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Something went wrong: ' . $e->getMessage()
-        ], 500);
     }
-}
-
-
 }
