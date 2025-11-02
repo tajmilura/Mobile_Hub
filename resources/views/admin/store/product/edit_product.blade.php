@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Add Product</li>
+                        <li class="breadcrumb-item active">Edit Product</li>
                     </ol>
                 </div>
             </div>
@@ -227,75 +227,124 @@
                                     <!-- Step 6: Media -->
                                     <div class="step">
                                         <h4 class="text-center font-weight-bold my-3">Media</h4>
-                                        <div class="row">
-                                            <!-- Main Image -->
-                                            <div class="form-group mb-3">
-                                                <label for="image">Main Image</label>
-                                                <input type="file" name="image" id="image"
-                                                    class="form-control">
-                                                @if ($product->image)
-                                                    <img src="{{ asset('storage/' . $product->image) }}" alt="Main Image"
-                                                        style="width: 150px; margin-top:10px;">
-                                                @endif
-                                                @error('image')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
+                                        <!-- Existing Media Preview -->
+                                        <!-- Existing Media Preview -->
+                                        <div class="my-4">
+                                            <h5 class="mb-3">Existing Media</h5>
 
-                                            {{-- Gallery Images --}}
-                                            <div class="form-group mb-3">
-                                                <label for="gallery">Gallery Images</label>
-                                                <input type="file" name="gallery[]" id="gallery"
-                                                    class="form-control" multiple>
-                                                @if ($product->images->count())
-                                                    <div class="mt-2">
-                                                        @foreach ($product->images as $img)
-                                                            <img src="{{ asset('storage/' . $img->image_path) }}"
-                                                                style="width:100px; margin-right:5px;"
-                                                                alt="Gallery Image">
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-                                                @error('gallery.*')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
+                                            <div class="row">
 
-                                            {{-- Video Upload --}}
-                                            <div class="form-group mb-3">
-                                                <label for="video">Upload Video</label>
-                                                <input type="file" name="video" id="video"
-                                                    class="form-control">
-                                                @if ($product->video)
-                                                    @if ($product->video->video_path)
-                                                        <video width="320" height="240" controls class="mt-2">
-                                                            <source
-                                                                src="{{ asset('storage/' . $product->video->video_path) }}"
-                                                                type="video/mp4">
-                                                            Your browser does not support the video tag.
-                                                        </video>
-                                                    @elseif($product->video->embed_link)
-                                                        <iframe width="320" height="240"
-                                                            src="{{ $product->video->embed_link }}" frameborder="0"
-                                                            allowfullscreen class="mt-2"></iframe>
+                                                {{-- 🔹 Main Image --}}
+                                                <div class="col-md-4 mb-3">
+                                                    <h6>Main Image</h6>
+                                                    @if ($product->image)
+                                                        <div class="position-relative d-inline-block">
+                                                            <img src="{{ asset('storage/' . $product->image) }}"
+                                                                class="img-fluid rounded border">
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-danger position-absolute top-0 end-0"
+                                                                onclick="deleteMedia('{{ route('product.image_destroy', $product->id) }}')">×</button>
+                                                        </div>
+                                                    @else
+                                                        <p class="text-muted">No old main image</p>
                                                     @endif
-                                                @endif
-                                                @error('video')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                </div>
+
+                                                {{-- 🔹 Gallery Images --}}
+                                                <div class="col-md-4 mb-3">
+                                                    <h6>Gallery Images</h6>
+                                                    @if ($product->images && $product->images->count())
+                                                        <div class="d-flex flex-wrap">
+                                                            @foreach ($product->images as $img)
+                                                                <div class="position-relative m-3">
+                                                                    <img src="{{ asset('storage/' . $img->image_path) }}"
+                                                                        class="img-thumbnail" style="width:100px;">
+                                                                    <button type="button"
+                                                                        class="btn btn-sm btn-danger position-absolute top-0 end-0"
+                                                                        onclick="deleteMedia('{{ route('product.image_destroy', $img->id) }}')">×</button>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @else
+                                                        <p class="text-muted">No old gallery images</p>
+                                                    @endif
+                                                </div>
+
+                                                {{-- 🔹 Video (Only One) --}}
+                                                <div class="col-md-4 mb-3">
+                                                    <h6>Product Video</h6>
+                                                    @if ($product->video)
+                                                        <div class="position-relative d-inline-block">
+                                                            @if ($product->video->video_path)
+                                                                <video width="100%" controls class="rounded border">
+                                                                    <source
+                                                                        src="{{ asset('storage/' . $product->video->video_path) }}"
+                                                                        type="video/mp4">
+                                                                </video>
+                                                            @elseif ($product->video->embed_link)
+                                                                <iframe width="100%" height="180"
+                                                                    src="{{ $product->video->embed_link }}"
+                                                                    frameborder="0" allowfullscreen
+                                                                    class="rounded border"></iframe>
+                                                            @endif
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-danger position-absolute top-0 end-0"
+                                                                onclick="deleteMedia('{{ route('product.image_destroy', $product->video->id) }}')">×</button>
+                                                        </div>
+                                                    @else
+                                                        <p class="text-muted">No old video found</p>
+                                                    @endif
+                                                </div>
+
                                             </div>
                                         </div>
 
-                                        <div class="form-group mt-3">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-header font-weight-bold">Main Image</div>
+                                                    <div class="card-body">
+                                                        <div id="mainImageDropzone" class="dropzone"></div>
+                                                        <small class="text-muted d-block mt-2">Recommended: 800x800px (1
+                                                            file)</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-5">
+                                                <div class="card">
+                                                    <div class="card-header font-weight-bold">Gallery Images</div>
+                                                    <div class="card-body">
+                                                        <div id="galleryDropzone" class="dropzone"></div>
+                                                        <div id="galleryPreview" class="d-flex flex-wrap mt-2"></div>
+                                                        <small class="text-muted d-block mt-2">You can upload multiple
+                                                            images</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="card">
+                                                    <div class="card-header font-weight-bold">Video</div>
+                                                    <div class="card-body">
+                                                        <div id="videoDropzone" class="dropzone"></div>
+                                                        <div id="videoPreviewContainer" class="mt-2"></div>
+                                                        <small class="text-muted d-block mt-2">Supported: mp4, webm (1
+                                                            file)</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label>YouTube Video Link</label>
-                                            <input type="text" class="form-control" name="video_link"
-                                                value="{{ $product->video_link }}">
+                                            <input type="text" class="form-control" name="video_link">
                                         </div>
 
                                         <div class="d-flex justify-content-end my-3">
                                             <button type="button" class="btn btn-secondary mr-2 prev">Previous</button>
                                             <button type="button" class="btn btn-primary next">Next</button>
                                         </div>
+
                                     </div>
 
 
@@ -315,20 +364,35 @@
                                         </div>
 
                                         <div class="row my-3">
-                                            <div class="col-sm-4">
-                                                <label>Featured</label>
-                                                <input type="checkbox" name="is_featured" value="1"
-                                                    {{ $product->is_featured ? 'checked' : '' }}>
+                                             <div class="col-sm-4">
+                                                <label class="font-weight-bold text-dark d-block mb-2">Featured: </label>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="hidden" name="is_featured" value="0">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        name="is_featured" id="is_featured" value="1"
+                                                        data-bootstrap-switch data-on-color="success"
+                                                        data-off-color="danger"  {{ $product->is_featured ? 'checked' : '' }}>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label>New Arrival</label>
-                                                <input type="checkbox" name="is_new_arrival" value="1"
-                                                    {{ $product->is_new_arrival ? 'checked' : '' }}>
+                                           <div class="col-sm-4">
+                                                <label class="font-weight-bold text-dark d-block mb-2">New Arrival: </label>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="hidden" name="is_new_arrival" value="0">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        name="is_new_arrival" id="is_new_arrival" value="1"
+                                                        data-bootstrap-switch data-on-color="success"
+                                                        data-off-color="danger"  {{ $product->is_new_arrival ? 'checked' : '' }}>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label>Hot Deal</label>
-                                                <input type="checkbox" name="is_hot_deal" value="1"
-                                                    {{ $product->is_hot_deal ? 'checked' : '' }}>
+                                             <div class="col-sm-4">
+                                                <label class="font-weight-bold text-dark d-block mb-2">Hot Deal: </label>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="hidden" name="is_hot_deal" value="0">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        name="is_hot_deal" id="is_hot_deal" value="1"
+                                                        data-bootstrap-switch data-on-color="success"
+                                                        data-off-color="danger"  {{ $product->is_hot_deal ? 'checked' : '' }}>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -547,6 +611,41 @@
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         })
     </script>
+    {{-- delete media --}}
+    <script>
+        function deleteMedia(button, url, type, id = null) {
+            if (!confirm('Are you sure you want to delete this?')) return;
+
+            fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // ✅ Remove the specific media div without page reload
+                        if (type === 'main') {
+                            document.getElementById('mainImageDiv').remove();
+                        } else if (type === 'gallery') {
+                            document.getElementById('galleryDiv' + id).remove();
+                        } else if (type === 'video') {
+                            document.getElementById('videoDiv').remove();
+                        }
+                    } else {
+                        alert('Failed to delete!');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Error occurred!');
+                });
+        }
+    </script>
+
+
     <script>
         // Progress Bar Update
         $(document).ready(function() {
@@ -766,59 +865,132 @@
         Dropzone.autoDiscover = false;
 
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('productForm');
-
-            // 🔹 Gallery Dropzone
-            const galleryInput = document.getElementById('galleryDropzone');
-            let galleryFiles = [];
-
-            galleryInput.addEventListener('change', function(e) {
-                Array.from(e.target.files).forEach(file => {
-                    galleryFiles.push(file);
-                    const url = URL.createObjectURL(file);
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.classList.add('img-thumbnail', 'm-1');
-                    img.width = 100;
-                    img.dataset.new = '1';
-                    document.getElementById('galleryPreview').appendChild(img);
-
-                    // click to remove
-                    img.addEventListener('click', function() {
-                        galleryFiles = galleryFiles.filter(f => f !== file);
-                        img.remove();
+            // 🔹 Initialize Dropzones
+            const mainDz = new Dropzone("#mainImageDropzone", {
+                url: "#",
+                autoProcessQueue: false,
+                maxFiles: 1,
+                addRemoveLinks: true,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (this.files.length > 1) this.removeFile(this.files[0]);
                     });
-                });
+                    this.on('maxfilesexceeded', function(file) {
+                        this.removeAllFiles();
+                        this.addFile(file);
+                    });
+                }
             });
 
-            // 🔹 Old gallery remove handling
-            document.querySelectorAll('#galleryPreview img[data-server-id]').forEach(img => {
-                img.addEventListener('click', function() {
-                    const serverId = img.dataset.serverId;
-                    const removedInput = document.createElement('input');
-                    removedInput.type = 'hidden';
-                    removedInput.name = 'removed_old_gallery[]';
-                    removedInput.value = serverId;
-                    form.appendChild(removedInput);
-                    img.remove();
-                });
+            const galleryDz = new Dropzone("#galleryDropzone", {
+                url: "#",
+                autoProcessQueue: false,
+                maxFiles: 20,
+                addRemoveLinks: true,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        // Gallery preview
+                        const url = URL.createObjectURL(file);
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.dataset._previewUrl = url;
+                        img.dataset._fileName = file.name;
+                        img.alt = file.name;
+                        document.getElementById('galleryPreview').appendChild(img);
+                        file._galleryPreviewEl = img;
+                    });
+
+                    this.on('removedfile', function(file) {
+                        if (file._galleryPreviewEl) {
+                            if (file._galleryPreviewEl.parentNode) file._galleryPreviewEl
+                                .parentNode.removeChild(file._galleryPreviewEl);
+                            if (file._galleryPreviewEl.dataset._previewUrl) URL.revokeObjectURL(
+                                file._galleryPreviewEl.dataset._previewUrl);
+                        }
+                    });
+                }
             });
 
-            // 🔹 On form submit
-            form.addEventListener('submit', function(e) {
-                if (galleryFiles.length > 0) {
-                    galleryFiles.forEach((file, i) => {
+            const videoDz = new Dropzone("#videoDropzone", {
+                url: "#",
+                autoProcessQueue: false,
+                maxFiles: 1,
+                addRemoveLinks: true,
+                acceptedFiles: "video/*",
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (this.files.length > 1) this.removeFile(this.files[0]);
+
+                        const previewEl = file.previewElement;
+                        if (previewEl) {
+                            const video = document.createElement('video');
+                            video.controls = true;
+                            video.width = 200;
+                            video.style.display = 'block';
+                            video.style.marginTop = '8px';
+                            const url = URL.createObjectURL(file);
+                            video.src = url;
+                            file._videoPreviewUrl = url;
+                            previewEl.appendChild(video);
+                        }
+                    });
+
+                    this.on('removedfile', function(file) {
+                        if (file._videoPreviewUrl) URL.revokeObjectURL(file._videoPreviewUrl);
+                    });
+                }
+            });
+
+            // 🔹 Append files to form on submit
+            const form = document.getElementById('productForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    // Remove previous hidden inputs if any
+                    form.querySelectorAll(
+                        'input[name="image"], input[name="gallery[]"], input[name="video"]').forEach(
+                        el => el.remove());
+
+                    // Main Image
+                    if (mainDz.files.length > 0) {
                         const dt = new DataTransfer();
-                        dt.items.add(file);
+                        dt.items.add(mainDz.files[0]);
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.name = 'image';
+                        input.files = dt.files;
+                        input.style.display = 'none';
+                        form.appendChild(input);
+                    }
+
+                    // Gallery Images
+                    if (galleryDz.files.length > 0) {
+                        const dt = new DataTransfer();
+                        galleryDz.files.forEach(file => dt.items.add(file));
                         const input = document.createElement('input');
                         input.type = 'file';
                         input.name = 'gallery[]';
                         input.files = dt.files;
                         input.style.display = 'none';
                         form.appendChild(input);
-                    });
-                }
-            });
+                    }
+
+                    // Video
+                    if (videoDz.files.length > 0) {
+                        const dt = new DataTransfer();
+                        dt.items.add(videoDz.files[0]);
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.name = 'video';
+                        input.files = dt.files;
+                        input.style.display = 'none';
+                        form.appendChild(input);
+                    }
+                });
+            } else {
+                console.warn('Product form not found; Dropzone will not append files on submit.');
+            }
         });
     </script>
 

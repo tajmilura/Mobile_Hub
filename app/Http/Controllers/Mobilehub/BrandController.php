@@ -115,13 +115,15 @@ class BrandController extends Controller
                 $constraint->upsize();
             });
 
-            $iconPath = 'uploads/brands/icons/';
-            if (!File::exists(public_path($iconPath))) {
-                File::makeDirectory(public_path($iconPath), 0755, true);
+            // $iconPath = 'uploads/brands/icons/';
+            $iconPath = storage_path('app/public/uploads/brands/icons/');
+
+            if (!File::exists($iconPath)) {
+                File::makeDirectory($iconPath, 0755, true);
             }
 
-            $icon->save(public_path($iconPath . $iconName));
-            $brand->brand_icon = $iconPath . $iconName;
+            $icon->save($iconPath . $iconName);
+            $brand->brand_icon = 'uploads/brands/icons/' . $iconName;
         } else {
             if (!isset($brand->brand_icon)) {
                 $brand->brand_icon = null;
@@ -148,13 +150,18 @@ class BrandController extends Controller
                 $constraint->upsize();
             });
 
-            $imagePath = 'uploads/brands/images/';
-            if (!File::exists(public_path($imagePath))) {
-                File::makeDirectory(public_path($imagePath), 0755, true);
+            // $imagePath = 'uploads/brands/images/';
+            $imagePath = storage_path('app/public/uploads/brands/images/');
+            // if (!File::exists(public_path($imagePath))) {
+            //     File::makeDirectory(public_path($imagePath), 0755, true);
+            // }
+
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0755, true);
             }
 
-            $image->save(public_path($imagePath . $imageName));
-            $brand->brand_image = $imagePath . $imageName;
+            $image->save($imagePath . $imageName);
+            $brand->brand_image = 'uploads/brands/images/' . $imageName;
         } else {
             if (!isset($brand->brand_image)) {
                 $brand->brand_image = null;
@@ -189,8 +196,8 @@ class BrandController extends Controller
         // -------------------
         if ($request->hasFile('brand_icon')) {
             // Delete old icon if exists
-            if ($brand->brand_icon && File::exists(public_path($brand->brand_icon))) {
-                File::delete(public_path($brand->brand_icon));
+            if ($brand->brand_icon && File::exists(storage_path('app/public/' . $brand->brand_icon))) {
+                File::delete(storage_path('app/public/' . $brand->brand_icon));
             }
 
             $brandName = Str::slug($request->name);
@@ -204,13 +211,14 @@ class BrandController extends Controller
             });
 
 
-            $iconPath = 'uploads/brands/icons/';
-            if (!File::exists(public_path($iconPath))) {
-                File::makeDirectory(public_path($iconPath), 0755, true);
+            // $iconPath = 'uploads/brands/icons/';
+            $iconPath = storage_path('app/public/uploads/brands/icons/');
+            if (!File::exists($iconPath)) {
+                File::makeDirectory($iconPath, 0755, true);
             }
 
-            $icon->save(public_path($iconPath . $iconName));
-            $brand->brand_icon = $iconPath . $iconName;
+            $icon->save($iconPath . $iconName);
+            $brand->brand_icon = 'uploads/brands/icons/' . $iconName;
         }
 
         // -------------------
@@ -218,8 +226,8 @@ class BrandController extends Controller
         // -------------------
         if ($request->hasFile('brand_image')) {
             // Delete old image if exists
-            if ($brand->brand_image && File::exists(public_path($brand->brand_image))) {
-                File::delete(public_path($brand->brand_image));
+            if ($brand->brand_image && File::exists(storage_path('app/public/' . $brand->brand_image))) {
+                File::delete(storage_path('app/public/' . $brand->brand_image));
             }
 
             $brandName = Str::slug($request->name);
@@ -230,12 +238,17 @@ class BrandController extends Controller
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
-            $imagePath = 'uploads/brands/images/';
-            if (!File::exists(public_path($imagePath))) {
-                File::makeDirectory(public_path($imagePath), 0755, true);
+            // $imagePath = 'uploads/brands/images/';
+            $imagePath = storage_path('app/public/uploads/brands/images/');
+            // if (!File::exists(public_path($imagePath))) {
+            //     File::makeDirectory(public_path($imagePath), 0755, true);
+            // }
+
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0755, true);
             }
 
-            $image->save(public_path($imagePath . $imageName));
+            $image->save($imagePath . $imageName);
             $brand->brand_image = $imagePath . $imageName;
         }
 
@@ -252,13 +265,12 @@ class BrandController extends Controller
         $brand = Brand::findOrFail($id);
 
         // Delete brand icon if exists
-        if ($brand->brand_icon && File::exists(public_path($brand->brand_icon))) {
-            File::delete(public_path($brand->brand_icon));
+        if ($brand->brand_image && File::exists(storage_path('app/public/' . $brand->brand_icon))) {
+            File::delete(storage_path('app/public/' . $brand->brand_icon));
         }
-
         // Delete brand image if exists
-        if ($brand->brand_image && File::exists(public_path($brand->brand_image))) {
-            File::delete(public_path($brand->brand_image));
+        if ($brand->brand_image && File::exists(storage_path('app/public/' . $brand->brand_image))) {
+            File::delete(storage_path('app/public/' . $brand->brand_image));
         }
 
         // Delete brand record from database

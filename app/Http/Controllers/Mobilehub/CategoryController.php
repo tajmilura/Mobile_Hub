@@ -52,13 +52,14 @@ class CategoryController extends Controller
                 $constraint->upsize();
             });
 
-            $iconPath = 'uploads/categories/icons/';
-            if (!File::exists(public_path($iconPath))) {
-                File::makeDirectory(public_path($iconPath), 0755, true);
+            // $iconPath = 'uploads/categories/icons/';
+            $iconPath = storage_path('app/public/uploads/categories/icons/');
+            if (!File::exists($iconPath)) {
+                File::makeDirectory($iconPath, 0755, true);
             }
 
-            $icon->save(public_path($iconPath . $iconName));
-            $category->category_icon = $iconPath . $iconName;
+            $icon->save($iconPath . $iconName);
+            $category->category_icon = 'uploads/categories/icons/' . $iconName;
         }
 
         // Handle Category Main Image
@@ -73,13 +74,14 @@ class CategoryController extends Controller
                 $constraint->upsize();
             });
 
-            $imagePath = 'uploads/categories/images/';
-            if (!File::exists(public_path($imagePath))) {
-                File::makeDirectory(public_path($imagePath), 0755, true);
+            // $imagePath = 'uploads/categories/images/';
+            $imagePath = storage_path('app/public/uploads/categories/icons/');
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0755, true);
             }
 
-            $image->save(public_path($imagePath . $imageName));
-            $category->category_image = $imagePath . $imageName;
+            $image->save($imagePath . $imageName);
+            $category->category_image = 'uploads/categories/images/' . $imageName;
         }
 
         $category->save();
@@ -102,8 +104,8 @@ class CategoryController extends Controller
 
         // Update category_icon
         if ($request->hasFile('category_icon')) {
-            if ($category->category_icon && File::exists(public_path($category->category_icon))) {
-                File::delete(public_path($category->category_icon));
+            if ($category->category_icon && File::exists(storage_path('app/public/' . $category->category_icon))) {
+                File::delete(storage_path('app/public/' . $category->category_icon));
             }
 
             $categoryName = Str::slug($request->name);
@@ -116,19 +118,19 @@ class CategoryController extends Controller
                 $constraint->upsize();
             });
 
-            $iconPath = 'uploads/categories/icons/';
-            if (!File::exists(public_path($iconPath))) {
-                File::makeDirectory(public_path($iconPath), 0755, true);
+            $iconPath = storage_path('app/public/uploads/categories/icons/');
+            if (!File::exists($iconPath)) {
+                File::makeDirectory($iconPath, 0755, true);
             }
 
-            $icon->save(public_path($iconPath . $iconName));
-            $category->category_icon = $iconPath . $iconName;
+            $icon->save($iconPath . $iconName);
+            $category->category_icon = 'uploads/categories/icons/' . $iconName;
         }
 
         // Update category_image
         if ($request->hasFile('category_image')) {
-            if ($category->category_image && File::exists(public_path($category->category_image))) {
-                File::delete(public_path($category->category_image));
+            if ($category->category_image && File::exists(storage_path('app/public/' . $category->category_image))) {
+                File::delete(storage_path('app/public/' . $category->category_image));
             }
 
             $categoryName = Str::slug($request->name);
@@ -141,13 +143,13 @@ class CategoryController extends Controller
                 $constraint->upsize();
             });
 
-            $imagePath = 'uploads/categories/images/';
-            if (!File::exists(public_path($imagePath))) {
-                File::makeDirectory(public_path($imagePath), 0755, true);
+              $imagePath = storage_path('app/public/uploads/categories/icons/');
+            if (!File::exists($imagePath)) {
+                File::makeDirectory($imagePath, 0755, true);
             }
 
-            $image->save(public_path($imagePath . $imageName));
-            $category->category_image = $imagePath . $imageName;
+            $image->save($imagePath . $imageName);
+            $category->category_image = 'uploads/categories/images/' . $imageName;
         }
 
         $category->save();
@@ -160,15 +162,14 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         // Delete category category_icon from folder if it exists
-        if ($category->category_icon && File::exists(public_path($category->category_icon))) {
-            File::delete(public_path($category->category_icon));
+        if ($category->category_icon && File::exists(storage_path('app/public/' . $category->category_icon))) {
+            File::delete(storage_path('app/public/' . $category->category_icon));
         }
 
         // Delete category image from folder if it exists
-        if ($category->category_image && File::exists(public_path($category->category_image))) {
-            File::delete(public_path($category->category_image));
+         if ($category->category_icon && File::exists(storage_path('app/public/' . $category->category_image))) {
+            File::delete(storage_path('app/public/' . $category->category_image));
         }
-
         // Delete category record from database
         $category->delete();
 

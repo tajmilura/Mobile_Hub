@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mobilehub\BrandController;
-use App\Http\Controllers\Mobilehub\CategoryController;
 use App\Http\Controllers\Mobilehub\ProductController;
+use App\Http\Controllers\Mobilehub\CategoryController;
+use App\Http\Controllers\Mobilehub\SliderBannerController;
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('ad_dashboard')
@@ -49,10 +50,23 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::prefix('product')->name('product.')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('index');
         Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::delete('/delete/edit_image/{product}', [ProductController::class, 'Image_destroy'])->name('image_destroy');
         Route::post('/store', [ProductController::class, 'store'])->name('store');
         Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('edit'); // Optional if using same form
-        Route::put('/update/{category}', [ProductController::class, 'update'])->name('update');
+        Route::put('/update/{product}', [ProductController::class, 'update'])->name('update');
         Route::delete('/delete/{product}', [ProductController::class, 'destroy'])->name('destroy');
+    });
+
+    // ----------------------
+    // Slider & Banner ROUTES
+    // ----------------------
+    Route::prefix('slider-banner')->name('slider_banner.')->group(function () {
+        Route::get('/', [SliderBannerController::class, 'index'])->name('index');
+        Route::get('/create', [SliderBannerController::class, 'create'])->name('create');
+        Route::post('/store', [SliderBannerController::class, 'store'])->name('store');
+        Route::get('/edit/{slider_banner}', [SliderBannerController::class, 'edit'])->name('edit'); // Optional if using same form
+        Route::put('/update/{slider_banner}', [SliderBannerController::class, 'update'])->name('update');
+        Route::delete('/delete/{slider_banner}', [SliderBannerController::class, 'destroy'])->name('destroy');
     });
 
 

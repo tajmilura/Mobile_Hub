@@ -47,8 +47,8 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
-    public function videos()
-    {
-        return $this->hasMany(ProductVideo::class);
-    }
+   public function video() {
+    return $this->hasOne(ProductVideo::class);
+}
+
 }
