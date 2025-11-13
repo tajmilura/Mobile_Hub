@@ -864,134 +864,138 @@
         });
     </script>
     <!-- Dropzone JS -->
-<script>
-Dropzone.autoDiscover = false;
+    <script>
+        Dropzone.autoDiscover = false;
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 🔹 Initialize Dropzones
-    const mainDz = new Dropzone("#mainImageDropzone", {
-        url: "#",
-        autoProcessQueue: false,
-        maxFiles: 1,
-        addRemoveLinks: true,
-        acceptedFiles: "image/*",
-        init: function() {
-            this.on('addedfile', function(file) {
-                if (this.files.length > 1) this.removeFile(this.files[0]);
-            });
-            this.on('maxfilesexceeded', function(file) {
-                this.removeAllFiles();
-                this.addFile(file);
-            });
-        }
-    });
-
-    const galleryDz = new Dropzone("#galleryDropzone", {
-        url: "#",
-        autoProcessQueue: false,
-        maxFiles: 20,
-        addRemoveLinks: true,
-        acceptedFiles: "image/*",
-        init: function() {
-            this.on('addedfile', function(file) {
-                // Gallery preview
-                const url = URL.createObjectURL(file);
-                const img = document.createElement('img');
-                img.src = url;
-                img.dataset._previewUrl = url;
-                img.dataset._fileName = file.name;
-                img.alt = file.name;
-                document.getElementById('galleryPreview').appendChild(img);
-                file._galleryPreviewEl = img;
-            });
-
-            this.on('removedfile', function(file) {
-                if (file._galleryPreviewEl) {
-                    if (file._galleryPreviewEl.parentNode) file._galleryPreviewEl.parentNode.removeChild(file._galleryPreviewEl);
-                    if (file._galleryPreviewEl.dataset._previewUrl) URL.revokeObjectURL(file._galleryPreviewEl.dataset._previewUrl);
-                }
-            });
-        }
-    });
-
-    const videoDz = new Dropzone("#videoDropzone", {
-        url: "#",
-        autoProcessQueue: false,
-        maxFiles: 1,
-        addRemoveLinks: true,
-        acceptedFiles: "video/*",
-        init: function() {
-            this.on('addedfile', function(file) {
-                if (this.files.length > 1) this.removeFile(this.files[0]);
-
-                const previewEl = file.previewElement;
-                if (previewEl) {
-                    const video = document.createElement('video');
-                    video.controls = true;
-                    video.width = 200;
-                    video.style.display = 'block';
-                    video.style.marginTop = '8px';
-                    const url = URL.createObjectURL(file);
-                    video.src = url;
-                    file._videoPreviewUrl = url;
-                    previewEl.appendChild(video);
+        document.addEventListener('DOMContentLoaded', function() {
+            // 🔹 Initialize Dropzones
+            const mainDz = new Dropzone("#mainImageDropzone", {
+                url: "#",
+                autoProcessQueue: false,
+                maxFiles: 1,
+                addRemoveLinks: true,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (this.files.length > 1) this.removeFile(this.files[0]);
+                    });
+                    this.on('maxfilesexceeded', function(file) {
+                        this.removeAllFiles();
+                        this.addFile(file);
+                    });
                 }
             });
 
-            this.on('removedfile', function(file) {
-                if (file._videoPreviewUrl) URL.revokeObjectURL(file._videoPreviewUrl);
+            const galleryDz = new Dropzone("#galleryDropzone", {
+                url: "#",
+                autoProcessQueue: false,
+                maxFiles: 20,
+                addRemoveLinks: true,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        // Gallery preview
+                        const url = URL.createObjectURL(file);
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.dataset._previewUrl = url;
+                        img.dataset._fileName = file.name;
+                        img.alt = file.name;
+                        document.getElementById('galleryPreview').appendChild(img);
+                        file._galleryPreviewEl = img;
+                    });
+
+                    this.on('removedfile', function(file) {
+                        if (file._galleryPreviewEl) {
+                            if (file._galleryPreviewEl.parentNode) file._galleryPreviewEl
+                                .parentNode.removeChild(file._galleryPreviewEl);
+                            if (file._galleryPreviewEl.dataset._previewUrl) URL.revokeObjectURL(
+                                file._galleryPreviewEl.dataset._previewUrl);
+                        }
+                    });
+                }
             });
-        }
-    });
 
-    // 🔹 Append files to form on submit
-    const form = document.getElementById('productForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            // Remove previous hidden inputs if any
-            form.querySelectorAll('input[name="image"], input[name="gallery[]"], input[name="video"]').forEach(el => el.remove());
+            const videoDz = new Dropzone("#videoDropzone", {
+                url: "#",
+                autoProcessQueue: false,
+                maxFiles: 1,
+                addRemoveLinks: true,
+                acceptedFiles: "video/*",
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (this.files.length > 1) this.removeFile(this.files[0]);
 
-            // Main Image
-            if (mainDz.files.length > 0) {
-                const dt = new DataTransfer();
-                dt.items.add(mainDz.files[0]);
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.name = 'image';
-                input.files = dt.files;
-                input.style.display = 'none';
-                form.appendChild(input);
-            }
+                        const previewEl = file.previewElement;
+                        if (previewEl) {
+                            const video = document.createElement('video');
+                            video.controls = true;
+                            video.width = 200;
+                            video.style.display = 'block';
+                            video.style.marginTop = '8px';
+                            const url = URL.createObjectURL(file);
+                            video.src = url;
+                            file._videoPreviewUrl = url;
+                            previewEl.appendChild(video);
+                        }
+                    });
 
-            // Gallery Images
-            if (galleryDz.files.length > 0) {
-                const dt = new DataTransfer();
-                galleryDz.files.forEach(file => dt.items.add(file));
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.name = 'gallery[]';
-                input.files = dt.files;
-                input.style.display = 'none';
-                form.appendChild(input);
-            }
+                    this.on('removedfile', function(file) {
+                        if (file._videoPreviewUrl) URL.revokeObjectURL(file._videoPreviewUrl);
+                    });
+                }
+            });
 
-            // Video
-            if (videoDz.files.length > 0) {
-                const dt = new DataTransfer();
-                dt.items.add(videoDz.files[0]);
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.name = 'video';
-                input.files = dt.files;
-                input.style.display = 'none';
-                form.appendChild(input);
+            // 🔹 Append files to form on submit
+            const form = document.getElementById('productForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    // Remove previous hidden inputs if any
+                    form.querySelectorAll(
+                        'input[name="image"], input[name="gallery[]"], input[name="video"]').forEach(
+                        el => el.remove());
+
+                    // Main Image
+                    if (mainDz.files.length > 0) {
+                        const dt = new DataTransfer();
+                        dt.items.add(mainDz.files[0]);
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.name = 'image';
+                        input.files = dt.files;
+                        input.style.display = 'none';
+                        form.appendChild(input);
+                    }
+
+                    // Gallery Images
+                    if (galleryDz.files.length > 0) {
+                        const dt = new DataTransfer();
+                        galleryDz.files.forEach(file => dt.items.add(file));
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.name = 'gallery[]';
+                        input.files = dt.files;
+                        input.style.display = 'none';
+                        form.appendChild(input);
+                    }
+
+                    // Video
+                    if (videoDz.files.length > 0) {
+                        const dt = new DataTransfer();
+                        dt.items.add(videoDz.files[0]);
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.name = 'video';
+                        input.files = dt.files;
+                        input.style.display = 'none';
+                        form.appendChild(input);
+                    }
+                });
+            } else {
+                console.warn('Product form not found; Dropzone will not append files on submit.');
             }
         });
-    } else {
-        console.warn('Product form not found; Dropzone will not append files on submit.');
-    }
-});
-</script>
+    </script>
 
     <script>
         $(function() {

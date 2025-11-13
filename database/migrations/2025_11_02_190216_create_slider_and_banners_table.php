@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('image_path'); // image file path
             $table->string('link')->nullable(); // click URL
             $table->integer('order')->default(0); // display order
-            $table->boolean('status')->default(true); // active / inactive
+            $table->boolean('status')->default(false); // active / inactive
             $table->timestamps();
         });
     }

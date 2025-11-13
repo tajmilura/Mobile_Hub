@@ -48,6 +48,8 @@
                                     <label for="category_icon">Category Icon</label>
                                     <input type="file" name="category_icon" class="form-control-file" id="category_icon"
                                         accept="image/*" onchange="previewImage(event, 'icon_preview')">
+                                        <small class="text-muted d-block mt-2">Recommended(max): 400x200px (1
+                                                            file)</small>
                                     @error('category_icon')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -60,6 +62,8 @@
                                     <label for="category_image">Category Image</label>
                                     <input type="file" name="category_image" class="form-control-file" id="category_image"
                                         accept="image/*" onchange="previewImage(event, 'image_preview')">
+                                          <small class="text-muted d-block mt-2">Recommended(max): 400x200px (1
+                                                            file)</small>
                                     @error('category_image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

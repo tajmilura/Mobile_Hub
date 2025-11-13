@@ -47,6 +47,8 @@
                                     <label for="brand_icon">Brand Icon</label>
                                     <input type="file" name="brand_icon" class="form-control-file" id="brand_icon"
                                         accept="image/*" onchange="previewImage(event, 'icon_preview')">
+                                     <small class="text-muted d-block mt-2">Recommended(max): 400x200px (1
+                                                            file)</small>
                                     @error('brand_icon')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -59,6 +61,8 @@
                                     <label for="brand_image">Brand Image</label>
                                     <input type="file" name="brand_image" class="form-control-file" id="brand_image"
                                         accept="image/*" onchange="previewImage(event, 'image_preview')">
+                                         <small class="text-muted d-block mt-2">Recommended(max): 400x200px (1
+                                                            file)</small>
                                     @error('brand_image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

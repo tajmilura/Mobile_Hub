@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Mobilehub\AIController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mobilehub\BrandController;
 use App\Http\Controllers\Mobilehub\ProductController;
 use App\Http\Controllers\Mobilehub\CategoryController;
 use App\Http\Controllers\Mobilehub\SliderBannerController;
+use App\Http\Controllers\SettingController;
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('ad_dashboard')
@@ -60,7 +62,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // ----------------------
     // Slider & Banner ROUTES
     // ----------------------
-    Route::prefix('slider-banner')->name('slider_banner.')->group(function () {
+    Route::prefix('slider_banner')->name('slider_banner.')->group(function () {
         Route::get('/', [SliderBannerController::class, 'index'])->name('index');
         Route::get('/create', [SliderBannerController::class, 'create'])->name('create');
         Route::post('/store', [SliderBannerController::class, 'store'])->name('store');
@@ -68,6 +70,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::put('/update/{slider_banner}', [SliderBannerController::class, 'update'])->name('update');
         Route::delete('/delete/{slider_banner}', [SliderBannerController::class, 'destroy'])->name('destroy');
     });
+
+    //setting route can be here
+ Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::put('/update', [SettingController::class, 'update'])->name('update');
+    });
+
+
 
 
 });

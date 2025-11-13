@@ -118,7 +118,7 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="{{ route('category.index') }}" class="nav-link">
+                              <a href="{{ route('slider_banner.create') }}" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Add Slider & Banner </p>
                               </a>
@@ -127,6 +127,84 @@
                               <a href="{{ route('category.index') }}" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>All Slider & Banner </p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="nav-header">Oder Management</li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-solid fa-box-open"></i>
+                          <p>
+                              Order
+                              <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('product.create') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>All Orders</p>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('product.index') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Order Items</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="nav-header">Payment Management</li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-solid fa-box-open"></i>
+                          <p>
+                              Payment
+                              <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('product.create') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Add Payment Method</p>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('product.index') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Order Items</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="nav-header">Website Management</li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-solid fa-box-open"></i>
+                          <p>
+                              Settings
+                              <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('settings.index') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>All Settings</p>
+                              </a>
+                          </li>
+                      </ul>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('product.index') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Order Items</p>
                               </a>
                           </li>
                       </ul>
