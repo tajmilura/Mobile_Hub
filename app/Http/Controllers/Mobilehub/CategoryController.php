@@ -75,7 +75,7 @@ class CategoryController extends Controller
             });
 
             // $imagePath = 'uploads/categories/images/';
-            $imagePath = storage_path('app/public/uploads/categories/icons/');
+            $imagePath = storage_path('app/public/uploads/categories/images/');
             if (!File::exists($imagePath)) {
                 File::makeDirectory($imagePath, 0755, true);
             }
@@ -143,7 +143,7 @@ class CategoryController extends Controller
                 $constraint->upsize();
             });
 
-              $imagePath = storage_path('app/public/uploads/categories/icons/');
+              $imagePath = storage_path('app/public/uploads/categories/images/');
             if (!File::exists($imagePath)) {
                 File::makeDirectory($imagePath, 0755, true);
             }

@@ -40,7 +40,7 @@ public function update(Request $request)
     ]);
 
     $settings = Setting::firstOrNew();
-
+    updateSettingsCache();
     // Basic Info
     $settings->site_name = $request->site_name;
     $settings->site_title = $request->site_title;
@@ -137,7 +137,7 @@ public function update(Request $request)
         $logoName = 'logo_' . uniqid() . '.' . $request->file('site_logo')->getClientOriginalExtension();
 
         $logoImage = $manager->read($request->file('site_logo'));
-        $logoImage->resize(105, 24, function ($constraint) {
+        $logoImage->resize(105, 25, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });
@@ -150,7 +150,8 @@ public function update(Request $request)
         $logoImage->save($logoPath . $logoName);
         $settings->site_logo = 'uploads/settings/' . $logoName;
     }
-
+        // important: refresh the cache immediately
+    updateSettingsCache();
     $settings->save();
     toastr('Settings updated successfully.', 'success');
 

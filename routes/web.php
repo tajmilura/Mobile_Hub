@@ -17,9 +17,9 @@ Route::get('/alif', function () {
     return view('bin');
 });
 
-Route::get('/home', function () {
-    return view('frontend.index');
-});
+// Route::get('/home', function () {
+//     return view('frontend.index');
+// });
 
 
 
@@ -41,3 +41,4 @@ Route::get('/test', function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
+require __DIR__.'/frontend.php';
