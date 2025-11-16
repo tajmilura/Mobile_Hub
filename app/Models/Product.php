@@ -51,4 +51,15 @@ class Product extends Model
     return $this->hasOne(ProductVideo::class);
 }
 
+
+    public function scopeNewArrivals($query)
+    {
+        return $query->where('is_new_arrival', true);
+    }
+
+    public function scopeHotDeals($query)
+    {
+        return $query->where('is_hot_deal', true);
+    }
+
 }

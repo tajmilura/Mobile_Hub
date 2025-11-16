@@ -8,27 +8,27 @@
         <!-- End .intro-slider-container -->
         <div class="container">
             <h2 class="title text-center mb-4">Explore Popular Categories</h2><!-- End .title text-center -->
-                {{-- category show --}}
-                @if ($categories->count())
-                    <div class="cat-blocks-container">
-                <div class="row">
-                    @foreach ($categories as $category)
-                        <div class="col-6 col-sm-4 col-lg-2">
-                            <a href="#" class="cat-block"> {{-- {{ route('category.show', $category->id) }} --}}
-                                <figure>
-                                    <span>
-                                        <img src="{{ asset('storage/' . $category->category_image) }}"
-                                            alt="{{ $category->category_name }}">
-                                    </span>
-                                </figure>
-                                <h3 class="cat-block-title">{{ $category->category_name }}</h3>
-                            </a>
-                        </div>
-                    @endforeach
+            {{-- category show --}}
+            @if ($categories->count())
+                <div class="cat-blocks-container">
+                    <div class="row">
+                        @foreach ($categories as $category)
+                            <div class="col-6 col-sm-4 col-lg-2">
+                                <a href="#" class="cat-block"> {{-- {{ route('category.show', $category->id) }} --}}
+                                    <figure>
+                                        <span>
+                                            <img src="{{ asset('storage/' . $category->category_image) }}"
+                                                alt="{{ $category->category_name }}">
+                                        </span>
+                                    </figure>
+                                    <h3 class="cat-block-title">{{ $category->category_name }}</h3>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-            <!-- End .cat-blocks-container -->
-                @endif
+                <!-- End .cat-blocks-container -->
+            @endif
         </div><!-- End .container -->
 
         <div class="mb-4"></div><!-- End .mb-4 -->
@@ -43,94 +43,32 @@
         <!-- End .container -->
 
         <div class="mb-6"></div><!-- End .mb-6 -->
+        @if ($longBanner)
+            <div class="container">
+                <div class="cta cta-border mb-5"
+                    style="background-image: url({{ asset('storage/' . $longBanner->image_path) }});">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="cta-content">
+                                <div class="cta-text text-right text-white">
+                                    <p>{!! $longBanner->subtitle !!} <br><strong>{!! $longBanner->highlight_text !!}</strong></p>
+                                </div>
+                                <a href="{{ $longBanner->link ?? '#' }}" class="btn btn-primary btn-round">
+                                    <span>{{ $longBanner->title }} - ${{ number_format($longBanner->price, 2) }}</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
-        <div class="container">
-            <div class="cta cta-border mb-5"
-                style="background-image: url({{ asset('assets/frontend') }}/assets/images/demos/demo-4/bg-1.jpg);">
-                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-4/camera.png" alt="camera"
-                    class="cta-img">
-                <div class="row justify-content-center">
-                    <div class="col-md-12">
-                        <div class="cta-content">
-                            <div class="cta-text text-right text-white">
-                                <p>Shop Today’s Deals <br><strong>Awesome Made Easy. HERO7 Black</strong></p>
-                            </div><!-- End .cta-text -->
-                            <a href="#" class="btn btn-primary btn-round"><span>Shop Now - $429.99</span><i
-                                    class="icon-long-arrow-right"></i></a>
-                        </div><!-- End .cta-content -->
-                    </div><!-- End .col-md-12 -->
-                </div><!-- End .row -->
-            </div><!-- End .cta -->
-        </div><!-- End .container -->
+        <!-- End .container -->
 
-        <div class="container">
-            <div class="heading text-center mb-3">
-                <h2 class="title">Deals & Outlet</h2><!-- End .title -->
-                <p class="title-desc">Today’s deal and more</p><!-- End .title-desc -->
-            </div><!-- End .heading -->
+        <!-- Todays deal -->
 
-            <div class="row">
-                <div class="col-lg-6 deal-col">
-                    <div class="deal"
-                        style="background-image: url('{{ asset('assets/frontend') }}/assets/images/demos/demo-4/deal/bg-1.jpg');">
-                        <div class="deal-top">
-                            <h2>Deal of the Day.</h2>
-                            <h4>Limited quantities. </h4>
-                        </div><!-- End .deal-top -->
-
-                        <div class="deal-content">
-                            <h3 class="product-title"><a href="product.html">Home Smart Speaker with Google
-                                    Assistant</a></h3><!-- End .product-title -->
-
-                            <div class="product-price">
-                                <span class="new-price">$129.00</span>
-                                <span class="old-price">Was $150.99</span>
-                            </div><!-- End .product-price -->
-
-                            <a href="product.html" class="btn btn-link"><span>Shop Now</span><i
-                                    class="icon-long-arrow-right"></i></a>
-                        </div><!-- End .deal-content -->
-
-                        <div class="deal-bottom">
-                            <div class="deal-countdown daily-deal-countdown" data-until="+10h"></div>
-                            <!-- End .deal-countdown -->
-                        </div><!-- End .deal-bottom -->
-                    </div><!-- End .deal -->
-                </div><!-- End .col-lg-6 -->
-
-                <div class="col-lg-6 deal-col">
-                    <div class="deal"
-                        style="background-image: url('{{ asset('assets/frontend') }}/assets/images/demos/demo-4/deal/bg-2.jpg');">
-                        <div class="deal-top">
-                            <h2>Your Exclusive Offers.</h2>
-                            <h4>Sign in to see amazing deals.</h4>
-                        </div><!-- End .deal-top -->
-
-                        <div class="deal-content">
-                            <h3 class="product-title"><a href="product.html">Certified Wireless Charging Pad for
-                                    iPhone / Android</a></h3><!-- End .product-title -->
-
-                            <div class="product-price">
-                                <span class="new-price">$29.99</span>
-                            </div><!-- End .product-price -->
-
-                            <a href="login.html" class="btn btn-link"><span>Sign In and Save money</span><i
-                                    class="icon-long-arrow-right"></i></a>
-                        </div><!-- End .deal-content -->
-
-                        <div class="deal-bottom">
-                            <div class="deal-countdown offer-countdown" data-until="+11d"></div>
-                            <!-- End .deal-countdown -->
-                        </div><!-- End .deal-bottom -->
-                    </div><!-- End .deal -->
-                </div><!-- End .col-lg-6 -->
-            </div><!-- End .row -->
-
-            <div class="more-container text-center mt-1 mb-5">
-                <a href="#" class="btn btn-outline-dark-2 btn-round btn-more"><span>Shop more Outlet
-                        deals</span><i class="icon-long-arrow-right"></i></a>
-            </div><!-- End .more-container -->
-        </div><!-- End .container -->
+        @include('frontend.partials.deal') <!-- End .container -->
 
         <div class="container">
             <hr class="mb-0">
@@ -197,8 +135,7 @@
                 </div><!-- End .heading-left -->
 
                 <div class="heading-right">
-                    <a href="#" class="title-link">View All Recommendadion <i
-                            class="icon-long-arrow-right"></i></a>
+                    <a href="#" class="title-link">View All Recommendadion <i class="icon-long-arrow-right"></i></a>
                 </div><!-- End .heading-right -->
             </div><!-- End .heading -->
 

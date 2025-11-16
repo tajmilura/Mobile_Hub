@@ -109,7 +109,7 @@
                                             <td>{{ $category->category_name }}</td>
                                             <td>
                                                 @if ($category->category_icon)
-                                                    <img src="{{ asset($category->category_icon) }}" alt="{{ $category->category_name }}"
+                                                    <img src="{{ asset('storage/' . $category->category_image) }}" alt="{{ $category->category_name }}"
                                                         width="50" height="50" class="rounded shadow-sm">
                                                 @else
                                                     <span class="text-muted">No logo</span>
