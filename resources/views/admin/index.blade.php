@@ -11,9 +11,6 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
@@ -22,15 +19,14 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
+    <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/jqvmap/jqvmap.min.css">
     <!-- dropzonejs -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/dropzone/min/dropzone.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/jqvmap/jqvmap.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet"
         href="{{ asset('assets/admin') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <!-- Theme style -->
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
@@ -39,6 +35,11 @@
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/summernote/summernote-bs4.min.css">
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -51,7 +52,6 @@
         </div>
 
         <!-- Navbar -->
-
         @include('admin.partials.navbar')
         <!-- /.navbar -->
 
@@ -60,13 +60,10 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-
             @yield('content')
-
         </div>
 
-        <!-- / footer content -->
-
+        <!-- Footer -->
         @include('admin.partials.footer')
 
         <!-- Control Sidebar -->
@@ -76,39 +73,33 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    <!-- Flasher SweetAlert -->
 
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- jQuery -->
-    <script src="{{ asset('assets/admin') }}/plugins/jquery/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
+    <!--  CORRECT JAVASCRIPT LOADING ORDER -->
+    
+    <!-- 1. jQuery FIRST (ONLY ONCE) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- 2. jQuery UI -->
     <script src="{{ asset('assets/admin') }}/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-        $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button);
     </script>
-    <!-- Bootstrap 4 -->
+    
+    <!-- 3. Bootstrap 4 -->
     <script src="{{ asset('assets/admin') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap Switch -->
+    
+    <!-- 4. Other AdminLTE Plugins -->
     <script src="{{ asset('assets/admin') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-    <!-- ChartJS -->
     <script src="{{ asset('assets/admin') }}/plugins/chart.js/Chart.min.js"></script>
-    <!-- Sparkline -->
     <script src="{{ asset('assets/admin') }}/plugins/sparklines/sparkline.js"></script>
-    <!-- JQVMap -->
     <script src="{{ asset('assets/admin') }}/plugins/jqvmap/jquery.vmap.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-    <!-- jQuery Knob Chart -->
     <script src="{{ asset('assets/admin') }}/plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- daterangepicker -->
     <script src="{{ asset('assets/admin') }}/plugins/moment/moment.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ asset('assets/admin') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
-    </script>
-    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('assets/admin') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+    <!-- 5. DataTables -->
     <script src="{{ asset('assets/admin') }}/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -121,18 +112,51 @@
     <script src="{{ asset('assets/admin') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- dropzonejs -->
+    
+    <!-- 6. Other Plugins -->
     <script src="{{ asset('assets/admin') }}/plugins/dropzone/min/dropzone.min.js"></script>
-    <!-- Summernote -->
     <script src="{{ asset('assets/admin') }}/plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- overlayScrollbars -->
     <script src="{{ asset('assets/admin') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
+    
+    <!-- 7. Toastr  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
+    <!-- 8. SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- 9. AdminLTE Core -->
     <script src="{{ asset('assets/admin') }}/dist/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
+    
+    <!-- 10. Demo Scripts  -->
     <script src="{{ asset('assets/admin') }}/dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('assets/admin') }}/dist/js/pages/dashboard.js"></script>
+
+    <!-- Toastr Configuration -->
+    <script>
+        // Toastr configuration - SAFE CHECK
+        if (typeof toastr !== 'undefined') {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+        } else {
+            console.warn('Toastr not loaded');
+        }
+    </script>
+
     <!-- Blade page specific JS -->
     @stack('scripts')
 </body>

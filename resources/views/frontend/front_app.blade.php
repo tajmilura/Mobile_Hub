@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/skins/skin-demo-4.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/demos/demo-4.css">
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -51,14 +53,14 @@
         <!--Main-->
 
 
-       @yield('content')
+        @yield('content')
 
 
 
         <!-- End .main -->
-            <!--Footer-->
-            @include('frontend.partials.footer')
-<!-- End .footer -->
+        <!--Footer-->
+        @include('frontend.partials.footer')
+        <!-- End .footer -->
     </div><!-- End .page-wrapper -->
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
@@ -82,8 +84,8 @@
                         role="tab" aria-controls="mobile-menu-tab" aria-selected="true">Menu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab"
-                        role="tab" aria-controls="mobile-cats-tab" aria-selected="false">Categories</a>
+                    <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab"
+                        aria-controls="mobile-cats-tab" aria-selected="false">Categories</a>
                 </li>
             </ul>
 
@@ -371,6 +373,12 @@
         </div>
     </div> --}}
     <!-- Plugins JS File -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.min.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.hoverIntent.min.js"></script>
@@ -384,7 +392,10 @@
     <!-- Main JS File -->
     <script src="{{ asset('assets/frontend') }}/assets/js/main.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/demos/demo-4.js"></script>
-      @stack('scripts')
+    <!-- jQuery must come first -->
+        <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @stack('scripts')
 </body>
 
 </html>

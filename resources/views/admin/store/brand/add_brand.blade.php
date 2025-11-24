@@ -208,11 +208,11 @@
                 });
         });
     </script>
-
+{{-- 
     <!-- jQuery must come first -->
     <script src="{{ asset('assets/admin/plugins/jquery/jquery.min.js') }}"></script>
     <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <script>
         $(document).on('click', '.delete-btn', function(e) {
@@ -292,7 +292,6 @@ $(document).on('click', '.editBrandBtn', function (e) {
 });
 
 
-// ✅ Add Brand Button (Back to add mode)
 $('#addNewBtn').on('click', function () {
     // Clear the form
     $('form')[0].reset();

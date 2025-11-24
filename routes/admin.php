@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\Mobilehub\AIController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Mobilehub\AIController;
 use App\Http\Controllers\Mobilehub\BrandController;
 use App\Http\Controllers\Mobilehub\ProductController;
 use App\Http\Controllers\Mobilehub\CategoryController;
+use App\Http\Controllers\Mobilehub\AdminCouponController;
 use App\Http\Controllers\Mobilehub\SliderBannerController;
-use App\Http\Controllers\SettingController;
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('ad_dashboard')
@@ -78,6 +79,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 
 
-
+     // Coupon Resource Routes (CRUD Operations)
+    Route::resource('coupons', AdminCouponController::class);
+    
+    // Additional Custom Routes
+    Route::post('/coupons/{coupon}/toggle-status', [AdminCouponController::class, 'toggleStatus'])->name('coupons.toggle-status');
 
 });

@@ -13,11 +13,20 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity')->default(1);
             $table->string('color')->nullable();
             $table->string('size')->nullable();
+            $table->string('variant')->nullable();
+            $table->decimal('price', 10, 2)->nullable();
+            $table->timestamps();
+
+            // Manual foreign key constraints
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+
+            $table->unique(['user_id', 'product_id', 'color', 'size']);
         });
     }
 
