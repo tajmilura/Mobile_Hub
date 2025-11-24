@@ -5,7 +5,7 @@
         @elseif($product->is_new_arrival)
         <span class="product-label label-circle label-top">New</span>
         @endif
-        <a href="#"> {{-- {{ route('product', $product->id) }} --}}
+        <a href="{{ route('product.details', $product->id) }}"> {{-- {{ route('product', $product->id) }} --}}
             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
         </a>
         <div class="product-action-vertical">
@@ -18,7 +18,7 @@
     </figure>
     <div class="product-body">
         <div class="product-cat"><a href="#">{{ $product->category->category_name }}</a></div>
-        <h3 class="product-title"><a href="#">{{ $product->name }}</a></h3> {{--{{ route('product.show', $product->id) }}--}}
+        <h3 class="product-title"><a href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a></h3> {{--{{ route('product.show', $product->id) }}--}}
         <div class="product-price">${{ number_format($product->price, 2) }}</div>
     </div>
 </div>

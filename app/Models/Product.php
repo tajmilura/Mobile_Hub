@@ -62,4 +62,13 @@ class Product extends Model
         return $query->where('is_hot_deal', true);
     }
 
+     public function scopeIsFeatured($query)
+    {
+        return $query->where('is_featured', true);
+    }
+
+
+
+
+
 }

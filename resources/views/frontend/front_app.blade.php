@@ -335,7 +335,7 @@
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
 
-    <div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
+    {{-- <div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
         <div class="row justify-content-center">
             <div class="col-10">
                 <div class="row no-gutters bg-white newsletter-popup-content">
@@ -369,7 +369,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Plugins JS File -->
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.min.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/bootstrap.bundle.min.js"></script>
@@ -384,6 +384,7 @@
     <!-- Main JS File -->
     <script src="{{ asset('assets/frontend') }}/assets/js/main.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/demos/demo-4.js"></script>
+      @stack('scripts')
 </body>
 
 </html>
