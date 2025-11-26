@@ -60,18 +60,10 @@
                                         <ul>
                                             <li><a href="{{ route('product.wishlist.index') }}">Wishlist</a></li>
                                             <li><a href="{{ route('product.cart.index') }}">My Cart</a></li>
-                                            {{-- <li><a href="{{ route('orders.index') }}">My Orders</a></li>
-                                            <li><a href="{{ route('reviews.index') }}">My Reviews</a></li>
-                                            <li><a href="{{ route('profile.show') }}">Profile</a></li> --}}
-                                            <li>
-                                                <form method="POST" action="{{ route('logout') }}">
-                                                    @csrf
-                                                    <button type="submit" class="dropdown-item text-danger"
-                                                        style="border:none; background:none;">
-                                                        Logout
-                                                    </button>
-                                                </form>
-                                            </li>
+                                            <li><a href="{{ route('order.history') }}">My Orders</a></li>
+                                            {{-- <li><a href="{{ route('reviews.index') }}">My Reviews</a></li> --}}
+                                            <li><a href="{{ route('profile') }}">Profile</a></li>
+                                             <li><a href="{{ route('logout') }}">Logout</a></li>
                                         </ul>
                                     </div>
                                 </li>

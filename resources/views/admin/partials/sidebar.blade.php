@@ -120,7 +120,7 @@
                           <li class="nav-item">
                               <a href="{{ route('coupons.index') }}" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>Add Category</p>
+                                  <p>Add Coupon</p>
                               </a>
                           </li>
                       </ul>

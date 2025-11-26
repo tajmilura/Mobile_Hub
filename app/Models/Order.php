@@ -105,4 +105,13 @@ class Order extends Model
             'paid_at' => now()
         ]);
     }
+
+     public function getFormattedPaymentStatusAttribute()
+    {
+        return ucfirst($this->payment_status);
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }

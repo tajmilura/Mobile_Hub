@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/skins/skin-demo-4.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/demos/demo-4.css">
+        <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/plugins/nouislider/nouislider.css">
+
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
@@ -374,6 +376,7 @@
     </div> --}}
     <!-- Plugins JS File -->
     <!-- jQuery -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Toastr JS -->
@@ -389,13 +392,47 @@
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.plugin.min.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.magnific-popup.min.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.countdown.min.js"></script>
+        <script src="{{ asset('assets/frontend') }}/assets/js/jquery.elevateZoom.min.js"></script>
+
     <!-- Main JS File -->
     <script src="{{ asset('assets/frontend') }}/assets/js/main.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/demos/demo-4.js"></script>
     <!-- jQuery must come first -->
-        <!-- SweetAlert2 CDN -->
+    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
+    {{-- Toastr Notifications --}}
+    @if (session('success'))
+        <script>
+            $(document).ready(function() {
+                toastr.success('{{ session('success') }}');
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            $(document).ready(function() {
+                toastr.error('{{ session('error') }}');
+            });
+        </script>
+    @endif
+
+    @if (session('warning'))
+        <script>
+            $(document).ready(function() {
+                toastr.warning('{{ session('warning') }}');
+            });
+        </script>
+    @endif
+
+    @if (session('info'))
+        <script>
+            $(document).ready(function() {
+                toastr.info('{{ session('info') }}');
+            });
+        </script>
+    @endif
 </body>
 
 </html>

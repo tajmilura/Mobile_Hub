@@ -13,16 +13,39 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id'); // Order reference
-            $table->string('payment_method'); // e.g., card, bKash, COD, PayPal
-            $table->string('payment_status')->default('pending'); // pending, paid, failed, refunded
-            $table->string('transaction_id')->nullable();
-            $table->decimal('amount', 10, 2); // Paid amount
-            $table->timestamp('paid_at')->nullable(); // Payment date/time
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
-            // Foreign key constraint
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            // Payment Information
+            $table->string('payment_method'); // cod, card, bkash, bank, nagad, rocket
+            $table->decimal('amount', 10, 2);
+            $table->string('currency')->default('BDT');
+            $table->string('transaction_id')->nullable()->unique();
+            $table->text('transaction_details')->nullable();
+
+            // Payment Status
+            $table->enum('status', [
+                'pending',
+                'processing',
+                'completed',
+                'failed',
+                'cancelled',
+                'refunded'
+            ])->default('pending');
+
+            // Payment Gateway Response
+            $table->text('gateway_response')->nullable();
+            $table->string('gateway_name')->nullable(); // stripe, paypal, bkash, etc
+
+            // Timestamps
+            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('failed_at')->nullable();
             $table->timestamps();
+
+            // Indexes
+            $table->index(['order_id', 'status']);
+            $table->index('transaction_id');
+            $table->index('user_id');
         });
     }
 

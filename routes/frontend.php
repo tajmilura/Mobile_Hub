@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CouponController;
+use App\Http\Controllers\Mobilehub\BkashController;
+use App\Http\Controllers\Mobilehub\OrderController;
 use App\Http\Controllers\Frontend\CartWishController;
 use App\Http\Controllers\Frontend\CheckoutController;
-
+use App\Http\Controllers\Mobilehub\PaymentController;
+use App\Http\Controllers\Mobilehub\DemoPaymentController;
 
 // ----------------------
 // Home ROUTES
@@ -80,6 +83,67 @@ Route::prefix('checkout')->group(function () {
     Route::post('/apply-coupon', [CheckoutController::class, 'applyCoupon'])->name('checkout.apply-coupon');
     Route::post('/remove-coupon', [CheckoutController::class, 'removeCoupon'])->name('checkout.remove-coupon');
 });
+
+
+
+
+// Payment Routes
+Route::prefix('payment')->group(function () {
+    Route::get('/process/{payment}', [PaymentController::class, 'process'])->name('payment.process');
+    Route::get('/show/{payment}', [PaymentController::class, 'show'])->name('payment.show');
+    Route::get('/success/{payment}', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/cancel/{payment}', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    Route::post('/webhook/{gateway}', [PaymentController::class, 'webhook'])->name('payment.webhook');
+});
+
+// Order Routes
+Route::prefix('order')->group(function () {
+    // Order Pages
+    Route::get('/confirmation/{order}', [OrderController::class, 'confirmation'])->name('frontend.pages.orderconfirmation');
+    Route::get('/details/{order}', [OrderController::class, 'show'])->name('order.details');
+    Route::get('/history', [OrderController::class, 'history'])->name('order.history');
+    Route::get('/tracking/{order}', [OrderController::class, 'tracking'])->name('order.tracking');
+    Route::get('/print/{order}', [OrderController::class, 'print'])->name('order.print');
+
+    // Order Actions
+    Route::post('/cancel/{order}', [OrderController::class, 'cancel'])->name('order.cancel');
+    Route::get('/reorder/{order}', [OrderController::class, 'reorder'])->name('order.reorder');
+    Route::get('/invoice/{order}', [OrderController::class, 'downloadInvoice'])->name('order.invoice');
+    Route::get('/status/{order}', [OrderController::class, 'getOrderStatus'])->name('order.status');
+    Route::get('/invoice/view/{order}', [OrderController::class, 'viewInvoice'])->name('order.invoice.view');
+
+    // Public Order Tracking
+    Route::get('/track', function () {
+        return view('frontend.pages.trackorder');
+    })->name('order.track');
+    Route::post('/track', [OrderController::class, 'trackOrder'])->name('order.track.submit');
+});
+
+
+// Demo Payment Routes
+Route::prefix('payment')->group(function () {
+    Route::get('/demo/{payment}', [DemoPaymentController::class, 'showDemoPayment'])->name('payment.demo');
+    Route::post('/demo/process/{payment}', [DemoPaymentController::class, 'processDemoPayment'])->name('payment.demo.process');
+
+    // Stripe Routes
+    Route::get('/stripe/success/{payment}', [PaymentController::class, 'stripeSuccess'])->name('payment.stripe.success');
+
+    // bKash Routes
+    Route::prefix('bkash')->group(function () {
+        Route::post('/create/{payment}', [BkashController::class, 'createPayment'])->name('payment.bkash.create');
+        Route::get('/callback/{payment}', [BkashController::class, 'callback'])->name('payment.bkash.callback');
+        Route::post('/execute/{payment}', [BkashController::class, 'executePayment'])->name('payment.bkash.execute');
+    });
+});
+
+
+// // Order Routes
+// Route::prefix('order')->group(function () {
+//     Route::get('/confirmation/{order}', [OrderController::class, 'confirmation'])->name('frontend.pages.orderconfirmation');
+//     Route::get('/details/{order}', [OrderController::class, 'show'])->name('order.details');
+//     Route::get('/history', [OrderController::class, 'history'])->name('order.history');
+//     Route::get('/tracking/{order}', [OrderController::class, 'tracking'])->name('order.tracking');
+// });
 
 });
 

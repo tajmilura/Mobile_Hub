@@ -309,7 +309,8 @@
                                                         </strong>
                                                     </td>
                                                     <td class="text-right text-danger">
-                                                        <strong>-${{ number_format($discount, 2) }}</strong></td>
+                                                        <strong>-${{ number_format($discount, 2) }}</strong>
+                                                    </td>
                                                 </tr>
                                             @endif
 
@@ -337,46 +338,30 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
                                     <div class="payment-methods">
                                         <h5>Payment Method *</h5>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="radio" name="payment_method"
-                                                value="cod" id="cod"
-                                                {{ old('payment_method') == 'cod' ? 'checked' : 'checked' }}>
-                                            <label class="form-check-label" for="cod">
-                                                <i class="icon-money"></i> Cash on Delivery
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="radio" name="payment_method"
-                                                value="card" id="card"
-                                                {{ old('payment_method') == 'card' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="card">
-                                                <i class="icon-credit-card"></i> Credit/Debit Card
-                                            </label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="radio" name="payment_method"
-                                                value="bkash" id="bkash"
-                                                {{ old('payment_method') == 'bkash' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="bkash">
-                                                <i class="icon-mobile"></i> bKash
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment_method"
-                                                value="bank" id="bank"
-                                                {{ old('payment_method') == 'bank' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="bank">
-                                                <i class="icon-bank"></i> Bank Transfer
-                                            </label>
-                                        </div>
+                                        @foreach ($paymentMethods as $method)
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" name="payment_method"
+                                                    value="{{ $method->code }}" id="{{ $method->code }}"
+                                                    {{ old('payment_method', 'cod') == $method->code ? 'checked' : '' }}
+                                                    {{ !$method->is_active ? 'disabled' : '' }}>
+                                                <label class="form-check-label" for="{{ $method->code }}">
+                                                    <i class="icon-{{ $method->code }}"></i>
+                                                    {{ $method->name }}
+                                                    @if ($method->charge > 0)
+                                                        <small class="text-muted">({{ $method->charge }}% charge)</small>
+                                                    @endif
+                                                    @if (!$method->is_active)
+                                                        <small class="text-danger">(Temporarily unavailable)</small>
+                                                    @endif
+                                                </label>
+                                            </div>
+                                        @endforeach
                                         @error('payment_method')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
-
                                     <!-- Terms and Conditions -->
                                     <div class="custom-control custom-checkbox mt-3">
                                         <input type="checkbox" class="custom-control-input" id="terms"

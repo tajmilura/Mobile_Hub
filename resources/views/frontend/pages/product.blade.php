@@ -1,5 +1,184 @@
 @extends('frontend.front_app')
 @section('content')
+    @push('styles')
+        <style>
+            .additional-info-table {
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid #e3f2fd;
+            }
+
+            .additional-info-table thead {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                border: none;
+            }
+
+            .additional-info-table th {
+                border: none;
+                font-size: 15px;
+                letter-spacing: 0.5px;
+            }
+
+            .additional-info-table tbody tr {
+                transition: all 0.3s ease;
+                border-left: 3px solid transparent;
+            }
+
+            .additional-info-table tbody tr:hover {
+                background-color: #f8f9ff;
+                border-left: 3px solid #007bff;
+                transform: translateX(2px);
+            }
+
+            .additional-info-table tbody td {
+                border-color: #f1f3f4;
+                vertical-align: middle;
+            }
+
+            .spec-row:nth-child(even) {
+                background-color: #fafbfc;
+            }
+
+            .spec-row:nth-child(odd) {
+                background-color: #ffffff;
+            }
+
+            /* Color Display Styles */
+            .color-options-display .color-option {
+                padding: 4px 8px;
+                border-radius: 20px;
+                background: white;
+                border: 1px solid #e9ecef;
+                transition: all 0.3s ease;
+            }
+
+            .color-options-display .color-option:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .color-dot {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                display: inline-block;
+                border: 2px solid white;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s ease;
+            }
+
+            .color-dot:hover {
+                transform: scale(1.2);
+            }
+
+            /* Size Display Styles */
+            .size-badge {
+                font-weight: 600;
+                font-size: 13px;
+                border: 2px solid #007bff !important;
+                background: white;
+                color: #007bff;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .size-badge:hover {
+                background: #007bff;
+                color: white;
+                transform: translateY(-2px);
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .additional-info-table {
+                    font-size: 14px;
+                }
+
+                .additional-info-table th,
+                .additional-info-table td {
+                    padding: 12px 8px;
+                }
+
+                .color-options-display .color-option {
+                    margin-bottom: 5px;
+                }
+            }
+        </style>
+        @push('styles')
+            <style>
+                .btn-product {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 12px 24px;
+                    border: 2px solid #007bff;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    transition: all 0.3s ease;
+                    min-width: 140px;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .btn-cart {
+                    background-color: #ffffff;
+                    color: #007bff !important;
+                    border-color: #007bff;
+                }
+
+                .btn-cart:hover {
+                    background-color: #007bff;
+                    color: #ffffff !important;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+                }
+
+                .btn-cart.bg-primary {
+                    background-color: #007bff !important;
+                    color: #ffffff !important;
+                    border-color: #007bff;
+                }
+
+                .btn-cart.bg-primary:hover {
+                    background-color: #0056b3 !important;
+                    border-color: #0056b3;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+                }
+
+                .button-text {
+                    color: inherit !important;
+                    font-weight: 600;
+                    z-index: 2;
+                    position: relative;
+                }
+
+                /* Ensure text is always visible */
+                .btn-product span {
+                    color: inherit !important;
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                }
+
+                /* Mobile responsive */
+                @media (max-width: 768px) {
+                    .product-action-buttons {
+                        flex-direction: column;
+                        gap: 12px;
+                    }
+
+                    .btn-product {
+                        min-width: 100%;
+                        margin-left: 0 !important;
+                    }
+                }
+            </style>
+        @endpush
+    @endpush
     <main class="main">
         <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
             <div class="container d-flex align-items-center">
@@ -64,16 +243,12 @@
                                 </div>
 
                                 <div class="product-price">
-                                    ${{ number_format($product->price, 2) }}
+                                    {{ number_format($product->price, 2) }} TK
                                     @if ($product->discount_price)
-                                        <span class="old-price">${{ number_format($product->discount_price, 2) }}</span>
+                                        <span class="old-price m-2">
+                                            {{ number_format($product->discount_price, 2) }}TK</span>
                                     @endif
                                 </div>
-
-                                <div class="product-content">
-                                    <p>{{ $product->description }}</p>
-                                </div>
-
                                 @php
                                     $colors = is_array($product->colors)
                                         ? $product->colors
@@ -85,32 +260,35 @@
                                     $sizes = $sizes ?? [];
                                 @endphp
 
-                                @if(!empty($colors))
-                                <div class="details-filter-row details-row-size">
-                                    <label>Color:</label>
-                                    <div class="product-nav product-nav-thumbs">
-                                        @foreach ($colors as $color)
-                                            <a href="#" class="color-option @if ($loop->first) active @endif"
-                                               data-color="{{ $color }}">
-                                                <span style="background-color: {{ $color }}; display:block; width:20px; height:20px; border-radius:50%;"></span>
-                                            </a>
-                                        @endforeach
+                                @if (!empty($colors))
+                                    <div class="details-filter-row details-row-size">
+                                        <label>Color:</label>
+                                        <div class="product-nav product-nav-thumbs">
+                                            @foreach ($colors as $color)
+                                                <a href="#"
+                                                    class="color-option @if ($loop->first) active @endif"
+                                                    data-color="{{ $color }}">
+                                                    <span
+                                                        style="background-color: {{ $color }}; display:block; width:20px; height:20px; border-radius:50%;"></span>
+                                                </a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
 
-                                @if(!empty($sizes))
-                                <div class="details-filter-row details-row-size">
-                                    <label>Size:</label>
-                                    <div class="product-nav product-nav-thumbs">
-                                        @foreach ($sizes as $size)
-                                            <a href="#" class="size-option @if ($loop->first) active @endif"
-                                               data-size="{{ $size }}">
-                                                {{ $size }}
-                                            </a>
-                                        @endforeach
+                                @if (!empty($sizes))
+                                    <div class="details-filter-row details-row-size">
+                                        <label>Size:</label>
+                                        <div class="product-nav product-nav-thumbs">
+                                            @foreach ($sizes as $size)
+                                                <a href="#"
+                                                    class="size-option @if ($loop->first) active @endif"
+                                                    data-size="{{ $size }}">
+                                                    {{ $size }}
+                                                </a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
 
                                 <div class="details-filter-row details-row-size">
@@ -124,13 +302,16 @@
 
                                 <div class="product-details-action">
                                     <!-- Add to Cart Button -->
-                                    <a href="#" data-id="{{ $product->id }}"
-                                        class="btn-product btn-cart addToCart">
-                                        <span>add to cart</span>
-                                    </a>
-                                     <a href="{{ route('checkout', $product->id) }}" data-id="{{ $product->id }}"
-                                        class="btn-product btn-cart ml-3 addToCart">
-                                        <span>Buy Now</span>
+                                    <button type="button" data-id="{{ $product->id }}"
+                                        class="btn btn-outline-primary btn-lg addToCart fw-semibold mr-2">
+                                        <i class="fas fa-cart-plus me-2"></i>
+                                        ADD TO CART
+                                    </button>
+
+                                    <a href="{{ route('checkout', $product->id) }}"
+                                        class="btn btn-danger btn-lg fw-semibold text-white">
+                                        <i class="fas fa-bolt me-2"></i>
+                                        BUY NOW
                                     </a>
 
 
@@ -172,11 +353,12 @@
                 <div class="product-details-tab">
                     <ul class="nav nav-pills justify-content-center" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab"
-                                role="tab" aria-controls="product-info-tab" aria-selected="true">Additional information</a>
+                            <a class="nav-link active" id="product-info-link" data-toggle="tab" href="#product-info-tab"
+                                role="tab" aria-controls="product-info-tab" aria-selected="true">Additional
+                                information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
+                            <a class="nav-link" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
                                 role="tab" aria-controls="product-desc-tab" aria-selected="false">Description</a>
                         </li>
                         <li class="nav-item">
@@ -194,9 +376,17 @@
                         <div class="tab-pane fade show active" id="product-info-tab" role="tabpanel"
                             aria-labelledby="product-info-link">
                             <div class="product-info-content">
-                                <h3 class="mb-4">Additional Information</h3>
+                                <h3 class="mb-4 text-dark font-weight-bold">Product Specifications</h3>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped additional-info-table">
+                                    <table class="table table-bordered table-hover additional-info-table shadow-sm">
+                                        <thead class="bg-danger text-white">
+                                            <tr>
+                                                <th class="py-3 px-4 text-uppercase font-weight-bold" style="width: 35%;">
+                                                    Specification</th>
+                                                <th class="py-3 px-4 text-uppercase font-weight-bold" style="width: 65%;">
+                                                    Details</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             @php
                                                 $attributes = [
@@ -231,20 +421,34 @@
 
                                             @foreach ($attributes as $key => $label)
                                                 @if (!empty($product->$key))
-                                                    <tr>
-                                                        <th class="attribute-label">{{ $label }}</th>
-                                                        <td class="attribute-value">{{ $product->$key }}</td>
+                                                    <tr class="spec-row">
+                                                        <td class="py-3 px-4 font-weight-bold text-dark bg-light">
+                                                            <i class="fas fa-angle-right text-primary mr-2"></i>
+                                                            {{ $label }}
+                                                        </td>
+                                                        <td class="py-3 px-4 text-dark">
+                                                            {{ $product->$key }}
+                                                        </td>
                                                     </tr>
                                                 @endif
                                             @endforeach
 
                                             @if (!empty($colors))
-                                                <tr>
-                                                    <th class="attribute-label">Available Colors</th>
-                                                    <td class="attribute-value">
-                                                        <div class="color-options-display">
+                                                <tr class="spec-row">
+                                                    <td class="py-3 px-4 font-weight-bold text-dark bg-light">
+                                                        <i class="fas fa-palette text-primary mr-2"></i>
+                                                        Available Colors
+                                                    </td>
+                                                    <td class="py-3 px-4">
+                                                        <div class="color-options-display d-flex flex-wrap gap-2">
                                                             @foreach ($colors as $color)
-                                                                <span class="color-dot" style="background-color: {{ $color }};" title="{{ $color }}"></span>
+                                                                <div class="color-option d-flex align-items-center">
+                                                                    <span class="color-dot shadow-sm"
+                                                                        style="background-color: {{ $color }};"
+                                                                        title="{{ $color }}"></span>
+                                                                    <small
+                                                                        class="ml-1 text-muted d-none d-sm-inline">{{ $color }}</small>
+                                                                </div>
                                                             @endforeach
                                                         </div>
                                                     </td>
@@ -252,12 +456,18 @@
                                             @endif
 
                                             @if (!empty($sizes))
-                                                <tr>
-                                                    <th class="attribute-label">Available Sizes</th>
-                                                    <td class="attribute-value">
-                                                        <div class="size-options-display">
+                                                <tr class="spec-row">
+                                                    <td class="py-3 px-4 font-weight-bold text-dark bg-light">
+                                                        <i class="fas fa-ruler text-primary mr-2"></i>
+                                                        Available Sizes
+                                                    </td>
+                                                    <td class="py-3 px-4">
+                                                        <div class="size-options-display d-flex flex-wrap gap-2">
                                                             @foreach ($sizes as $size)
-                                                                <span class="size-badge">{{ $size }}</span>
+                                                                <span
+                                                                    class="size-badge badge badge-outline-primary py-2 px-3 border">
+                                                                    {{ $size }}
+                                                                </span>
                                                             @endforeach
                                                         </div>
                                                     </td>
@@ -273,7 +483,7 @@
                             aria-labelledby="product-desc-link">
                             <div class="product-desc-content">
                                 <h3>Product Information</h3>
-                                <p>{{ $product->description }}</p>
+                                <p> {!! html_entity_decode($product->description) !!}</p>
                             </div>
                         </div>
 
@@ -299,11 +509,11 @@
                     </div>
                 </div>
 
-                @if(isset($relatedProducts) && $relatedProducts->count() > 0)
-                <h2 class="title text-center mb-4">You May Also Like</h2>
+                @if (isset($relatedProducts) && $relatedProducts->count() > 0)
+                    <h2 class="title text-center mb-4">You May Also Like</h2>
 
-                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                    data-owl-options='{
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                        data-owl-options='{
                         "nav": false,
                         "dots": true,
                         "margin": 20,
@@ -316,36 +526,39 @@
                             "1200": {"items":4,"nav": true,"dots": false}
                         }
                     }'>
-                    @foreach ($relatedProducts as $related)
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <a href="{{ route('product.details', $related->id) }}">
-                                    <img src="{{ asset('storage/' . $related->image) }}" alt="Product image"
-                                        class="product-image">
-                                </a>
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable addToWishlist" data-id="{{ $related->id }}">
-                                        <span>add to wishlist</span>
+                        @foreach ($relatedProducts as $related)
+                            <div class="product product-7 text-center">
+                                <figure class="product-media">
+                                    <a href="{{ route('product.details', $related->id) }}">
+                                        <img src="{{ asset('storage/' . $related->image) }}" alt="Product image"
+                                            class="product-image">
                                     </a>
+                                    <div class="product-action-vertical">
+                                        <a href="#"
+                                            class="btn-product-icon btn-wishlist btn-expandable addToWishlist"
+                                            data-id="{{ $related->id }}">
+                                            <span>add to wishlist</span>
+                                        </a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product btn-cart addToCart"
+                                            data-id="{{ $related->id }}">
+                                            <span>add to cart</span>
+                                        </a>
+                                    </div>
+                                </figure>
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#">{{ $related->category->name ?? 'N/A' }}</a>
+                                    </div>
+                                    <h3 class="product-title">
+                                        <a href="{{ route('product.details', $related->id) }}">{{ $related->name }}</a>
+                                    </h3>
+                                    <div class="product-price">${{ number_format($related->price, 2) }}</div>
                                 </div>
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart addToCart" data-id="{{ $related->id }}">
-                                        <span>add to cart</span>
-                                    </a>
-                                </div>
-                            </figure>
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">{{ $related->category->name ?? 'N/A' }}</a>
-                                </div>
-                                <h3 class="product-title">
-                                    <a href="{{ route('product.details', $related->id) }}">{{ $related->name }}</a>
-                                </h3>
-                                <div class="product-price">${{ number_format($related->price, 2) }}</div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
                 @endif
             </div>
         </div>
@@ -353,289 +566,293 @@
 @endsection
 
 @push('styles')
-<style>
-    /* Additional Information Table Styling */
-    .additional-info-table {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 0;
-    }
+    <style>
+        /* Additional Information Table Styling */
+        .additional-info-table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+        }
 
-    .additional-info-table th.attribute-label {
-        background-color: #f8f9fa;
-        font-weight: 600;
-        color: #495057;
-        width: 220px;
-        padding: 16px 20px;
-        border-right: 2px solid #dee2e6;
-        font-size: 15px;
-    }
-
-    .additional-info-table td.attribute-value {
-        padding: 16px 20px;
-        background-color: #fff;
-        color: #6c757d;
-        font-size: 15px;
-        line-height: 1.5;
-    }
-
-    .additional-info-table tr:hover td {
-        background-color: #f8f9fa;
-    }
-
-    /* Color and Size Display Styling */
-    .color-options-display {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .color-dot {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        transition: transform 0.2s ease;
-    }
-
-    .color-dot:hover {
-        transform: scale(1.1);
-    }
-
-    .size-options-display {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-
-    .size-badge {
-        display: inline-block;
-        padding: 6px 12px;
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 6px;
-        font-size: 13px;
-        font-weight: 500;
-        color: #495057;
-        transition: all 0.2s ease;
-    }
-
-    .size-badge:hover {
-        background-color: #007bff;
-        color: #fff;
-        border-color: #007bff;
-    }
-
-    /* Buy Now Button Styling */
-    .btn-buy-now {
-        background: linear-gradient(135deg, #28a745, #20c997);
-        border-color: #28a745;
-        color: white;
-        font-weight: 600;
-        padding: 12px 24px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-buy-now:hover {
-        background: linear-gradient(135deg, #218838, #1e9e8a);
-        border-color: #1e7e34;
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-    }
-
-    .btn-buy-now i {
-        margin-right: 8px;
-    }
-
-    /* Product Details Action Area */
-    .product-details-action {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        align-items: center;
-        margin: 20px 0;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
         .additional-info-table th.attribute-label {
-            width: 150px;
-            padding: 12px 15px;
-            font-size: 14px;
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+            width: 220px;
+            padding: 16px 20px;
+            border-right: 2px solid #dee2e6;
+            font-size: 15px;
         }
 
         .additional-info-table td.attribute-value {
-            padding: 12px 15px;
-            font-size: 14px;
+            padding: 16px 20px;
+            background-color: #fff;
+            color: #6c757d;
+            font-size: 15px;
+            line-height: 1.5;
         }
 
+        .additional-info-table tr:hover td {
+            background-color: #f8f9fa;
+        }
+
+        /* Color and Size Display Styling */
+        .color-options-display {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .color-dot {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .size-options-display {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .size-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #495057;
+            transition: all 0.2s ease;
+        }
+
+        .size-badge:hover {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        /* Buy Now Button Styling */
+        .btn-buy-now {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-color: #28a745;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-buy-now:hover {
+            background: linear-gradient(135deg, #218838, #1e9e8a);
+            border-color: #1e7e34;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-buy-now i {
+            margin-right: 8px;
+        }
+
+        /* Product Details Action Area */
         .product-details-action {
-            flex-direction: column;
-            align-items: stretch;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin: 20px 0;
         }
 
-        .btn-buy-now, .btn-cart {
-            width: 100%;
-            margin-bottom: 10px;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .additional-info-table th.attribute-label {
+                width: 150px;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .additional-info-table td.attribute-value {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .product-details-action {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-buy-now,
+            .btn-cart {
+                width: 100%;
+                margin-bottom: 10px;
+            }
         }
-    }
 
-    /* Tab Content Styling */
-    .product-info-content {
-        padding: 30px;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
+        /* Tab Content Styling */
+        .product-info-content {
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
 
-    .product-desc-content {
-        padding: 30px;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        line-height: 1.7;
-    }
-</style>
+        .product-desc-content {
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            line-height: 1.7;
+        }
+    </style>
 @endpush
 
 @push('scripts')
-<script>
-$(document).ready(function(){
-    let selectedColor = '';
-    let selectedSize = '';
+    <script>
+        $(document).ready(function() {
+            let selectedColor = '';
+            let selectedSize = '';
 
-    // Color selection
-    $('.color-option').click(function(e) {
-        e.preventDefault();
-        $('.color-option').removeClass('active');
-        $(this).addClass('active');
-        selectedColor = $(this).data('color');
-        $('#buy_now_color').val(selectedColor);
-    });
+            // Color selection
+            $('.color-option').click(function(e) {
+                e.preventDefault();
+                $('.color-option').removeClass('active');
+                $(this).addClass('active');
+                selectedColor = $(this).data('color');
+                $('#buy_now_color').val(selectedColor);
+            });
 
-    // Size selection
-    $('.size-option').click(function(e) {
-        e.preventDefault();
-        $('.size-option').removeClass('active');
-        $(this).addClass('active');
-        selectedSize = $(this).data('size');
-        $('#buy_now_size').val(selectedSize);
-    });
+            // Size selection
+            $('.size-option').click(function(e) {
+                e.preventDefault();
+                $('.size-option').removeClass('active');
+                $(this).addClass('active');
+                selectedSize = $(this).data('size');
+                $('#buy_now_size').val(selectedSize);
+            });
 
-    // Quantity change for Buy Now
-    $('#qty').on('change input', function() {
-        $('#buy_now_quantity').val($(this).val());
-    });
+            // Quantity change for Buy Now
+            $('#qty').on('change input', function() {
+                $('#buy_now_quantity').val($(this).val());
+            });
 
-    // Set default selections
-    if ($('.color-option').length > 0) {
-        selectedColor = $('.color-option.active').data('color');
-        $('#buy_now_color').val(selectedColor);
-    }
-    if ($('.size-option').length > 0) {
-        selectedSize = $('.size-option.active').data('size');
-        $('#buy_now_size').val(selectedSize);
-    }
-
-    // Add to Cart
-    $('.addToCart').click(function(e) {
-        e.preventDefault();
-        let productId = $(this).data('id');
-        let quantity = $('#qty').val() || 1;
-
-        // Check stock
-        let maxStock = $('#qty').attr('max');
-        if (parseInt(quantity) > parseInt(maxStock)) {
-            toastr.error('Quantity exceeds available stock!');
-            return;
-        }
-
-        $.ajax({
-            url: "{{ route('product.cart.add') }}",
-            type: "POST",
-            data: {
-                product_id: productId,
-                quantity: quantity,
-                color: selectedColor,
-                size: selectedSize,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(response) {
-                toastr.success(response.message);
-                // Update cart count in header if needed
-                if (response.cart_count !== undefined) {
-                    $('.cart-count').text(response.cart_count);
-                }
-            },
-            error: function(xhr) {
-                if (xhr.status === 401) {
-                    window.location.href = "{{ route('login') }}?redirect_back=" + encodeURIComponent(window.location.href);
-                } else {
-                    let errorMessage = 'Something went wrong!';
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    }
-                    toastr.error(errorMessage);
-                    console.error('Cart Add Error:', xhr.responseText);
-                }
+            // Set default selections
+            if ($('.color-option').length > 0) {
+                selectedColor = $('.color-option.active').data('color');
+                $('#buy_now_color').val(selectedColor);
             }
-        });
-    });
-
-    // Add to Wishlist
-    $('.addToWishlist').click(function(e) {
-        e.preventDefault();
-        let productId = $(this).data('id');
-
-        $.ajax({
-            url: "{{ route('product.wishlist.add') }}",
-            type: "POST",
-            data: {
-                product_id: productId,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(response) {
-                toastr.success(response.message);
-                // Update wishlist count in header if needed
-                if (response.wishlist_count !== undefined) {
-                    $('.wishlist-count').text(response.wishlist_count);
-                }
-            },
-            error: function(xhr) {
-                if (xhr.status === 401) {
-                    window.location.href = "{{ route('login') }}?redirect_back=" + encodeURIComponent(window.location.href);
-                } else {
-                    let errorMessage = 'Something went wrong!';
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    }
-                    toastr.error(errorMessage);
-                    console.error('Wishlist Add Error:', xhr.responseText);
-                }
+            if ($('.size-option').length > 0) {
+                selectedSize = $('.size-option.active').data('size');
+                $('#buy_now_size').val(selectedSize);
             }
+
+            // Add to Cart
+            $('.addToCart').click(function(e) {
+                e.preventDefault();
+                let productId = $(this).data('id');
+                let quantity = $('#qty').val() || 1;
+
+                // Check stock
+                let maxStock = $('#qty').attr('max');
+                if (parseInt(quantity) > parseInt(maxStock)) {
+                    toastr.error('Quantity exceeds available stock!');
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ route('product.cart.add') }}",
+                    type: "POST",
+                    data: {
+                        product_id: productId,
+                        quantity: quantity,
+                        color: selectedColor,
+                        size: selectedSize,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                        // Update cart count in header if needed
+                        if (response.cart_count !== undefined) {
+                            $('.cart-count').text(response.cart_count);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 401) {
+                            window.location.href = "{{ route('login') }}?redirect_back=" +
+                                encodeURIComponent(window.location.href);
+                        } else {
+                            let errorMessage = 'Something went wrong!';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            }
+                            toastr.error(errorMessage);
+                            console.error('Cart Add Error:', xhr.responseText);
+                        }
+                    }
+                });
+            });
+
+            // Add to Wishlist
+            $('.addToWishlist').click(function(e) {
+                e.preventDefault();
+                let productId = $(this).data('id');
+
+                $.ajax({
+                    url: "{{ route('product.wishlist.add') }}",
+                    type: "POST",
+                    data: {
+                        product_id: productId,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                        // Update wishlist count in header if needed
+                        if (response.wishlist_count !== undefined) {
+                            $('.wishlist-count').text(response.wishlist_count);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 401) {
+                            window.location.href = "{{ route('login') }}?redirect_back=" +
+                                encodeURIComponent(window.location.href);
+                        } else {
+                            let errorMessage = 'Something went wrong!';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            }
+                            toastr.error(errorMessage);
+                            console.error('Wishlist Add Error:', xhr.responseText);
+                        }
+                    }
+                });
+            });
+
+            // Buy Now form validation {{ route('checkout') }}
+            $('form[action="#"]').on('submit', function(e) {
+                let quantity = $('#qty').val() || 1;
+                let maxStock = $('#qty').attr('max');
+
+                if (parseInt(quantity) > parseInt(maxStock)) {
+                    e.preventDefault();
+                    toastr.error('Quantity exceeds available stock!');
+                    return false;
+                }
+
+                // Show loading state
+                $(this).find('.btn-buy-now').prop('disabled', true).html(
+                    '<i class="fas fa-spinner fa-spin"></i> Processing...');
+            });
         });
-    });
-
-    // Buy Now form validation {{ route('checkout') }}
-    $('form[action="#"]').on('submit', function(e) {
-        let quantity = $('#qty').val() || 1;
-        let maxStock = $('#qty').attr('max');
-
-        if (parseInt(quantity) > parseInt(maxStock)) {
-            e.preventDefault();
-            toastr.error('Quantity exceeds available stock!');
-            return false;
-        }
-
-        // Show loading state
-        $(this).find('.btn-buy-now').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processing...');
-    });
-});
-</script>
+    </script>
 @endpush

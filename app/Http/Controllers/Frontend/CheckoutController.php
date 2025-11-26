@@ -8,31 +8,27 @@ use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
+use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
-public function index()
+    public function index()
     {
-        // Fix: Load product with cart items
-        $cartItems = Cart::with(['product' => function($query) {
+        $cartItems = Cart::with(['product' => function ($query) {
             $query->select('id', 'name', 'price', 'image', 'stock');
         }])->where('user_id', Auth::id())->get();
-        // dd($cartItems);
+
         if ($cartItems->isEmpty()) {
-            return redirect()->route('cart')->with('error', 'Your cart is empty!');
+              toastr()->error('Your cart is empty!!');
+            return redirect()->route('product.cart.index')->with('error', 'Your cart is empty!');
         }
 
-        // Debug: Check what data we're getting
-        // dd($cartItems->toArray());
-
-        $subtotal = $cartItems->sum(function($item) {
-            // Fix: Check if product exists and has price
-            if ($item->product && $item->product->price) {
-                return $item->product->price * $item->quantity;
-            }
-            return 0;
+        // FIX: Use cart price instead of product price
+        $subtotal = $cartItems->sum(function ($item) {
+            return $item->price * $item->quantity;
         });
 
         $shipping = 0;
@@ -54,12 +50,22 @@ public function index()
 
         $total = $subtotal + $shipping + $tax - $discount;
 
+        // Get active payment methods
+        $paymentMethods = PaymentMethod::active()->orderBy('sort_order')->get();
+
         return view('frontend.pages.checkout', compact(
-            'cartItems', 'subtotal', 'shipping', 'tax', 'discount',
-            'total', 'couponCode', 'discountType', 'appliedCoupon'
+            'cartItems',
+            'subtotal',
+            'shipping',
+            'tax',
+            'discount',
+            'total',
+            'couponCode',
+            'discountType',
+            'appliedCoupon',
+            'paymentMethods'
         ));
     }
-
 
     public function process(Request $request)
     {
@@ -71,7 +77,7 @@ public function index()
             'billing_city' => 'required|string',
             'billing_state' => 'required|string',
             'billing_zipcode' => 'required|string',
-            'payment_method' => 'required|in:cod,card,bkash,bank',
+            'payment_method' => 'required|in:cod,bkash,nagad,rocket,card,bank',
             'terms' => 'required'
         ]);
 
@@ -84,9 +90,9 @@ public function index()
                 return redirect()->route('cart')->with('error', 'Your cart is empty!');
             }
 
-            // Calculate totals
-            $subtotal = $cartItems->sum(function($item) {
-                return $item->product->price * $item->quantity;
+            // FIX: Use cart price for calculation
+            $subtotal = $cartItems->sum(function ($item) {
+                return $item->price * $item->quantity;
             });
 
             $shipping = 0;
@@ -105,7 +111,6 @@ public function index()
                 $coupon = Coupon::find($couponId);
                 $couponType = $coupon ? $coupon->type : null;
 
-                // Increment coupon usage
                 if ($coupon) {
                     $coupon->incrementUsage();
                 }
@@ -116,9 +121,9 @@ public function index()
             // Create order
             $order = Order::create([
                 'user_id' => Auth::id(),
-                'order_number' => 'ORD-' . date('Ymd') . '-' . strtoupper(uniqid()),
+                'order_number' => 'ORD-' . date('YmdHis') . '-' . strtoupper(uniqid()),
                 'status' => 'pending',
-                'payment_status' => $request->payment_method == 'cod' ? 'pending' : 'paid',
+                'payment_status' => 'pending',
                 'payment_method' => $request->payment_method,
                 'subtotal' => $subtotal,
                 'discount' => $discount,
@@ -158,11 +163,11 @@ public function index()
                     'product_description' => $cartItem->product->description,
                     'product_image' => $cartItem->product->image,
                     'product_price' => $cartItem->product->price,
-                    'sale_price' => $cartItem->product->price,
+                    'sale_price' => $cartItem->price, // FIX: Use cart price, not product price
                     'quantity' => $cartItem->quantity,
-                    'subtotal' => $cartItem->product->price * $cartItem->quantity,
-                    'tax' => ($cartItem->product->price * $cartItem->quantity) * 0.05,
-                    'total' => ($cartItem->product->price * $cartItem->quantity) * 1.05,
+                    'subtotal' => $cartItem->price * $cartItem->quantity, // FIX: Use cart price
+                    'tax' => ($cartItem->price * $cartItem->quantity) * 0.05, // FIX: Use cart price
+                    'total' => ($cartItem->price * $cartItem->quantity) * 1.05, // FIX: Use cart price
                     'color' => $cartItem->color,
                     'size' => $cartItem->size,
                 ]);
@@ -171,17 +176,66 @@ public function index()
                 $cartItem->product->decrement('stock', $cartItem->quantity);
             }
 
-            // Clear cart and coupon session
-            Cart::where('user_id', Auth::id())->delete();
-            session()->forget('applied_coupon');
+            // Handle payment based on method
+            if ($request->payment_method === 'cod') {
+                // For COD, create pending payment and confirm order
+                Payment::create([
+                    'order_id' => $order->id,
+                    'user_id' => Auth::id(),
+                    'payment_method' => 'cod',
+                    'amount' => $grandTotal,
+                    'currency' => 'BDT',
+                    'status' => 'pending',
+                ]);
 
-            DB::commit();
+                // FIX: Update order status properly for COD
+                $order->update([
+                    'status' => 'confirmed',
+                    'payment_status' => 'pending',
+                    'confirmed_at' => now()
+                ]);
 
-            return redirect()->route('order.confirmation', $order->id)
-                ->with('success', 'Order placed successfully!');
+                // Clear cart and coupon session
+                Cart::where('user_id', Auth::id())->delete();
+                session()->forget('applied_coupon');
+
+                DB::commit();
+                // $toastr()->success('Order placed successfully! You will pay $' . number_format($grandTotal, 2) . ' when you receive the product.');
+                return redirect()->route('frontend.pages.orderconfirmation', $order->id)
+                    ->with('success', 'Order placed successfully! You will pay $' . number_format($grandTotal, 2) . ' when you receive the product.');
+
+            } else {
+                // For online payments, create pending payment
+                $payment = Payment::create([
+                    'order_id' => $order->id,
+                    'user_id' => Auth::id(),
+                    'payment_method' => $request->payment_method,
+                    'amount' => $grandTotal,
+                    'currency' => 'BDT',
+                    'status' => 'pending',
+                ]);
+
+                // FIX: Order remains pending until payment
+                $order->update([
+                    'status' => 'pending',
+                    'payment_status' => 'pending'
+                ]);
+
+                // Clear cart and coupon session
+                Cart::where('user_id', Auth::id())->delete();
+                session()->forget('applied_coupon');
+
+                DB::commit();
+
+                // FIX: Simple redirect for now - remove processRealPayment call
+                // $toastr()->info('Please complete the payment to confirm your order.');
+                return redirect()->route('payment.demo', $payment->id)
+                    ->with('info', 'Please complete the payment to confirm your order.');
+            }
 
         } catch (\Exception $e) {
             DB::rollBack();
+            // $toastr()->error('Order failed: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Order failed: ' . $e->getMessage());
         }
     }
@@ -197,6 +251,7 @@ public function index()
             ->first();
 
         if (!$coupon) {
+            // $toastr()->error('Invalid coupon code!');
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid coupon code!'
@@ -204,6 +259,7 @@ public function index()
         }
 
         if (!$coupon->isValid()) {
+            // $toastr()->error('This coupon is no longer valid!');
             return response()->json([
                 'success' => false,
                 'message' => 'This coupon is no longer valid!'
@@ -211,13 +267,16 @@ public function index()
         }
 
         $cartItems = Cart::with('product')->where('user_id', Auth::id())->get();
-        $subtotal = $cartItems->sum(function($item) {
-            return $item->product->price * $item->quantity;
+        
+        // FIX: Use cart price for subtotal calculation
+        $subtotal = $cartItems->sum(function ($item) {
+            return $item->price * $item->quantity;
         });
 
         $discount = $coupon->calculateDiscount($subtotal);
 
         if ($discount <= 0) {
+                // $toastr()->error('Coupon cannot be applied to your cart!');
             return response()->json([
                 'success' => false,
                 'message' => 'Coupon cannot be applied to your cart!'
@@ -241,10 +300,17 @@ public function index()
     public function removeCoupon()
     {
         session()->forget('applied_coupon');
-
+        $toastr()->success('Coupon removed successfully!');
         return response()->json([
             'success' => true,
             'message' => 'Coupon removed successfully!'
         ]);
+    }
+
+    // FIX: Add missing method for payment processing
+    private function handleOnlinePayment($payment)
+    {
+        // For now, redirect to demo payment
+        return redirect()->route('frontend.pages.demo', $payment->id);
     }
 }
