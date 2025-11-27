@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $totalCategories = Category::count();
         $totalBrands = Brand::count();
         $totalOrders = Order::count();
-        $totalCustomers = User::where('role', 'user')->count();
+        $totalCustomers = User::where('role', 'customer')->count();
 
         // Order Status Counts
         $pendingOrders = Order::where('status', 'pending')->count();

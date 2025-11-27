@@ -51,6 +51,22 @@ class Product extends Model
     return $this->hasOne(ProductVideo::class);
 }
 
+ // Relationship with ProductViews
+    public function views()
+    {
+        return $this->hasMany(ProductView::class);
+    }
+
+    // Accessor for views count
+    public function getViewsCountAttribute()
+    {
+        if (isset($this->attributes['views_count'])) {
+            return $this->attributes['views_count'];
+        }
+        
+        return $this->views()->count();
+    }
+
 
     public function scopeNewArrivals($query)
     {

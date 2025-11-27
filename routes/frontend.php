@@ -20,12 +20,10 @@ use App\Http\Controllers\NewsletterController;
 // Newsletter Routes
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::post('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+// web.php-
+Route::get('/shop', [App\Http\Controllers\Frontend\ShopController::class, 'shop'])->name('shop');
 
-// Admin Newsletter Routes (if needed)
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/newsletter', [NewsletterController::class, 'index'])->name('admin.newsletter.index');
-    Route::delete('/newsletter/{newsletter}', [NewsletterController::class, 'destroy'])->name('admin.newsletter.destroy');
-});
+
 Route::get('/', [HomeController::class, 'Homeindex'])->name('index');
 // Static Pages Routes
 Route::get('/about', [HomeController::class, 'about'])->name('about');

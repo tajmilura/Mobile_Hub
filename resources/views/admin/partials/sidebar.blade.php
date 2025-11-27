@@ -20,19 +20,6 @@
               </div>
           </div>
 
-          <!-- SidebarSearch Form -->
-          <div class="form-inline">
-              <div class="input-group" data-widget="sidebar-search">
-                  <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                      aria-label="Search">
-                  <div class="input-group-append">
-                      <button class="btn btn-sidebar">
-                          <i class="fas fa-search fa-fw"></i>
-                      </button>
-                  </div>
-              </div>
-          </div>
-
           <!-- Sidebar Menu -->
           <nav class="mt-2">
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -40,7 +27,7 @@
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                   <li class="nav-item menu-open">
-                      <a href="#" class="nav-link active">
+                      <a href="{{ route('admin_dashboard') }}" class="nav-link active">
                           <i class="nav-icon fas fa-tachometer-alt"></i>
                           <p>
                               Dashboard
@@ -76,7 +63,7 @@
                   </li>
                   <li class="nav-item">
                       <a href="#" class="nav-link">
-                          <i class=" nav-icon fa-brands fa-font-awesome"></i>
+                          <i class=" nav-icon fas fa-solid fa-box-open"></i>
                           <p>
                               Brand
                               <i class="fas fa-angle-left right"></i>
@@ -185,17 +172,9 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="{{ route('product.create') }}" class="nav-link">
+                              <a href="{{ route('admin.payment-methods.index') }}" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Add Payment Method</p>
-                              </a>
-                          </li>
-                      </ul>
-                      <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                              <a href="{{ route('product.index') }}" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Order Items</p>
                               </a>
                           </li>
                       </ul>
@@ -226,6 +205,13 @@
                           </li>
                       </ul>
                   </li>
+                     <li class="nav-header">News Letters</li>
+                  <li class="nav-item">
+                      <a href="{{ route('newsletter.index') }}" class="nav-link">
+                          <i class="nav-icon fas fa-ellipsis-h"></i>
+                          <p>All News Letters</p>
+                      </a>
+                  </li>
                   <li class="nav-header">Website Management</li>
                   <li class="nav-item">
                       <a href="#" class="nav-link">
@@ -254,9 +240,9 @@
                   </li>
                   <li class="nav-header">MISCELLANEOUS</li>
                   <li class="nav-item">
-                      <a href="iframe.html" class="nav-link">
+                      <a href="{{ route('admin_dashboard') }}" class="nav-link">
                           <i class="nav-icon fas fa-ellipsis-h"></i>
-                          <p>Tabbed IFrame Plugin</p>
+                          <p>{{ getSetting('site_name') }}</p>
                       </a>
                   </li>
               </ul>

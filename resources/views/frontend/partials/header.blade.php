@@ -53,7 +53,7 @@
                                 <li class="header-dropdown">
                                     <a href="#">
                                         <img src="{{ Auth::user()->profile_photo_url ?? asset('default-avatar.png') }}"
-                                            alt="User" class="rounded-circle me-2" width="24" height="24">
+                                            alt="User" class="rounded-circle mr-3 me-2" width="24" height="24">
                                         {{ Str::limit(Auth::user()->name, 12) }}
                                     </a>
                                     <div class="header-menu">
@@ -100,11 +100,11 @@
             <div class="header-center">
                 <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                    <form action="#" method="get">
+                    <form action="{{ route('shop') }}" method="GET">
                         <div class="header-search-wrapper search-wrapper-wide">
                             <label for="q" class="sr-only">Search</label>
                             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                            <input type="search" class="form-control" name="q" id="q"
+                            <input type="search" class="form-control"  value="{{ request('search') }}" name="search" id="q"
                                 placeholder="Search product ..." required>
                         </div><!-- End .header-search-wrapper -->
                     </form>
@@ -233,7 +233,9 @@
             </div><!-- End .header-right -->
         </div><!-- End .container -->
     </div><!-- End .header-middle -->
-
+     @php
+                $brands = \App\Models\Brand::all();
+            @endphp
     <div class="header-bottom sticky-header">
         <div class="container">
             <div class="header-left">
@@ -260,18 +262,18 @@
 
             <div class="header-center">
                 <nav class="main-nav">
-                    <ul class="menu sf-arrows">
+                    <ul class="menu">
                         <li class="megamenu-container active">
-                            <a href="{{ url('/') }}" class="sf-with-ul">Home</a>
+                            <a href="{{ url('/') }}" class="">Home</a>
                         </li>
                         <li>
-                            <a href="category.html" class="sf-with-ul">Shop</a>
+                            <a href="{{ route('shop') }}" class="">Shop</a>
                         </li>
                         <li>
-                            <a href="{{ route('product.cart.index') }}" class="sf-with-ul">Cart</a>
+                            <a href="{{ route('product.cart.index') }}" class="">Cart</a>
                         </li>
                         <li>
-                            <a href="{{ route('product.wishlist.index') }}" class="sf-with-ul">Wishlist</a>
+                            <a href="{{ route('product.wishlist.index') }}" class="">Wishlist</a>
                         </li>
                         <li>
                             <a href="#" class="sf-with-ul">Pages</a>

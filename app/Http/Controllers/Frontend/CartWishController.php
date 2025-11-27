@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Wishlist;
 use App\Models\Product;
@@ -40,10 +41,11 @@ class CartWishController extends Controller
                     session()->forget('applied_coupon');
                 }
             }
+             $brands = Brand::all();
 
             $total = $subtotal - $discount;
 
-            return view('frontend.pages.cart', compact('cartItems', 'subtotal', 'total', 'discount'));
+            return view('frontend.pages.cart', compact('cartItems', 'brands' ,'subtotal', 'total', 'discount'));
         } catch (\Exception $e) {
             Log::error('Cart index error: ' . $e->getMessage());
             return back()->with('error', 'Something went wrong.');
@@ -224,8 +226,8 @@ class CartWishController extends Controller
             $wishlistItems = Wishlist::with('product')
                 ->where('user_id', auth()->id())
                 ->get();
-
-            return view('frontend.pages.wishlist', compact('wishlistItems'));
+                   $brands = Brand::all();
+            return view('frontend.pages.wishlist', compact('wishlistItems','brands'));
         } catch (\Exception $e) {
             Log::error('Wishlist index error: ' . $e->getMessage());
             return back()->with('error', 'Something went wrong.');

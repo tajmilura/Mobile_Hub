@@ -215,19 +215,21 @@ class HomeController extends Controller
     // About Page
     public function about()
     {
-        return view('frontend.pages.about');
+         $brands = Brand::all();
+        return view('frontend.pages.about', compact('brands'));
     }
 
     // Contact Page
     public function contact()
     {
-        return view('frontend.pages.contact');
+         $brands = Brand::all();
+        return view('frontend.pages.contact', compact('brands'));
     }
 
     // FAQ Page
     public function faq()
     {
-        $faqs = Faq::where('status', 1)->orderBy('order', 'asc')->get();
-        return view('frontend.pages.faq', compact('faqs'));
+         $brands = Brand::all();
+        return view('frontend.pages.faq', compact('brands'));
     }
 }

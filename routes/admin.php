@@ -11,7 +11,9 @@ use App\Http\Controllers\Mobilehub\AdminOrderController;
 use App\Http\Controllers\Mobilehub\AdminCouponController;
 use App\Http\Controllers\Mobilehub\AdminProfileController;
 use App\Http\Controllers\Mobilehub\AdminUserController;
+use App\Http\Controllers\Mobilehub\PaymentMethodController;
 use App\Http\Controllers\Mobilehub\SliderBannerController;
+use App\Http\Controllers\NewsletterController;
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('ad_dashboard')
@@ -40,6 +42,10 @@ Route::middleware(['auth', 'role:admin'])
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
+    // Admin Newsletter Routes
+    Route::get('/newsletter', [NewsletterController::class, 'Newsindex'])->name('newsletter.index');
+    Route::delete('/newsletter/{newsletter}', [NewsletterController::class, 'destroy'])->name('newsletter.destroy');
+    Route::get('/newsletter/export', [NewsletterController::class, 'export'])->name('newsletter.export');
     // ----------------------
     // BRAND ROUTES
     // ----------------------
@@ -152,4 +158,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             'message' => $newStatus ? 'Maintenance mode enabled' : 'Maintenance mode disabled'
         ]);
     })->middleware('auth')->name('admin.toggleMaintenance');
+
+    // Payment Methods Routes
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/payment-methods', [PaymentMethodController::class, 'index'])->name('payment-methods.index');
+        Route::post('/payment-methods', [PaymentMethodController::class, 'store'])->name('payment-methods.store');
+        Route::put('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'update'])->name('payment-methods.update');
+        Route::delete('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
+    });
 });

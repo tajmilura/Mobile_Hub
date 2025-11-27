@@ -1,6 +1,6 @@
         <footer class="footer">
             <div class="cta bg-image bg-dark pt-4 pb-5 mb-0"
-                style="background-image: url({{ asset('assets/frontend') }}/assets/images/demos/demo-4/bg-5.jpg);">
+                style="background-image: url({{ asset('storage/' . $longBanner->image_path) }});">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-sm-10 col-md-8 col-lg-6">

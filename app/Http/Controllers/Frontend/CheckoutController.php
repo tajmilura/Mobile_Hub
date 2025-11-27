@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Coupon;
@@ -52,7 +53,7 @@ class CheckoutController extends Controller
 
         // Get active payment methods
         $paymentMethods = PaymentMethod::active()->orderBy('sort_order')->get();
-
+        $brands = Brand::all();
         return view('frontend.pages.checkout', compact(
             'cartItems',
             'subtotal',
@@ -63,7 +64,7 @@ class CheckoutController extends Controller
             'couponCode',
             'discountType',
             'appliedCoupon',
-            'paymentMethods'
+            'paymentMethods',
         ));
     }
 
@@ -267,7 +268,7 @@ class CheckoutController extends Controller
         }
 
         $cartItems = Cart::with('product')->where('user_id', Auth::id())->get();
-        
+
         // FIX: Use cart price for subtotal calculation
         $subtotal = $cartItems->sum(function ($item) {
             return $item->price * $item->quantity;

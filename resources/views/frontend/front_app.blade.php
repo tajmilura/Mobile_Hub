@@ -23,6 +23,10 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet"
         href="{{ asset('assets/frontend') }}/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+        <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/plugins/owl-carousel/owl.carousel.css">

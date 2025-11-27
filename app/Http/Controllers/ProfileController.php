@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Brand;
 use Intervention\Image\Laravel\Facades\Image;
 use Illuminate\Validation\Rules\Password;
 
@@ -21,8 +22,8 @@ class ProfileController extends Controller
      * Display the user's profile form.
      */
     public function edit(Request $request): View
-    {
-        return view('frontend.profile.profile', [
+    {  $brands = Brand::all();
+        return view('frontend.profile.profile',compact('brands'), [
             'user' => $request->user(),
         ]);
     }
@@ -75,8 +76,12 @@ class ProfileController extends Controller
         }
 
         $user->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        if(Auth::user()->role=='admin'){
+            return Redirect::route('admin.profile.edit')->with('status', 'profile-updated');
+        }
+        else{
+                    return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        }
     }
 
     /**

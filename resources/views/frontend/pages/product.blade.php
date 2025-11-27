@@ -2,6 +2,109 @@
 @section('content')
     @push('styles')
         <style>
+            .product-video-section {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .section-title {
+                color: #2c3e50;
+                font-weight: 700;
+                font-size: 2rem;
+                border-bottom: 3px solid #3498db;
+                display: inline-block;
+                padding-bottom: 0.5rem;
+            }
+
+            .video-item .card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                border-radius: 15px;
+                overflow: hidden;
+            }
+
+            .video-item .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            }
+
+            .card-header {
+                border-radius: 0 !important;
+                padding: 1rem 1.5rem;
+            }
+
+            .local-video-container {
+                background: #000;
+            }
+
+            .product-video {
+                border-radius: 0;
+                max-height: 400px;
+            }
+
+            .embed-video-container {
+                position: relative;
+                width: 100%;
+                height: 0;
+                padding-bottom: 56.25%;
+                background: #000;
+            }
+
+            .embed-video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+
+            .video-title {
+                font-size: 0.95rem;
+                line-height: 1.4;
+            }
+
+            .no-video-placeholder .card {
+                border-radius: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .no-video-placeholder .card:hover {
+                background: #f8f9fa !important;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .section-title {
+                    font-size: 1.5rem;
+                }
+
+                .video-item {
+                    margin-bottom: 1.5rem;
+                }
+
+                .card-header h5 {
+                    font-size: 1rem;
+                }
+            }
+
+            /* Animation */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .video-item {
+                animation: fadeIn 0.6s ease-out;
+            }
+        </style>
+        <style>
             .additional-info-table {
                 border-radius: 12px;
                 overflow: hidden;
@@ -506,6 +609,82 @@
                                 <!-- Reviews content here -->
                             </div>
                         </div>
+                    </div>
+
+                    {{-- Video Part --}}
+                    <div class="product-video-section text-center py-4">
+                        <h3 class="section-title mb-4">📹 Product Videos</h3>
+
+                        @if ($product->video)
+                            <div class="videos-container row justify-content-center g-4">
+                                <!-- Local Video Check -->
+                                @if ($product->video->video_path)
+                                    <div class="video-item col-lg-6 col-md-8">
+                                        <div class="card shadow-sm border-0 h-100">
+                                            <div class="card-header bg-primary text-white">
+                                                <h5 class="card-title mb-0">
+                                                    <i class="fas fa-play-circle m-2"></i>Product Video
+                                                </h5>
+                                            </div>
+                                            <div class="card-body p-0">
+                                                <div class="local-video-container">
+                                                    <video controls class="product-video w-100">
+                                                        <source
+                                                            src="{{ asset('storage/' . $product->video->video_path) }}"
+                                                            type="video/mp4">
+                                                        Your browser does not support the video tag.
+                                                    </video>
+                                                </div>
+                                                @if ($product->video->title)
+                                                    <div class="p-3">
+                                                        <p class="video-title fw-semibold text-muted mb-0">
+                                                            <i
+                                                                class="fas fa-heading me-2"></i>{{ $product->video->title }}
+                                                        </p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <!-- Embed Video Check -->
+                                @if ($product->video->embed_link)
+                                    <div class="video-item col-lg-6 col-md-8">
+                                        <div class="card shadow-sm border-0 h-100">
+                                            <div class="card-header bg-success text-white">
+                                                <h5 class="card-title mb-0">
+                                                    <i class="fab fa-youtube m-2"></i>Video From Youtube
+                                                </h5>
+                                            </div>
+                                            <div class="card-body p-0">
+                                                <div class="embed-video-container">
+                                                    {!! $product->video->embed_link !!}
+                                                </div>
+                                                @if ($product->video->title && !$product->video->video_path)
+                                                    <div class="p-3">
+                                                        <p class="video-title fw-semibold text-muted mb-0">
+                                                            <i
+                                                                class="fas fa-heading me-2"></i>{{ $product->video->title }}
+                                                        </p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        @else
+                            <div class="no-video-placeholder">
+                                <div class="card border-0 bg-light">
+                                    <div class="card-body py-5">
+                                        <i class="fas fa-video-slash fa-3x text-muted mb-3"></i>
+                                        <h5 class="text-muted">No Video Available</h5>
+                                        <p class="text-muted mb-0">This product doesn't have any videos yet.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 

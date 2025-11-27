@@ -26,7 +26,7 @@ class PaymentController extends Controller
             ->firstOrFail();
 
         if ($payment->isPaid()) {
-            return redirect()->route('order.confirmation', $payment->order_id)
+            return redirect()->route('frontend.pages.orderconfirmation', $payment->order_id)
                 ->with('info', 'Payment already completed!');
         }
 
@@ -35,7 +35,7 @@ class PaymentController extends Controller
             return $this->processStripePayment($payment);
         }
 
-        return view('frontend.payment.process', compact('payment'));
+        return view('frontend.pages.process', compact('payment'));
     }
 
     private function processStripePayment($payment)
@@ -94,7 +94,7 @@ class PaymentController extends Controller
                     'paid_at' => now()
                 ]);
 
-                return redirect()->route('order.confirmation', $payment->order_id)
+                return redirect()->route('frontend.pages.orderconfirmation', $payment->order_id)
                     ->with('success', 'Payment completed successfully!');
             }
 
@@ -133,7 +133,7 @@ class PaymentController extends Controller
             ]);
         }
 
-        return redirect()->route('order.confirmation', $payment->order_id)
+        return redirect()->route('frontend.pages.orderconfirmation', $payment->order_id)
             ->with('success', 'Payment completed successfully!');
     }
 

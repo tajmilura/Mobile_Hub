@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('video_path')->nullable();
 
             // For embedded links
-            $table->string('embed_link')->nullable(); // YouTube/Vimeo URL
+            $table->text('embed_link')->nullable(); // YouTube/Vimeo URL
 
             // Optional metadata
             $table->string('title')->nullable();
