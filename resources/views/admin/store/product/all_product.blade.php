@@ -25,18 +25,21 @@
                             <td>{{ $index + 1 }}</td>
                             <td>
                                 @if ($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="60" height="60"
-                                        style="object-fit: cover; border-radius: 8px;">
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                        width="60" height="60" style="object-fit: cover; border-radius: 8px;">
                                 @else
                                     <span class="text-muted">No Image</span>
                                 @endif
                             </td>
-                            <td>{{ $product->name }}</td>
+                            <td><a href="{{ route('product.show', $product->id) }}" class="text-dark font-weight-bold">
+                                    {{ $product->name }}
+                                </a></td>
                             <td>{{ $product->brand->name ?? 'N/A' }}</td>
                             <td>{{ $product->category->category_name ?? 'N/A' }}</td>
                             <td>{{ $product->release_date ?? 'N/A' }}</td>
                             <td class="text-center align-middle">
-                                <a href="{{ route('product.edit', $product->id) }}" data-id="{{ $product->id }}" data-name="" class="text-primary pr-3 editBrandBtn">
+                                <a href="{{ route('product.edit', $product->id) }}" data-id="{{ $product->id }}"
+                                    data-name="" class="text-primary pr-3 editBrandBtn">
                                     <i class="fas fa-edit"></i>
                                 </a>
 
@@ -99,7 +102,7 @@
                         type: 'DELETE',
                         data: {
                             _token: '{{ csrf_token() }}',
-                              _method: 'DELETE'
+                            _method: 'DELETE'
                         },
                         success: function(response) {
                             if (response.success) {

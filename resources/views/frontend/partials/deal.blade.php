@@ -31,7 +31,7 @@
                         @endif
                     </div>
 
-                    <a href="#" class="btn btn-link"> 
+                    <a href="{{ route('checkout', $deal->id) }}" class="btn btn-link">
                         <span>Shop Now</span>
                         <i class="icon-long-arrow-right"></i>
                     </a> {{-- {{ route('product.show', $deal->id) }} --}}
@@ -39,7 +39,7 @@
 
                 @if($deal->discount_end)
                 <div class="deal-bottom">
-                    <div class="deal-countdown daily-deal-countdown" 
+                    <div class="deal-countdown daily-deal-countdown"
                          data-until="{{ \Carbon\Carbon::parse($deal->discount_end)->toIso8601String() }}">
                     </div>
                 </div>
@@ -54,7 +54,7 @@
         <a href="#" class="btn btn-outline-dark-2 btn-round btn-more">
             <span>Shop more Outlet deals</span>
             <i class="icon-long-arrow-right"></i>
-        </a> 
+        </a>
     </div>
 </div>
 @endif

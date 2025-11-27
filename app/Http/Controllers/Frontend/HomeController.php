@@ -9,11 +9,12 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SliderAndBanner;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function Homeindex(Request $request)
     {
         $sliders = SliderAndBanner::where('type', 'slider')
             ->where('status', true)
@@ -40,6 +41,8 @@ class HomeController extends Controller
             ->get();
         $categories = Category::all();
 
+        $brands = Brand::all();
+
         $isFeaturedProductOne = Product::IsFeatured()->latest()->first();
         $isFeaturedProducts = Product::IsFeatured()->get();
         $recommendedProducts = $this->getRecommendedProducts($request);
@@ -52,10 +55,39 @@ class HomeController extends Controller
             'hotDeals',
             'isFeaturedProductOne',
             'isFeaturedProducts',
-            'recommendedProducts'
+            'recommendedProducts',
+            'brands'
 
         ));
     }
+
+
+    public function BrandProduct($brand_id)
+{
+    // Brand find
+    $brand = Brand::findOrFail($brand_id);
+
+    $brands = Brand::all();
+    $products = Product::where('brand_id', $brand_id)->paginate(12);;
+
+    return view('frontend.pages.brand', compact('brand','brands' ,'products'));
+}
+
+
+    public function CategoryProduct($cat_id)
+{
+    // Brand find
+    $category = Category::findOrFail($cat_id);
+
+  $brands = Brand::all();
+    $products = Product::where('category_id', $cat_id)->paginate(12);;
+
+    return view('frontend.pages.category', compact('category','brands' ,'products'));
+}
+
+
+
+
 
 
     public function getRecommendedProducts(Request $request)
@@ -177,5 +209,25 @@ class HomeController extends Controller
                                 ->get();
 
         return view('frontend.pages.product', compact('product', 'relatedProducts'));
+    }
+
+
+    // About Page
+    public function about()
+    {
+        return view('frontend.pages.about');
+    }
+
+    // Contact Page
+    public function contact()
+    {
+        return view('frontend.pages.contact');
+    }
+
+    // FAQ Page
+    public function faq()
+    {
+        $faqs = Faq::where('status', 1)->orderBy('order', 'asc')->get();
+        return view('frontend.pages.faq', compact('faqs'));
     }
 }

@@ -12,7 +12,7 @@
                 </li>
                 @foreach($categories as $category)
                 <li class="nav-item">
-                    <a class="nav-link" id="new-{{ $category->id }}-link" data-toggle="tab" 
+                    <a class="nav-link" id="new-{{ $category->id }}-link" data-toggle="tab"
                        href="#new-{{ $category->id }}-tab" role="tab"
                        aria-controls="new-{{ $category->id }}-tab" aria-selected="false">
                         {{ $category->category_name }}

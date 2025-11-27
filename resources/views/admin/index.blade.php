@@ -4,8 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mobile Hub | Dashboard</title>
+    <title>{{ getSetting('site_title', 'Mobile Hub') }} | Dashboard</title>
 
+    <link rel="mask-icon" href="{{ asset('storage/' . getSetting('favicon')) }}" color="#666666">
+    <link rel="shortcut icon" href="{{ asset('storage/' . getSetting('favicon')) }}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -26,7 +28,8 @@
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet"
         href="{{ asset('assets/admin') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="{{ asset('assets/admin') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
@@ -37,7 +40,7 @@
     <link rel="stylesheet" href="{{ asset('assets/admin') }}/plugins/summernote/summernote-bs4.min.css">
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -75,19 +78,19 @@
     <!-- ./wrapper -->
 
     <!--  CORRECT JAVASCRIPT LOADING ORDER -->
-    
+
     <!-- 1. jQuery FIRST (ONLY ONCE) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <!-- 2. jQuery UI -->
     <script src="{{ asset('assets/admin') }}/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script>
         $.widget.bridge('uibutton', $.ui.button);
     </script>
-    
+
     <!-- 3. Bootstrap 4 -->
     <script src="{{ asset('assets/admin') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- 4. Other AdminLTE Plugins -->
     <script src="{{ asset('assets/admin') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/chart.js/Chart.min.js"></script>
@@ -97,8 +100,9 @@
     <script src="{{ asset('assets/admin') }}/plugins/jquery-knob/jquery.knob.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/moment/moment.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/daterangepicker/daterangepicker.js"></script>
-    <script src="{{ asset('assets/admin') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    
+    <script src="{{ asset('assets/admin') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+    </script>
+
     <!-- 5. DataTables -->
     <script src="{{ asset('assets/admin') }}/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -112,21 +116,21 @@
     <script src="{{ asset('assets/admin') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    
+
     <!-- 6. Other Plugins -->
     <script src="{{ asset('assets/admin') }}/plugins/dropzone/min/dropzone.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <script src="{{ asset('assets/admin') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    
+
     <!-- 7. Toastr  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    
+
     <!-- 8. SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <!-- 9. AdminLTE Core -->
     <script src="{{ asset('assets/admin') }}/dist/js/adminlte.js"></script>
-    
+
     <!-- 10. Demo Scripts  -->
     <script src="{{ asset('assets/admin') }}/dist/js/demo.js"></script>
     <script src="{{ asset('assets/admin') }}/dist/js/pages/dashboard.js"></script>

@@ -62,8 +62,16 @@
                                             <li><a href="{{ route('product.cart.index') }}">My Cart</a></li>
                                             <li><a href="{{ route('order.history') }}">My Orders</a></li>
                                             {{-- <li><a href="{{ route('reviews.index') }}">My Reviews</a></li> --}}
-                                            <li><a href="{{ route('profile') }}">Profile</a></li>
-                                             <li><a href="{{ route('logout') }}">Logout</a></li>
+                                            <li><a href="{{ route('profile.edit') }}">Profile</a></li>
+                                            <li>
+                                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="list-group-item list-group-item-action border-0 text-start w-100 bg-transparent">
+                                                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                                    </button>
+                                                </form>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>
@@ -232,16 +240,18 @@
                 <div class="dropdown category-dropdown">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
-                        Browse Categories <i class="icon-angle-down"></i>
+                        Browse Brands <i class="icon-angle-down"></i>
                     </a>
-
                     <div class="dropdown-menu">
                         <nav class="side-nav">
                             <ul class="menu-vertical sf-arrows">
-                                <li class="item-lead"><a href="#">Daily offers</a></li>
-                                <li class="item-lead"><a href="#">Gift Ideas</a></li>
-                                <li><a href="#">Beds</a></li>
-                                <li><a href="#">Lighting</a></li>
+                                @foreach ($brands as $brand)
+                                    <li>
+                                        <a href="{{ route('product.brand.products', $brand->id) }}">
+                                            {{ $brand->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul><!-- End .menu-vertical -->
                         </nav><!-- End .side-nav -->
                     </div><!-- End .dropdown-menu -->
@@ -266,10 +276,9 @@
                         <li>
                             <a href="#" class="sf-with-ul">Pages</a>
                             <ul>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="contact.html">Contact</a></li>
-                                <li><a href="login.html">Login</a></li>
-                                <li><a href="faq.html">FAQs</a></li>
+                                <li><a href="{{ route('about') }}">About</a></li>
+                                <li><a href="{{ route('contact') }}">Contact</a></li>
+                                <li><a href="{{ route('faq') }}">FAQs</a></li>
                             </ul>
                         </li>
                     </ul><!-- End .menu -->

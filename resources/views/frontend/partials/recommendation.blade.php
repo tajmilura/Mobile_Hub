@@ -31,13 +31,13 @@
                             </a>
 
                             <div class="product-action-vertical">
-                                <a href="#" data-id="{{ $product->id }}"
+                                <a href="{{ route('product.wishlist.add',$product->id) }}" data-id="{{ $product->id }}"
                                    class="btn-product-icon btn-wishlist add-to-wishlist"
                                    title="Add to wishlist"></a>
                             </div>
 
                             <div class="product-action">
-                                <a href="#" data-id="{{ $product->id }}"
+                                <a href="{{ route('product.cart.add',$product->id) }}" data-id="{{ $product->id }}"
                                    class="btn-product btn-cart add-to-cart">
                                    <span>add to cart</span>
                                 </a>

@@ -10,15 +10,26 @@
                                         coupon</span> for first shopping</p><!-- End .cta-desc -->
                             </div><!-- End .text-center -->
 
-                            <form action="#">
+                            <form method="POST" action="{{ route('newsletter.subscribe') }}">
+                                @csrf
                                 <div class="input-group input-group-round">
-                                    <input type="email" class="form-control form-control-white"
-                                        placeholder="Enter your Email Address" aria-label="Email Adress" required>
+                                    <input type="email" name="email"
+                                        class="form-control form-control-white @error('email') is-invalid @enderror"
+                                        placeholder="Enter your Email Address" aria-label="Email Address" required
+                                        value="{{ old('email') }}">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit"><span>Subscribe</span><i
-                                                class="icon-long-arrow-right"></i></button>
-                                    </div><!-- .End .input-group-append -->
-                                </div><!-- .End .input-group -->
+                                        <button class="btn btn-primary" type="submit">
+                                            <span>Subscribe</span>
+                                            <i class="icon-long-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                @error('email')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                                @if (session('newsletter_success'))
+                                    <div class="alert alert-success mt-2">{{ session('newsletter_success') }}</div>
+                                @endif
                             </form>
                         </div><!-- End .col-sm-10 col-md-8 col-lg-6 -->
                     </div><!-- End .row -->
@@ -29,15 +40,15 @@
                     <div class="row">
                         <div class="col-sm-6 col-lg-3">
                             <div class="widget widget-about">
-                                <img src="{{ asset('assets/frontend') }}/assets/images/demos/demo-4/logo-footer.png"
-                                    class="footer-logo" alt="Footer Logo" width="105" height="25">
+                                <img src="{{ asset('storage/' . getSetting('site_logo')) }}" class="footer-logo"
+                                    alt="Footer Logo" width="105" height="25">
                                 <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
                                     magna eros eu erat. </p>
 
                                 <div class="widget-call">
                                     <i class="icon-phone"></i>
                                     Got Question? Call us 24/7
-                                    <a href="tel:#">+0123 456 789</a>
+                                    <a href="tel:#"></a>{{ getSetting('phone', 'Mobile Hub') }}
                                 </div><!-- End .widget-call -->
                             </div><!-- End .widget about-widget -->
                         </div><!-- End .col-sm-6 col-lg-3 -->
@@ -47,11 +58,13 @@
                                 <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
 
                                 <ul class="widget-list">
-                                    <li><a href="about.html">About Molla</a></li>
+                                    <li><a href="{{ route('about') }}">About
+                                            {{ getSetting('site_name', 'Mobile Hub') }}</a></li>
                                     <li><a href="#">Our Services</a></li>
-                                    <li><a href="#">How to shop on Molla</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
+                                    <li><a href="#">How to shop on {{ getSetting('site_name', 'Mobile Hub') }}</a>
+                                    </li>
+                                    <li><a href="{{ route('faq') }}">FAQ</a></li>
+                                    <li><a href="{{ route('contact') }}">Contact us</a></li>
                                 </ul><!-- End .widget-list -->
                             </div><!-- End .widget -->
                         </div><!-- End .col-sm-6 col-lg-3 -->
@@ -76,11 +89,11 @@
                                 <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
 
                                 <ul class="widget-list">
-                                    <li><a href="#">Sign In</a></li>
-                                    <li><a href="cart.html">View Cart</a></li>
-                                    <li><a href="#">My Wishlist</a></li>
+                                    <li><a href="{{ route('login') }}">Sign In</a></li>
+                                    <li><a href="{{ route('product.cart.index') }}">View Cart</a></li>
+                                    <li><a href="{{ route('product.wishlist.index') }}">My Wishlist</a></li>
                                     <li><a href="#">Track My Order</a></li>
-                                    <li><a href="#">Help</a></li>
+                                    <li><a href="{{ route('contact') }}">Help</a></li>
                                 </ul><!-- End .widget-list -->
                             </div><!-- End .widget -->
                         </div><!-- End .col-sm-6 col-lg-3 -->
@@ -90,7 +103,12 @@
 
             <div class="footer-bottom">
                 <div class="container">
-                    <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+                    ' <strong>Copyright &copy; {{ date('Y') }} <a
+                            href="#">{{ getSetting('site_name', 'Mobile Hub') }}</a>.</strong>'
+                    All rights reserved.
+                    <div class="float-right d-none d-sm-inline-block">
+                        <b>Version</b> 1.0
+                    </div>
                     <!-- End .footer-copyright -->
                     <figure class="footer-payments">
                         <img src="{{ asset('assets/frontend') }}/assets/images/payments.png" alt="Payment methods"

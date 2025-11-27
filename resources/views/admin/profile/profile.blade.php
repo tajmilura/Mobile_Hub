@@ -1,4 +1,4 @@
-@extends('frontend.front_app')
+@extends('admin.index')
 
 @section('title', 'User Profile')
 
@@ -15,8 +15,8 @@
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('admin_dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin_dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Profile</li>
                 </ol>
             </div>
@@ -56,25 +56,13 @@
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body p-0">
                                     <div class="list-group list-group-flush">
-                                        <a href="{{ route('dashboard') }}"
+                                        <a href="{{ route('admin_dashboard') }}"
                                             class="list-group-item list-group-item-action {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                                             <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                                         </a>
-                                        <a href="{{ route('profile.edit') }}"
+                                        <a href="{{ route('admin.profile.edit') }}"
                                             class="list-group-item list-group-item-action {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
                                             <i class="fas fa-user me-2"></i>Profile Information
-                                        </a>
-                                        <a href="{{ route('order.history') }}"
-                                            class="list-group-item list-group-item-action {{ request()->routeIs('order.history') ? 'active' : '' }}">
-                                            <i class="fas fa-shopping-bag me-2"></i>Order History
-                                        </a>
-                                        <a href="{{ route('product.wishlist.index') }}"
-                                            class="list-group-item list-group-item-action {{ request()->routeIs('product.wishlist.index') ? 'active' : '' }}">
-                                            <i class="fas fa-heart me-2"></i>My Wishlist
-                                        </a>
-                                        <a href="{{ route('product.cart.index') }}"
-                                            class="list-group-item list-group-item-action {{ request()->routeIs('product.cart.index') ? 'active' : '' }}">
-                                            <i class="fas fa-shopping-cart me-2"></i>Shopping Cart
                                         </a>
                                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                             @csrf
@@ -137,7 +125,7 @@
                                         </p>
                                     </header>
 
-                                    <form method="POST" action="{{ route('password.update.custom') }}" class="space-y-4"
+                                    <form method="POST" action="{{ route('admin.password.update.custom') }}" class="space-y-4"
                                         id="updatePasswordForm">
                                         @csrf
                                         @method('PUT')

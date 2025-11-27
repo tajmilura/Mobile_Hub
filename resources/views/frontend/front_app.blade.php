@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- molla/index-4.html  22 Nov 2019 09:53:08 GMT -->
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ getSetting('site_title', 'Default Title') }}</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Molla - Bootstrap eCommerce Template">
-    <meta name="author" content="p-themes">
+    <title>{{ getSetting('site_title', 'Mobile Hub') }}</title>
+    <meta name="keywords" content="{{ getSetting('meta_keywords', 'Mobile Hub , Mobile Shop') }}">
+    <meta name="description" content="{{ getSetting('meta_description', 'eCommerce') }}">
+    <meta name="author" content="{{ getSetting('meta_author', 'p-themes') }}">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="{{ asset('assets/frontend') }}/assets/images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ asset('assets/frontend') }}/assets/images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ asset('assets/frontend') }}/assets/images/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('storage/' . getSetting('favicon')) }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storage/' . getSetting('favicon')) }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storage/' . getSetting('favicon')) }}">
     <link rel="manifest" href="{{ asset('assets/frontend') }}/assets/images/icons/site.html">
-    <link rel="mask-icon" href="{{ asset('assets/frontend') }}/assets/images/icons/safari-pinned-tab.svg"
-        color="#666666">
-    <link rel="shortcut icon" href="{{ asset('assets/frontend') }}/assets/images/icons/favicon.ico">
-    <meta name="apple-mobile-web-app-title" content="Molla">
-    <meta name="application-name" content="Molla">
+    <link rel="mask-icon" href="{{ asset('storage/' . getSetting('favicon')) }}" color="#666666">
+    <link rel="shortcut icon" href="{{ asset('storage/' . getSetting('favicon')) }}">
+    <meta name="apple-mobile-web-app-title" content="{{ getSetting('site_title', 'Mobile Hub') }}">
+    <meta name="application-name" content="{{ getSetting('site_title', 'Mobile Hub') }}">
     <meta name="msapplication-TileColor" content="#cc9966">
     <meta name="msapplication-config" content="{{ asset('assets/frontend') }}/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
@@ -39,7 +32,7 @@
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/skins/skin-demo-4.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/demos/demo-4.css">
-        <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/plugins/nouislider/nouislider.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/assets/css/plugins/nouislider/nouislider.css">
 
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -214,6 +207,7 @@
     </div><!-- End .mobile-menu-container -->
 
     <!-- Sign in / Register Modal -->
+    <!-- Sign in / Register Modal -->
     <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -235,19 +229,28 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="tab-content-5">
+                                <!-- Login Tab -->
                                 <div class="tab-pane fade show active" id="signin" role="tabpanel"
                                     aria-labelledby="signin-tab">
-                                    <form action="#">
+                                    <!-- Session Status -->
+                                    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                                    <form method="POST" action="{{ route('login') }}">
+                                        @csrf
+
                                         <div class="form-group">
-                                            <label for="singin-email">Username or email address *</label>
-                                            <input type="text" class="form-control" id="singin-email"
-                                                name="singin-email" required>
+                                            <label for="singin-email">Email address *</label>
+                                            <input type="email" class="form-control" id="singin-email"
+                                                name="email" :value="old('email')" required autofocus
+                                                autocomplete="username">
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
                                             <label for="singin-password">Password *</label>
                                             <input type="password" class="form-control" id="singin-password"
-                                                name="singin-password" required>
+                                                name="password" required autocomplete="current-password">
+                                            <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
@@ -258,14 +261,18 @@
 
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
-                                                    id="signin-remember">
+                                                    id="signin-remember" name="remember">
                                                 <label class="custom-control-label" for="signin-remember">Remember
                                                     Me</label>
                                             </div><!-- End .custom-checkbox -->
 
-                                            <a href="#" class="forgot-link">Forgot Your Password?</a>
+                                            @if (Route::has('password.request'))
+                                                <a href="{{ route('password.request') }}" class="forgot-link">Forgot
+                                                    Your Password?</a>
+                                            @endif
                                         </div><!-- End .form-footer -->
                                     </form>
+
                                     <div class="form-choice">
                                         <p class="text-center">or sign in with</p>
                                         <div class="row">
@@ -284,19 +291,42 @@
                                         </div><!-- End .row -->
                                     </div><!-- End .form-choice -->
                                 </div><!-- .End .tab-pane -->
+
+                                <!-- Register Tab -->
                                 <div class="tab-pane fade" id="register" role="tabpanel"
                                     aria-labelledby="register-tab">
-                                    <form action="#">
+                                    <form method="POST" action="{{ route('register') }}">
+                                        @csrf
+
+                                        <div class="form-group">
+                                            <label for="register-name">Full Name *</label>
+                                            <input type="text" class="form-control" id="register-name"
+                                                name="name" :value="old('name')" required autofocus
+                                                autocomplete="name">
+                                            <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
+                                        </div><!-- End .form-group -->
+
                                         <div class="form-group">
                                             <label for="register-email">Your email address *</label>
                                             <input type="email" class="form-control" id="register-email"
-                                                name="register-email" required>
+                                                name="email" :value="old('email')" required
+                                                autocomplete="username">
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
                                             <label for="register-password">Password *</label>
                                             <input type="password" class="form-control" id="register-password"
-                                                name="register-password" required>
+                                                name="password" required autocomplete="new-password">
+                                            <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group">
+                                            <label for="register-password-confirmation">Confirm Password *</label>
+                                            <input type="password" class="form-control"
+                                                id="register-password-confirmation" name="password_confirmation"
+                                                required autocomplete="new-password">
+                                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
@@ -309,10 +339,12 @@
                                                 <input type="checkbox" class="custom-control-input"
                                                     id="register-policy" required>
                                                 <label class="custom-control-label" for="register-policy">I agree to
-                                                    the <a href="#">privacy policy</a> *</label>
+                                                    the <a href="#" data-toggle="modal"
+                                                        data-target="#terms-modal">privacy policy</a> *</label>
                                             </div><!-- End .custom-checkbox -->
                                         </div><!-- End .form-footer -->
                                     </form>
+
                                     <div class="form-choice">
                                         <p class="text-center">or sign in with</p>
                                         <div class="row">
@@ -323,7 +355,7 @@
                                                 </a>
                                             </div><!-- End .col-6 -->
                                             <div class="col-sm-6">
-                                                <a href="#" class="btn btn-login  btn-f">
+                                                <a href="#" class="btn btn-login btn-f">
                                                     <i class="icon-facebook-f"></i>
                                                     Login With Facebook
                                                 </a>
@@ -339,41 +371,6 @@
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
 
-    {{-- <div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
-        <div class="row justify-content-center">
-            <div class="col-10">
-                <div class="row no-gutters bg-white newsletter-popup-content">
-                    <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
-                        <div class="banner-content text-center">
-                            <img src="{{ asset('assets/frontend') }}/assets/images/popup/newsletter/logo.png"
-                                class="logo" alt="logo" width="60" height="15">
-                            <h2 class="banner-title">get <span>25<light>%</light></span> off</h2>
-                            <p>Subscribe to the Molla eCommerce newsletter to receive timely updates from your favorite
-                                products.</p>
-                            <form action="#">
-                                <div class="input-group input-group-round">
-                                    <input type="email" class="form-control form-control-white"
-                                        placeholder="Your Email Address" aria-label="Email Adress" required>
-                                    <div class="input-group-append">
-                                        <button class="btn" type="submit"><span>go</span></button>
-                                    </div><!-- .End .input-group-append -->
-                                </div><!-- .End .input-group -->
-                            </form>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="register-policy-2" required>
-                                <label class="custom-control-label" for="register-policy-2">Do not show this popup
-                                    again</label>
-                            </div><!-- End .custom-checkbox -->
-                        </div>
-                    </div>
-                    <div class="col-xl-2-5col col-lg-5 ">
-                        <img src="{{ asset('assets/frontend') }}/assets/images/popup/newsletter/img-1.jpg"
-                            class="newsletter-img" alt="newsletter">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <!-- Plugins JS File -->
     <!-- jQuery -->
 
@@ -392,7 +389,7 @@
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.plugin.min.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.magnific-popup.min.js"></script>
     <script src="{{ asset('assets/frontend') }}/assets/js/jquery.countdown.min.js"></script>
-        <script src="{{ asset('assets/frontend') }}/assets/js/jquery.elevateZoom.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/assets/js/jquery.elevateZoom.min.js"></script>
 
     <!-- Main JS File -->
     <script src="{{ asset('assets/frontend') }}/assets/js/main.js"></script>

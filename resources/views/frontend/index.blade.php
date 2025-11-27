@@ -14,7 +14,7 @@
                     <div class="row">
                         @foreach ($categories as $category)
                             <div class="col-6 col-sm-4 col-lg-2">
-                                <a href="#" class="cat-block"> {{-- {{ route('category.show', $category->id) }} --}}
+                                <a href="{{ route('product.category.products', $category->id) }}" class="cat-block"> {{-- {{ route('category.show', $category->id) }} --}}
                                     <figure>
                                         <span>
                                             <img src="{{ asset('storage/' . $category->category_image) }}"

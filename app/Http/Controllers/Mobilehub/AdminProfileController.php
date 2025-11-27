@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Mobilehub;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -15,14 +15,14 @@ use Intervention\Image\Laravel\Facades\Image;
 use Illuminate\Validation\Rules\Password;
 
 
-class ProfileController extends Controller
+class AdminProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
     {
-        return view('frontend.profile.profile', [
+        return view('admin.profile.profile', [
             'user' => $request->user(),
         ]);
     }
@@ -44,7 +44,7 @@ class ProfileController extends Controller
 
             $profilePhotoName = 'profile_' . $user->id . '_' . uniqid() . '.webp';
 
-            // Intervention Image ব্যবহার করে
+            // Intervention Image 
             $manager = Image::read($request->file('profile_photo'));
 
             // Resize and optimize image
@@ -76,7 +76,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('admin.profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -102,7 +102,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return Redirect::to('admin_dashboard');
     }
      /**
      * Custom password update method
@@ -128,3 +128,4 @@ class ProfileController extends Controller
         return back()->with('status', 'password-updated');
     }
 }
+

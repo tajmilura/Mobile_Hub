@@ -62,7 +62,7 @@ class ProductController extends Controller
         $manager = new ImageManager(new Driver());
         $product = new Product();
 
-        // ✅ Basic Info
+        //  Basic Info
         $product->fill([
             'category_id' => $request->category_id,
             'brand_id' => $request->brand_id,
@@ -108,7 +108,7 @@ class ProductController extends Controller
             'barcode' => $request->barcode,
         ]);
 
-        // ✅ Main Image
+        //  Main Image
         if ($request->hasFile('image')) {
             $productName = Str::slug($request->name);
             $uniqueId = uniqid();
@@ -131,7 +131,7 @@ class ProductController extends Controller
 
         $product->save(); // Save first to get ID
 
-        // ✅ Gallery Images
+        //  Gallery Images
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $galleryImage) {
                 $uniqueId = uniqid();
@@ -157,7 +157,7 @@ class ProductController extends Controller
             }
         }
 
-        // ✅ Video (upload + embed link)
+        //  Video (upload + embed link)
         $videoLink = null;
         if ($request->hasFile('video')) {
             $video = $request->file('video');
@@ -187,7 +187,7 @@ class ProductController extends Controller
             ]);
         }
 
-        toastr()->success('✅ Product created successfully!');
+        toastr()->success(' Product created successfully!');
         return redirect()->route('product.index');
     }
 
@@ -210,6 +210,26 @@ class ProductController extends Controller
     }
 
 
+  public function show($id)
+{
+    $product = Product::with(['category', 'brand'])
+        ->findOrFail($id);
+
+    // Convert JSON fields to arrays for display
+    if ($product->colors && is_string($product->colors)) {
+        $product->colors = json_decode($product->colors, true);
+    }
+
+    if ($product->tags && is_string($product->tags)) {
+        $product->tags = json_decode($product->tags, true);
+    }
+
+    if ($product->gallery && is_string($product->gallery)) {
+        $product->gallery = json_decode($product->gallery, true);
+    }
+
+    return view('admin.store.product.view_product', compact('product'));
+}
     //Edit Image delete
     public function Image_destroy($id)
     {

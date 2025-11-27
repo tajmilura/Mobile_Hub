@@ -10,23 +10,39 @@ use App\Http\Controllers\Frontend\CartWishController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Mobilehub\PaymentController;
 use App\Http\Controllers\Mobilehub\DemoPaymentController;
+use App\Http\Controllers\NewsletterController;
 
 // ----------------------
 // Home ROUTES
 // ----------------------
 
-Route::get('/', [HomeController::class, 'index'])->name('index');
+
+// Newsletter Routes
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+
+// Admin Newsletter Routes (if needed)
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/newsletter', [NewsletterController::class, 'index'])->name('admin.newsletter.index');
+    Route::delete('/newsletter/{newsletter}', [NewsletterController::class, 'destroy'])->name('admin.newsletter.destroy');
+});
+Route::get('/', [HomeController::class, 'Homeindex'])->name('index');
+// Static Pages Routes
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 
 Route::prefix('product')->name('product.')->group(function () {
     Route::get('/details/{id}', [HomeController::class, 'productDetails'])->name('details');
-    Route::get('/create', [HomeController::class, 'create'])->name('create');
-    Route::post('/store', [HomeController::class, 'store'])->name('store');
-    //Route::get('/edit/{brand}', [HomeController::class, 'edit'])->name('edit');
-    Route::put('/update/{brand}', [HomeController::class, 'update'])->name('update');
-    Route::delete('/delete/{brand}', [HomeController::class, 'destroy'])->name('destroy');
+    // Route::get('/create', [HomeController::class, 'create'])->name('create');
+    // Route::post('/store', [HomeController::class, 'store'])->name('store');
+    Route::get('/brand/{brand}', [HomeController::class, 'BrandProduct'])->name('brand.products');
+    Route::get('/category/{category}', [HomeController::class, 'CategoryProduct'])->name('category.products');
+    // Route::put('/update/{brand}', [HomeController::class, 'update'])->name('update');
+    // Route::delete('/delete/{brand}', [HomeController::class, 'destroy'])->name('destroy');
     // Track product view (AJAX)
-    Route::post('/{id}/track-view', [HomeController::class, 'trackView'])
-        ->name('trackView');
+    // Route::post('/{id}/track-view', [HomeController::class, 'trackView'])
+    //     ->name('trackView');
 });
 
 // ----------------------
