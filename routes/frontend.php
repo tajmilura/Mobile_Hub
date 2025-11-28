@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AIRecommendationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -16,6 +17,9 @@ use App\Http\Controllers\NewsletterController;
 // Home ROUTES
 // ----------------------
 
+// AI Recommendation Routes
+Route::get('/ai-phone-expert', [AIRecommendationController::class, 'showChat'])->name('ai.recommendation');
+Route::post('/ai-recommendations', [AIRecommendationController::class, 'getRecommendations'])->name('ai.get-recommendations');
 
 // Newsletter Routes
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

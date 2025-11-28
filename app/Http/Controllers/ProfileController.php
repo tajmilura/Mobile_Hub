@@ -96,8 +96,8 @@ class ProfileController extends Controller
         $user = $request->user();
 
         // Delete profile photo if exists
-        if ($user->profile_photo && File::exists(storage_path('app/public/' . $user->profile_photo))) {
-            File::delete(storage_path('app/public/' . $user->profile_photo));
+        if ($user->profile_photo && File::exists(storage_path('app/public/uploads' . $user->profile_photo))) {
+            File::delete(storage_path('app/public/uploads' . $user->profile_photo));
         }
 
         Auth::logout();

@@ -233,6 +233,7 @@
             </div><!-- End .header-right -->
         </div><!-- End .container -->
     </div><!-- End .header-middle -->
+
      @php
                 $brands = \App\Models\Brand::all();
             @endphp
@@ -282,6 +283,9 @@
                                 <li><a href="{{ route('contact') }}">Contact</a></li>
                                 <li><a href="{{ route('faq') }}">FAQs</a></li>
                             </ul>
+                        </li>
+                         <li>
+                            <a href="{{ route('ai.recommendation') }}" class="">AI Recommendation</a>
                         </li>
                     </ul><!-- End .menu -->
                 </nav><!-- End .main-nav -->

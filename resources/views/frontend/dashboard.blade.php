@@ -24,7 +24,7 @@
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-lg-3">
-                    @include('frontend.partials.profile-sidebar')
+                    {{-- @include('frontend.partials.profile-sidebar') --}}
                 </div>
 
                 <!-- Main Content -->

@@ -1,4 +1,10 @@
         <footer class="footer">
+            @php
+            $longBanner = \App\Models\SliderAndBanner::where('type', 'long_banner')
+            ->where('status', true)
+            ->latest()
+            ->first();
+            @endphp
             <div class="cta bg-image bg-dark pt-4 pb-5 mb-0"
                 style="background-image: url({{ asset('storage/' . $longBanner->image_path) }});">
                 <div class="container">
